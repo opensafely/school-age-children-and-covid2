@@ -90,7 +90,7 @@ recode cat_time 63=1 157=2 300=3
 recode `outcome' .=0 
 tab cat_time
 tab cat_time `outcome'
- STOP 
+ 
 /*Overlapping time periods
 gen cat_time0=1 if cat==0
 gen cat_time1=1 if cat==0 | cat==0.25
