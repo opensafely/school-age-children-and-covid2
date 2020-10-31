@@ -135,7 +135,7 @@ winexec "C:/Program Files (x86)/Stata15/Stata-64.exee"  do "10_an_interaction_co
 
 *Time
 foreach outcome of any  non_covid_death covid_tpp_prob covid_death covid_icu covidadmission   {
-winexec "C:/Program Files (x86)/Stata15/Stata-64.exee"  do "10_an_interaction_cox_models_time" `outcome'	
+winexec "C:/Program Files (x86)/Stata15/Stata-64.exe"  do "10_an_interaction_cox_models_time" `outcome'	
 }
 
 ************************************************************

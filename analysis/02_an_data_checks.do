@@ -126,8 +126,6 @@ tab `outcome'_month
 drop `outcome'_month
 }
 
-STOP
-
 *Outcome dates
 di d(1feb2020)
 * 21946
@@ -137,15 +135,15 @@ di d(01june2020)
 * 22067
 di d(01aug2020)
 * 22128
-di d(01sept2020)
-* 22159
+di d(01oct2020)
+* 22189
 
 foreach outcome of any   non_covid_death  covid_tpp_prob covidadmission covid_icu covid_death    {
 summ  `outcome', format d 
 summ patient_id if `outcome'==1
 local total_`outcome'=`r(N)'
 hist date_`outcome', saving(`outcome', replace) ///
-xlabel(21946 22006 22067 22128 22159,labsize(tiny))  xtitle(, size(vsmall)) ///
+xlabel(21946 22006 22067 22128 22189,labsize(tiny))  xtitle(, size(vsmall)) ///
 graphregion(color(white))  legend(off) freq  ///
 yscale(range(0 3000)) ylab(0 (500) 6000, labsize(vsmall)) ytitle("Number", size(vsmall))  ///
 title("N=`total_`outcome''", size(vsmall)) 

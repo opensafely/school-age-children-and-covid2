@@ -256,7 +256,7 @@ recode tot_adults_hh 3/max=3
 /* SET FU DATES===============================================================*/ 
 * Censoring dates for each outcome (largely, last date outcome data available)
 *****NEEDS UPDATING WHEN INFO AVAILABLE*******************
-global onscoviddeathcensor   	= "03/08/2020"
+global onscoviddeathcensor   	= "01/11/2020"
 
 *Start dates
 global indexdate 			    = "01/02/2020"
@@ -633,9 +633,9 @@ lab var esrd 							"End-stage renal disease"
 recode positive_covid_test_ever .=0
 
 /*  Cohort entry and censor dates  */
-* Date of cohort entry, 1 Mar 2020
+* Date of cohort entry, 1 Feb 2020
 gen enter_date = date("$indexdate", "DMY")
-gen covid_admissioncensor=d(01May2020)
+gen covid_admissioncensor=d(01November2020)
 * Date of study end (typically: last date of outcome data available)
 **** NOTE!! NEEDS UPDATING!!!!
 gen onscoviddeathcensor_date 	    = date("$onscoviddeathcensor", 	"DMY")
