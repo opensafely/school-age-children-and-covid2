@@ -113,6 +113,20 @@ foreach comorb in $varlist {
 	
 }
 
+*summarise end dates for each outcome
+foreach outcome in date_covid_tpp_prob	date_non_covid_death	date_covid_death	date_covid_icu	date_covidadmission	died_date_onscovid_part1	 {
+sum `outcome', format
+}
+
+foreach outcome in date_covid_tpp_prob	date_non_covid_death	date_covid_death	date_covid_icu	date_covidadmission	died_date_onscovid_part1	 {
+gen `outcome'_month=mofd(`outcome') 
+ lab define `outcome'_month 721 feb 722 mar 723 apr 724 may 725 june 726 jul 727 aug 728 sept 729 oct
+lab val `outcome'_month `outcome'_month
+tab `outcome'_month
+drop `outcome'_month
+}
+
+STOP
 
 *Outcome dates
 di d(1feb2020)
@@ -123,13 +137,15 @@ di d(01june2020)
 * 22067
 di d(01aug2020)
 * 22128
+di d(01sept2020)
+* 22159
 
 foreach outcome of any   non_covid_death  covid_tpp_prob covidadmission covid_icu covid_death    {
 summ  `outcome', format d 
 summ patient_id if `outcome'==1
 local total_`outcome'=`r(N)'
 hist date_`outcome', saving(`outcome', replace) ///
-xlabel(21946 22006 22067 22128,labsize(tiny))  xtitle(, size(vsmall)) ///
+xlabel(21946 22006 22067 22128 22159,labsize(tiny))  xtitle(, size(vsmall)) ///
 graphregion(color(white))  legend(off) freq  ///
 yscale(range(0 3000)) ylab(0 (500) 6000, labsize(vsmall)) ytitle("Number", size(vsmall))  ///
 title("N=`total_`outcome''", size(vsmall)) 
@@ -141,6 +157,8 @@ graph export "output/01_histogram_outcomes.svg", as(svg) replace
 *censor dates
 summ dereg_date, format
 summ has_12_m
+
+
 
 /* LOGICAL RELATIONSHIPS======================================================*/ 
 
