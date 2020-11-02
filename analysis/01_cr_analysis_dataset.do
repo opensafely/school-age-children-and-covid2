@@ -631,9 +631,6 @@ lab var esrd 							"End-stage renal disease"
 
 /* OUTCOME AND SURVIVAL TIME==================================================*/
 
-use $tempdir/analysis_dataset, clear
-
-
 recode positive_covid_test_ever .=0
 
 gen enter_date = date("$indexdate", "DMY")
