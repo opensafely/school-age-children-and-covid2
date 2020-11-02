@@ -107,10 +107,8 @@ foreach var of varlist  chronic_respiratory_disease 	///
 }
 
 foreach comorb in $varlist { 
-
 	local comorb: subinstr local comorb "i." ""
 	safetab `comorb', m
-	
 }
 
 *summarise end dates for each outcome
