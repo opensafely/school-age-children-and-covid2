@@ -171,14 +171,6 @@ actions:
         log: log/10_an_interaction_cox_models_time_non_covid_death.log
         data: "output/an_interaction_cox_models_non_covid_death_kids_cat3_cat_time_MAINFULLYADJMODEL_*.ster"
 
-  10_an_interaction_cox_models_weeks_non_covid_death:
-    needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/10_an_interaction_cox_models_weeks.do non_covid_death
-    outputs:
-      moderately_sensitive:
-        log: log/10_an_interaction_cox_models_weeks_non_covid_death.log
-        data: "output/an_interaction_cox_models_non_covid_death_week0_ageband_*.ster"
-
   10_an_interaction_cox_models_sex_non_covid_death:
     needs: [01_cr_analysis_dataset]
     run: stata-mp:latest analysis/10_an_interaction_cox_models_sex.do non_covid_death
@@ -244,14 +236,6 @@ actions:
         log: log/10_an_interaction_cox_models_time_covid_tpp_prob.log
         data: "output/an_interaction_cox_models_covid_tpp_prob_kids_cat3_cat_time_MAINFULLYADJMODEL_*.ster"
 
-  10_an_interaction_cox_models_weeks_covid_tpp_prob:
-    needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/10_an_interaction_cox_models_weeks.do covid_tpp_prob
-    outputs:
-      moderately_sensitive:
-        log: log/10_an_interaction_cox_models_weeks_covid_tpp_prob.log
-        data: "output/an_interaction_cox_models_covid_tpp_prob_week0_ageband_*.ster"
-
   10_an_interaction_cox_models_sex_covid_tpp_prob:
     needs: [01_cr_analysis_dataset]
     run: stata-mp:latest analysis/10_an_interaction_cox_models_sex.do covid_tpp_prob
@@ -316,14 +300,6 @@ actions:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_time_covid_death.log
         data: "output/an_interaction_cox_models_covid_death_kids_cat3_cat_time_MAINFULLYADJMODEL_*.ster"
-
-  10_an_interaction_cox_models_weeks_covid_death:
-    needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/10_an_interaction_cox_models_weeks.do covid_death
-    outputs:
-      moderately_sensitive:
-        log: log/10_an_interaction_cox_models_weeks_covid_death.log
-        data: "output/an_interaction_cox_models_covid_death_week0_ageband_*.ster"
 
   10_an_interaction_cox_models_sex_covid_death:
     needs: [01_cr_analysis_dataset]
@@ -422,14 +398,6 @@ actions:
         log: log/10_an_interaction_cox_models_time_covid_icu.log
         data: "output/an_interaction_cox_models_covid_icu_kids_cat3_cat_time_MAINFULLYADJMODEL_*.ster"
 
-  10_an_interaction_cox_models_weeks_covid_icu:
-    needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/10_an_interaction_cox_models_weeks.do covid_icu
-    outputs:
-      moderately_sensitive:
-        log: log/10_an_interaction_cox_models_weeks_covid_icu.log
-        data: "output/an_interaction_cox_models_covid_icu_week0_ageband_*.ster"
-
   10_an_interaction_cox_models_sex_covid_icu:
     needs: [01_cr_analysis_dataset]
     run: stata-mp:latest analysis/10_an_interaction_cox_models_sex.do covid_icu
@@ -494,14 +462,6 @@ actions:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_time_covidadmission.log
         data: "output/an_interaction_cox_models_covidadmission_kids_cat3_cat_time_MAINFULLYADJMODEL_*.ster"
-
-  10_an_interaction_cox_models_weeks_covidadmission:
-    needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/10a_an_interaction_cox_models_weeks_covidad.do covidadmission
-    outputs:
-      moderately_sensitive:
-        log: log/10_an_interaction_cox_models_weeks_covidadmission.log
-        data: "output/an_interaction_cox_models_covidadmission_week*_ageband_*.ster"
 
   10_an_interaction_cox_models_sex_covidadmission:
     needs: [01_cr_analysis_dataset]
@@ -625,7 +585,6 @@ actions:
     needs:
       - 10_an_interaction_cox_models_shield_non_covid_death
       - 10_an_interaction_cox_models_time_non_covid_death
-      - 10_an_interaction_cox_models_weeks_non_covid_death
       - 10_an_interaction_cox_models_sex_non_covid_death
     run: stata-mp:latest analysis/11_an_interaction_HR_tables_forest.do non_covid_death
     outputs:
@@ -637,7 +596,6 @@ actions:
     needs:
       - 10_an_interaction_cox_models_shield_covid_tpp_prob
       - 10_an_interaction_cox_models_time_covid_tpp_prob
-      - 10_an_interaction_cox_models_weeks_covid_tpp_prob
       - 10_an_interaction_cox_models_sex_covid_tpp_prob
     run: stata-mp:latest analysis/11_an_interaction_HR_tables_forest.do covid_tpp_prob
     outputs:
@@ -649,7 +607,6 @@ actions:
     needs:
       - 10_an_interaction_cox_models_shield_covid_death
       - 10_an_interaction_cox_models_time_covid_death
-      - 10_an_interaction_cox_models_weeks_covid_death
       - 10_an_interaction_cox_models_sex_covid_death
     run: stata-mp:latest analysis/11_an_interaction_HR_tables_forest.do covid_death
     outputs:
@@ -661,7 +618,6 @@ actions:
     needs:
       - 10_an_interaction_cox_models_shield_covid_icu
       - 10_an_interaction_cox_models_time_covid_icu
-      - 10_an_interaction_cox_models_weeks_covid_icu
       - 10_an_interaction_cox_models_sex_covid_icu
     run: stata-mp:latest analysis/11_an_interaction_HR_tables_forest.do covid_icu
     outputs:
@@ -673,41 +629,12 @@ actions:
     needs:
       - 10_an_interaction_cox_models_shield_covidadmission
       - 10_an_interaction_cox_models_time_covidadmission
-      - 10_an_interaction_cox_models_weeks_covidadmission
       - 10_an_interaction_cox_models_sex_covidadmission
     run: stata-mp:latest analysis/11_an_interaction_HR_tables_forest.do covidadmission
     outputs:
       moderately_sensitive:
         log: 11_an_interaction_HR_tables_forest_covidadmission.log
         data: "output/11_an_int_tab_contents_HRtable_covidadmission.txt"
-
-  11a_an_interaction_HR_tables_forest_WEEKS_covidadmission:
-    needs:
-      - 10_an_interaction_cox_models_shield_non_covid_death
-      - 10_an_interaction_cox_models_shield_covid_tpp_prob
-      - 10_an_interaction_cox_models_shield_covid_death
-      - 10_an_interaction_cox_models_shield_covid_icu
-      - 10_an_interaction_cox_models_shield_covidadmission
-      - 10_an_interaction_cox_models_time_non_covid_death
-      - 10_an_interaction_cox_models_time_covid_tpp_prob
-      - 10_an_interaction_cox_models_time_covid_death
-      - 10_an_interaction_cox_models_time_covid_icu
-      - 10_an_interaction_cox_models_time_covidadmission
-      - 10_an_interaction_cox_models_weeks_non_covid_death
-      - 10_an_interaction_cox_models_weeks_covid_tpp_prob
-      - 10_an_interaction_cox_models_weeks_covid_death
-      - 10_an_interaction_cox_models_weeks_covid_icu
-      - 10_an_interaction_cox_models_weeks_covidadmission
-      - 10_an_interaction_cox_models_sex_non_covid_death
-      - 10_an_interaction_cox_models_sex_covid_tpp_prob
-      - 10_an_interaction_cox_models_sex_covid_death
-      - 10_an_interaction_cox_models_sex_covid_icu
-      - 10_an_interaction_cox_models_sex_covidadmission
-    run: stata-mp:latest analysis/11a_an_interaction_HR_tables_forest_WEEKS.do covidadmission
-    outputs:
-      moderately_sensitive:
-        log: 11a_an_interaction_HR_tables_forest_WEEKS.log
-        data: "output/an_int_tab_contents_HRtable_WEEKS.txt"
 
   12_an_tablecontent_HRtable_SENSE_non_covid_death:
     needs:
@@ -794,7 +721,6 @@ actions:
       - 11_an_interaction_HR_tables_forest_covid_tpp_prob
       - 11_an_interaction_HR_tables_forest_covidadmission
       - 11_an_interaction_HR_tables_forest_non_covid_death
-      - 11a_an_interaction_HR_tables_forest_WEEKS_covidadmission
       - 12_an_tablecontent_HRtable_SENSE_covid_death
       - 12_an_tablecontent_HRtable_SENSE_covid_icu
       - 12_an_tablecontent_HRtable_SENSE_covid_tpp_prob
