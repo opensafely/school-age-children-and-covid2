@@ -24,7 +24,7 @@ log using $logdir/01_cr_analysis_dataset, replace t
 
 
 *Import dataset into STATA
-import delimited "output/input.csv", clear
+*import delimited "output/input.csv", clear
 
 
 /* CONVERT STRINGS TO DATE====================================================*/
@@ -82,7 +82,7 @@ foreach var of varlist 	chronic_respiratory_disease ///
 }
 
 * Recode to dates from the strings 
-foreach var of varlist covid_icu_date	died_date_ons covid_admission_date covid_tpp_probable	{
+foreach var of varlist covid_icu_date positive_covid_test_eve	died_date_ons covid_admission_date covid_tpp_probable	{
 						
 	confirm string variable `var'
 	rename `var' `var'_dstr
@@ -632,8 +632,6 @@ lab var esrd 							"End-stage renal disease"
 
 /* OUTCOME AND SURVIVAL TIME==================================================*/
 
-recode positive_covid_test_ever .=0
-
 gen enter_date = date("$indexdate", "DMY")
 gen study_end_censor =date("$study_end_censor", "DMY")
 gen icnarc_censor    =date("$icnarc_censor", "DMY")
@@ -673,7 +671,6 @@ gen covid_death_icu = (covid_icu_death_date < .)
 gen covidadmission = (covid_admission_primary_date < .)
 gen covid_death_part1 = (died_date_onscovid_part1 < .)
 
-
 					/**** Create survival times  ****/
 * For looping later, name must be stime_binary_outcome_name
 
@@ -699,6 +696,8 @@ replace covid_death_part1 = 0 if (died_date_onscovid_part1 > study_end_censor )
 * Format date variables
 format  stime* %td 
 
+gen positive_SGSS = (positive_covid_test_ever < .)
+rename positive_covid_test_ever date_positive_SGSS
 
 /* LABEL VARIABLES============================================================*/
 *  Label variables you are intending to keep, drop the rest 
@@ -726,7 +725,6 @@ label var imd 						"Index of Multiple Deprivation (IMD)"
 label var ethnicity					"Ethnicity"
 label var stp 						"Sustainability and Transformation Partnership"
 lab var tot_adults_hh 				"Total number adults in hh"
-lab var positive_covid_test_ever	"Ever having had positive covid test"
 
 * Comorbidities of interest 
 label var asthma						"Asthma category"
@@ -784,6 +782,7 @@ label var  covid_icu				    "Failure/censoring indicator for outcome: covid icu"
 label var  covid_death_icu				"Failure/censoring indicator for outcome: covid icu/death"
 lab var covidadmission 					"Failure/censoring indicator for outcome: covid SUS admission"
 lab var covid_death_part1				"Failure/censoring indicator for outcome: covid death part1"
+lab var  positive_SGSS		"Indicator positive covid test"
 
 rename died_date_onsnoncovid date_non_covid_death
 rename died_date_onscovid date_covid_death
@@ -795,6 +794,7 @@ label var  date_covid_death			"Date of ONS COVID-19 Death"
 lab var date_covid_icu					"Date of admission to ICU for COVID-19" 
 lab var date_covidadmission			"Date of admission to hospital for COVID-19" 
 label var  died_date_onscovid_part1			"Date of ONS COVID Death part1"
+lab var  date_positive_SGSS		"Date of positive SGSS test"
 
 * Survival times
 label var  stime_covid_tpp_prob				"Survival tme (date); outcome "

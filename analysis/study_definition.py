@@ -97,10 +97,17 @@ study = StudyDefinition(
         },
     ),
 
-   positive_covid_test_ever=patients.with_test_result_in_sgss(
+	positive_covid_test_ever=patients.with_test_result_in_sgss(
         pathogen="SARS-CoV-2",
         test_result="positive",
-        return_expectations={"incidence": 0.1},
+        on_or_after="2020-02-01",
+        find_first_match_in_period=True,
+        returning="date",
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2020-02-01"},
+            "rate": "exponential_increase",
+        },
     ),
 
     ## DEMOGRAPHIC COVARIATES
