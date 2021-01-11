@@ -147,12 +147,6 @@ forvalues i = 1/20 {
 *pause Stata for 8 hours: 1/2880 whilst testing on server, on full data
 ************************************************************
 
-*Weeks
-foreach outcome of any  non_covid_death  covid_tpp_prob covid_death covid_icu   {
-winexec "C:/Program Files (x86)/Stata15/Stata-64.exee"  do "10_an_interaction_cox_models_weeks" `outcome'	
-}
-do "10a_an_interaction_cox_models_weeks_covidad.do" covidadmission
-
 /*	
 *****MULTIPLE IMPUTATION to account for missing ethnicity data 
 **MULTIPLE IMPUTATION: create the datasets (~3 hours each outcome)
@@ -223,8 +217,6 @@ foreach outcome of any worms  {
 foreach outcome of any  non_covid_death covid_tpp_prob covidadmission covid_icu covid_death     {
 	do "11_an_interaction_HR_tables_forest.do" 	 `outcome'
 }
-do "11a_an_interaction_HR_tables_forest_WEEKS.do"
-
 
 /*
 foreach outcome of any  covid_tpp_prob covidadmission covid_icu covid_death   {
