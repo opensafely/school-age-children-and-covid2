@@ -92,7 +92,7 @@ use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'.dta", clear
 
 
 
-foreach exposure_type in kids_cat3 gp_number_kids {
+foreach exposure_type in kids_cat3  {
 
 *Age spline model (not adj ethnicity)
 basecoxmodel, exposure("i.`exposure_type'") age("age1 age2 age3") 
@@ -106,6 +106,19 @@ estimates save "./output/an_multivariate_cox_models_`outcome'_`exposure_type'_MA
 	if e(N_fail)>0 estat phtest, d
 	timer off 1
 	timer list 
+	
+}
+else di "WARNING AGE SPLINE MODEL DID NOT FIT (OUTCOME `outcome')"
+
+}
+
+foreach exposure_type in  gp_number_kids {
+
+*Age spline model (not adj ethnicity)
+basecoxmodel, exposure("i.`exposure_type'") age("age1 age2 age3") 
+if _rc==0{
+estimates
+estimates save "./output/an_multivariate_cox_models_`outcome'_`exposure_type'_MAINFULLYADJMODEL_ageband_`x'", replace
 	
 }
 else di "WARNING AGE SPLINE MODEL DID NOT FIT (OUTCOME `outcome')"

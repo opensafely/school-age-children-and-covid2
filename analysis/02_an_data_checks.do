@@ -45,9 +45,7 @@ drop dup_check
 assert age < .
 assert age >= 18 
 assert age <= 110
- 
-* INCLUSION 2: M or F gender at 1 March 2020 
-assert inlist(sex, "M", "F")
+
 
 * EXCLUDE 1:  MISSING IMD
 assert inlist(imd, 1, 2, 3, 4, 5)
@@ -135,13 +133,16 @@ di d(01aug2020)
 * 22128
 di d(01oct2020)
 * 22189
+di d(01dec2020)
+* 22250
+
 
 foreach outcome of any   non_covid_death  covid_tpp_prob covidadmission covid_icu covid_death    {
 summ  `outcome', format d 
 summ patient_id if `outcome'==1
 local total_`outcome'=`r(N)'
 hist date_`outcome', saving(`outcome', replace) ///
-xlabel(21946 22006 22067 22128 22189,labsize(tiny))  xtitle(, size(vsmall)) ///
+xlabel(21946 22006 22067 22128 22189 22250 ,labsize(tiny))  xtitle(, size(vsmall)) ///
 graphregion(color(white))  legend(off) freq  ///
 yscale(range(0 3000)) ylab(0 (500) 6000, labsize(vsmall)) ytitle("Number", size(vsmall))  ///
 title("N=`total_`outcome''", size(vsmall)) 
@@ -287,6 +288,9 @@ safetab covid_death covid_icu  , row col
 
 safecount if covid_icu==1 & covid_death==1
 safecount if covidadmission==1 & covid_death==1
+
+
+safetab positive_covid_test_ever covid_tpp_prob , row col
 
 * Close log file 
 log close
