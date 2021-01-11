@@ -390,14 +390,6 @@ actions:
         log: log/10_an_interaction_cox_models_shield_covid_icu.log
         data: "output/an_interaction_cox_models_covid_icu_kids_cat3_shield_MAINFULLYADJMODEL_*.ster"
 
-  10_an_interaction_cox_models_time_covid_icu:
-    needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/10_an_interaction_cox_models_time.do covid_icu
-    outputs:
-      moderately_sensitive:
-        log: log/10_an_interaction_cox_models_time_covid_icu.log
-        data: "output/an_interaction_cox_models_covid_icu_kids_cat3_cat_time_MAINFULLYADJMODEL_*.ster"
-
   10_an_interaction_cox_models_sex_covid_icu:
     needs: [01_cr_analysis_dataset]
     run: stata-mp:latest analysis/10_an_interaction_cox_models_sex.do covid_icu
@@ -617,7 +609,6 @@ actions:
   11_an_interaction_HR_tables_forest_covid_icu:
     needs:
       - 10_an_interaction_cox_models_shield_covid_icu
-      - 10_an_interaction_cox_models_time_covid_icu
       - 10_an_interaction_cox_models_sex_covid_icu
     run: stata-mp:latest analysis/11_an_interaction_HR_tables_forest.do covid_icu
     outputs:
