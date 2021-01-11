@@ -627,7 +627,6 @@ actions:
         log: 11_an_interaction_HR_tables_forest_covidadmission.log
         data: "output/11_an_int_tab_contents_HRtable_covidadmission.txt"
 
- 
   12_an_tablecontent_HRtable_SENSE_non_covid_death:
     needs:
       - 07d_an_multivariable_cox_models_FULL_Sense3_non_covid_death
