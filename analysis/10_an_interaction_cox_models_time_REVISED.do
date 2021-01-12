@@ -84,13 +84,13 @@ forvalues x=0/1 {
 
 use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'.dta", clear
 
-*Split data by time of study period: days to 1st September
-stsplit cat_time, at(0,212,400)
-recode cat_time 212=1 400=2
+*Split data by time of study period:  pre-lockdown, lockdown, summer, first school term+half-term. 
+stsplit cat_time, at(0,63,212,400)
+recode cat_time 63=1 212=2 400=3
 recode `outcome' .=0 
 tab cat_time
 tab cat_time `outcome'
- 
+
 /*Overlapping time periods
 gen cat_time0=1 if cat==0
 gen cat_time1=1 if cat==0 | cat==0.25
@@ -107,14 +107,21 @@ foreach exposure_type in kids_cat3  {
 basemodel, exposure("i.`exposure_type'") age("age1 age2 age3")  
 
 *Age spline model (not adj ethnicity, interaction)
-basemodel, exposure("i.`exposure_type'") age("age1 age2 age3") interaction(1.`int_type'#1.`exposure_type' 1.`int_type'#2.`exposure_type')
-cap if _rc==0{
+basemodel, exposure("i.`exposure_type'") age("age1 age2 age3") ///
+interaction(1.`int_type'#1.`exposure_type' 1.`int_type'#2.`exposure_type' ///
+2.`int_type'#1.`exposure_type' 2.`int_type'#2.`exposure_type' )
+
+if _rc==0{
 testparm 1.`int_type'#i.`exposure_type'
 di _n "`exposure_type' " _n "****************"
 lincom 1.`exposure_type' + 1.`int_type'#1.`exposure_type', eform
 di "`exposure_type'" _n "****************"
 lincom 2.`exposure_type' + 1.`int_type'#2.`exposure_type', eform
-estimates save ./output/an_interaction_cox_models_`outcome'_`exposure_type'_`int_type'_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_`x', replace
+di "`exposure_type'" _n "****************"
+lincom 1.`exposure_type' + 2.`int_type'#1.`exposure_type', eform
+di "`exposure_type'" _n "****************"
+lincom 2.`exposure_type' + 2.`int_type'#2.`exposure_type', eform
+estimates save ./output/an_interaction_cox_models_`outcome'_`exposure_type'_`int_type'_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_`x'_REV, replace
 }
 else di "WARNING GROUP MODEL DID NOT FIT (OUTCOME `outcome')"
 
