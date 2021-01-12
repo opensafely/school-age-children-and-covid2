@@ -134,8 +134,12 @@ winexec "C:/Program Files (x86)/Stata15/Stata-64.exee"  do "10_an_interaction_co
 }
 
 *Time
-foreach outcome of any  non_covid_death covid_tpp_prob covid_death covid_icu covidadmission   {
+foreach outcome of any  non_covid_death covid_tpp_prob covid_death covidadmission   {
 winexec "C:/Program Files (x86)/Stata15/Stata-64.exe"  do "10_an_interaction_cox_models_time" `outcome'	
+}
+*Revised time periods
+foreach outcome of any  non_covid_death covid_tpp_prob covid_death covidadmission   {
+winexec "C:/Program Files (x86)/Stata15/Stata-64.exe"  do "10_an_interaction_cox_models_time_REVISED" `outcome'	
 }
 
 ************************************************************
@@ -217,7 +221,10 @@ foreach outcome of any worms  {
 foreach outcome of any  non_covid_death covid_tpp_prob covidadmission covid_icu covid_death     {
 	do "11_an_interaction_HR_tables_forest.do" 	 `outcome'
 }
-
+*Revised time periods
+foreach outcome of any  non_covid_death covid_tpp_prob covidadmission covid_icu covid_death     {
+	do "11a_an_interaction_HR_tables_forest_CAT_TIME_REVISED" 	 `outcome'
+}
 /*
 foreach outcome of any  covid_tpp_prob covidadmission covid_icu covid_death   {
 	do "09_an_agesplinevisualisation.do" `outcome'
