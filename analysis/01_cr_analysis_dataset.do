@@ -82,7 +82,7 @@ foreach var of varlist 	chronic_respiratory_disease ///
 }
 
 * Recode to dates from the strings 
-foreach var of varlist covid_icu_date positive_covid_test_eve	died_date_ons covid_admission_date covid_tpp_probable	{
+foreach var of varlist covid_icu_date positive_covid_test	died_date_ons covid_admission_date covid_tpp_probable	{
 						
 	confirm string variable `var'
 	rename `var' `var'_dstr
@@ -231,7 +231,7 @@ keep household_id nokids
 duplicates drop
 bysort household_id: replace nokids=3 if _N>1
 duplicates drop
-save kids_mixed_category
+save kids_mixed_category, replace
 restore
 
 
@@ -264,6 +264,11 @@ recode tot_adults_hh 3/max=3
 
 
 merge m:1 household_id using kids_mixed_category, nogen
+
+lab define   nokids 0 none  1 "only <12 years" ///
+2 "only 12-18" ///
+3 "mixed"
+lab val nokids nokids
 tab nokids kids_cat3
 
 
@@ -739,7 +744,7 @@ label var imd 						"Index of Multiple Deprivation (IMD)"
 label var ethnicity					"Ethnicity"
 label var stp 						"Sustainability and Transformation Partnership"
 lab var tot_adults_hh 				"Total number adults in hh"
-
+lab var nokids "Age kids in household"
 * Comorbidities of interest 
 label var asthma						"Asthma category"
 label var egfr_cat						"Calculated eGFR"
