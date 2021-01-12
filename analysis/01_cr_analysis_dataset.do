@@ -24,7 +24,7 @@ log using $logdir/01_cr_analysis_dataset, replace t
 
 
 *Import dataset into STATA
-import delimited "output/input.csv", clear
+*import delimited "output/input.csv", clear
 
 
 /* CONVERT STRINGS TO DATE====================================================*/
@@ -263,7 +263,7 @@ bysort household_id: gen tot_adults_hh=_N
 recode tot_adults_hh 3/max=3
 
 
-merge m:1 household_id using kids_mixed_category, nogen
+merge m:1 household_id using kids_mixed_category, nogen keep(master match)
 
 lab define   nokids 0 none  1 "only <12 years" ///
 2 "only 12-18" ///
