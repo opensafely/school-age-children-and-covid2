@@ -225,6 +225,16 @@ lab define kids_cat3  0 "No kids" 1 "Kids under 12" 2 "Kids under 18"
 lab val kids_cat3 kids_cat3
 drop min_kids
 
+preserve
+keep if age<18
+keep household_id nokids
+duplicates drop
+bysort household_id: replace nokids=3 if _N>1
+duplicates drop
+save kids_mixed_category
+restore
+
+
 *Dose-response exposure
 recode nokids 2=.
 bysort household_id: egen number_kids=count(nokids)
@@ -251,6 +261,10 @@ drop if age<18
 *Total number adults in household (to check hh size)
 bysort household_id: gen tot_adults_hh=_N
 recode tot_adults_hh 3/max=3
+
+
+merge m:1 household_id using kids_mixed_category, nogen
+tab nokids kids_cat3
 
 
 /* SET FU DATES===============================================================*/ 
