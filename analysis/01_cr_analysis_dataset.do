@@ -82,7 +82,7 @@ foreach var of varlist 	chronic_respiratory_disease ///
 }
 
 * Recode to dates from the strings 
-foreach var of varlist covid_icu_date	died_date_ons covid_admission_date covid_tpp_probable	{
+foreach var of varlist covid_icu_date positive_covid_test_eve	died_date_ons covid_admission_date covid_tpp_probable	{
 						
 	confirm string variable `var'
 	rename `var' `var'_dstr
@@ -256,7 +256,8 @@ recode tot_adults_hh 3/max=3
 /* SET FU DATES===============================================================*/ 
 * Censoring dates for each outcome (largely, last date outcome data available)
 *****NEEDS UPDATING WHEN INFO AVAILABLE*******************
-global onscoviddeathcensor   	= "19/10/2020"
+global study_end_censor   	= "18/12/2020"
+global icnarc_censor   	= "17/08/2020"
 
 *Start dates
 global indexdate 			    = "01/02/2020"
@@ -631,19 +632,14 @@ lab var esrd 							"End-stage renal disease"
 
 /* OUTCOME AND SURVIVAL TIME==================================================*/
 
-recode positive_covid_test_ever .=0
-
 gen enter_date = date("$indexdate", "DMY")
-gen covid_admissioncensor=d(01November2020)
-* Date of study end (typically: last date of outcome data available)
-**** NOTE!! NEEDS UPDATING!!!!
-gen onscoviddeathcensor_date 	    = date("$onscoviddeathcensor", 	"DMY")
-gen tpp_infec_censor_date    	    = date("$tpp_infec_censor", 	"DMY")
- 	
+gen study_end_censor =date("$study_end_censor", "DMY")
+gen icnarc_censor    =date("$icnarc_censor", "DMY")
+
 * Format the dates
 format 	enter_date					///
-		onscoviddeathcensor_date   %td
-		 	
+		study_end_censor   ///
+		 icnarc_censor 	%td
 		
 			/****   Outcome definitions   ****/
 
@@ -675,32 +671,33 @@ gen covid_death_icu = (covid_icu_death_date < .)
 gen covidadmission = (covid_admission_primary_date < .)
 gen covid_death_part1 = (died_date_onscovid_part1 < .)
 
-
 					/**** Create survival times  ****/
 * For looping later, name must be stime_binary_outcome_name
 
 * Survival time = last followup date (first: end study, death, or that outcome)
 *gen stime_onscoviddeath = min(onscoviddeathcensor_date, 				died_date_ons)
-gen stime_covid_death_part1 	= min(onscoviddeathcensor_date, died_date_onscovid_part1, died_date_ons, dereg_date)
-gen stime_covid_tpp_prob = min(onscoviddeathcensor_date, died_date_ons, date_covid_tpp_prob, dereg_date)
-gen stime_non_covid_death = min(onscoviddeathcensor_date, died_date_ons, died_date_onsnoncovid, dereg_date)
-gen stime_covid_death_icu = min(onscoviddeathcensor_date, died_date_ons, died_date_onscovid, covid_icu_date, dereg_date)
-gen stime_covid_death = min(onscoviddeathcensor_date, died_date_ons, died_date_onscovid, dereg_date)
-gen stime_covid_icu = min(onscoviddeathcensor_date, died_date_ons, covid_icu_date, dereg_date)
-gen stime_covidadmission 	= min(covid_admissioncensor, covid_admission_primary_date, died_date_ons, dereg_date)
+gen stime_covid_death_part1 	= min(study_end_censor   , died_date_onscovid_part1, died_date_ons, dereg_date)
+gen stime_covid_tpp_prob = min(study_end_censor   , died_date_ons, date_covid_tpp_prob, dereg_date)
+gen stime_non_covid_death = min(study_end_censor   , died_date_ons, died_date_onsnoncovid, dereg_date)
+gen stime_covid_death_icu = min(study_end_censor   , died_date_ons, died_date_onscovid, covid_icu_date, dereg_date)
+gen stime_covid_death = min(study_end_censor   , died_date_ons, died_date_onscovid, dereg_date)
+gen stime_covid_icu = min(icnarc_censor, died_date_ons, covid_icu_date, dereg_date)
+gen stime_covidadmission 	= min(study_end_censor   , covid_admission_primary_date, died_date_ons, dereg_date)
 
 * If outcome was after censoring occurred, set to zero
-replace covid_tpp_prob = 0 if (date_covid_tpp_prob > onscoviddeathcensor_date)
-replace non_covid_death = 0 if (died_date_onsnoncovid > onscoviddeathcensor_date)
-replace covid_death_icu = 0 if (covid_icu_death_date > onscoviddeathcensor_date)
-replace covid_death = 0 if (died_date_onscovid > onscoviddeathcensor_date)
-replace covid_icu = 0 if (covid_icu_death_date > onscoviddeathcensor_date)
-replace covidadmission 	= 0 if (covid_admission_primary_date > covid_admissioncensor | covid_admission_primary_date > died_date_ons) 
-replace covid_death_part1 = 0 if (died_date_onscovid_part1 > onscoviddeathcensor_date)
+replace covid_tpp_prob = 0 if (date_covid_tpp_prob > study_end_censor )
+replace non_covid_death = 0 if (died_date_onsnoncovid > study_end_censor )
+replace covid_death_icu = 0 if (covid_icu_death_date > study_end_censor )
+replace covid_death = 0 if (died_date_onscovid > study_end_censor )
+replace covid_icu = 0 if (covid_icu_death_date > icnarc_censor)
+replace covidadmission 	= 0 if (covid_admission_primary_date > study_end_censor  | covid_admission_primary_date > died_date_ons) 
+replace covid_death_part1 = 0 if (died_date_onscovid_part1 > study_end_censor )
 
 * Format date variables
 format  stime* %td 
 
+gen positive_SGSS = (positive_covid_test_ever < .)
+rename positive_covid_test_ever date_positive_SGSS
 
 /* LABEL VARIABLES============================================================*/
 *  Label variables you are intending to keep, drop the rest 
@@ -717,7 +714,6 @@ label var patient_id				"Patient ID"
 label var age 						"Age (years)"
 label var agegroup					"Grouped age"
 label var age66 					"66 years and older"
-label var sex 						"Sex"
 label var male 						"Male"
 label var bmi 						"Body Mass Index (BMI, kg/m2)"
 label var bmicat 					"Grouped BMI"
@@ -728,9 +724,7 @@ label var smoke_nomiss	 			"Smoking status (missing set to non)"
 label var imd 						"Index of Multiple Deprivation (IMD)"
 label var ethnicity					"Ethnicity"
 label var stp 						"Sustainability and Transformation Partnership"
-lab var care_home_type				"Care home type"
 lab var tot_adults_hh 				"Total number adults in hh"
-lab var positive_covid_test_ever	"Ever having had positive covid test"
 
 * Comorbidities of interest 
 label var asthma						"Asthma category"
@@ -777,10 +771,9 @@ lab var shield "Probable shielding"
 
 * Outcomes and follow-up
 label var enter_date					"Date of study entry"
-label var onscoviddeathcensor_date 		"Date of admin censoring for ONS deaths"
-label var tpp_infec_censor_date 		"Date of admin censoring for covid TPP cases"
-label var covid_icu_death_date			"Date of admin censoring for covid death or ICU"
-label var covid_admissioncensor 		"Date of admin censoring for SUS data"
+label var study_end_censor    			"Date of admin censoring for outcomes (except ICNARC)"
+label var icnarc_censor    				"Date of admin censoring for ICU admission"
+
 
 label var  covid_tpp_prob				"Failure/censoring indicator for outcome: covid prob case"
 label var  non_covid_death				"Failure/censoring indicator for outcome: non-covid death"
@@ -789,6 +782,7 @@ label var  covid_icu				    "Failure/censoring indicator for outcome: covid icu"
 label var  covid_death_icu				"Failure/censoring indicator for outcome: covid icu/death"
 lab var covidadmission 					"Failure/censoring indicator for outcome: covid SUS admission"
 lab var covid_death_part1				"Failure/censoring indicator for outcome: covid death part1"
+lab var  positive_SGSS		"Indicator positive covid test"
 
 rename died_date_onsnoncovid date_non_covid_death
 rename died_date_onscovid date_covid_death
@@ -800,6 +794,7 @@ label var  date_covid_death			"Date of ONS COVID-19 Death"
 lab var date_covid_icu					"Date of admission to ICU for COVID-19" 
 lab var date_covidadmission			"Date of admission to hospital for COVID-19" 
 label var  died_date_onscovid_part1			"Date of ONS COVID Death part1"
+lab var  date_positive_SGSS		"Date of positive SGSS test"
 
 * Survival times
 label var  stime_covid_tpp_prob				"Survival tme (date); outcome "
@@ -822,7 +817,7 @@ lab var  dereg_date						"Date deregistration from practice"
 *  Drop variables that are not needed (those not labelled)
 ds, not(varlabel)
 drop `r(varlist)'
-	
+drop covid_admission_primary_diagnosi	
 
 	
 

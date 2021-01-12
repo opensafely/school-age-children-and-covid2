@@ -111,6 +111,7 @@ safetab `var' gp_number_kids, col row
 
 }
 
+
 **********************************
 *  Number (%) with each exposure  *
 **********************************

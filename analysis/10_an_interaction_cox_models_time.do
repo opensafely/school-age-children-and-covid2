@@ -108,7 +108,7 @@ basemodel, exposure("i.`exposure_type'") age("age1 age2 age3")
 
 *Age spline model (not adj ethnicity, interaction)
 basemodel, exposure("i.`exposure_type'") age("age1 age2 age3") interaction(1.`int_type'#1.`exposure_type' 1.`int_type'#2.`exposure_type')
-if _rc==0{
+cap if _rc==0{
 testparm 1.`int_type'#i.`exposure_type'
 di _n "`exposure_type' " _n "****************"
 lincom 1.`exposure_type' + 1.`int_type'#1.`exposure_type', eform
