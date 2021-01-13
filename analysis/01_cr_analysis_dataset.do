@@ -24,7 +24,7 @@ log using $logdir/01_cr_analysis_dataset, replace t
 
 
 *Import dataset into STATA
-import delimited "output/input.csv", clear
+*import delimited "output/input.csv", clear
 
 
 /* CONVERT STRINGS TO DATE====================================================*/
@@ -94,8 +94,10 @@ foreach var of varlist covid_icu_date positive_covid_test	died_date_ons covid_ad
 
 gen covid_admission_primary_date = covid_admission_date ///
 if (covid_admission_primary_diagnosi == "U071"| covid_admission_primary_diagnosi == "U072")
-
  
+gen  covid_primary_care_codes_only=covid_tpp_probable
+format covid_primary_care_codes_only %td
+replace covid_tpp_probable=positive_covid_test_ever if covid_tpp_probable==. & covid_tpp_probable>positive_covid_test
 
 /*Tab all variables in initial extract*/
 sum, d f
@@ -716,10 +718,11 @@ replace covidadmission 	= 0 if (covid_admission_primary_date > study_end_censor 
 replace covid_death_part1 = 0 if (died_date_onscovid_part1 > study_end_censor )
 
 * Format date variables
-format  stime* %td 
-
+format  stime* %td  
 gen positive_SGSS = (positive_covid_test_ever < .)
+gen covid_primary_care_codes = (covid_primary_care_codes_only < .)
 rename positive_covid_test_ever date_positive_SGSS
+rename covid_primary_care_codes_only date_covid_primary_care_codes
 
 /* LABEL VARIABLES============================================================*/
 *  Label variables you are intending to keep, drop the rest 
@@ -806,6 +809,7 @@ label var  covid_death_icu				"Failure/censoring indicator for outcome: covid ic
 lab var covidadmission 					"Failure/censoring indicator for outcome: covid SUS admission"
 lab var covid_death_part1				"Failure/censoring indicator for outcome: covid death part1"
 lab var  positive_SGSS		"Indicator positive covid test"
+lab var  covid_primary_care_codes		"Indicator positive primary care code COVID infection"
 
 rename died_date_onsnoncovid date_non_covid_death
 rename died_date_onscovid date_covid_death
@@ -818,7 +822,7 @@ lab var date_covid_icu					"Date of admission to ICU for COVID-19"
 lab var date_covidadmission			"Date of admission to hospital for COVID-19" 
 label var  died_date_onscovid_part1			"Date of ONS COVID Death part1"
 lab var  date_positive_SGSS		"Date of positive SGSS test"
-
+lab var   date_covid_primary_care_codes "Date of COVID-19 primary care code"
 * Survival times
 label var  stime_covid_tpp_prob				"Survival tme (date); outcome "
 label var  stime_non_covid_death			"Survival tme (date); outcome non_covid_death	"
