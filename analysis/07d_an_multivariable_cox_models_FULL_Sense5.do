@@ -73,7 +73,7 @@ gen anydiab= diabcat>=2
 gen any_nonwhite=ethnicity>=2
    
 *Fully adjusted
-stcox 	i.kids_cat3 	 ///
+stcox 	i.kids_cat4 	 ///
 			age1 age2 age3		///
 			i.tot_adults_hh ///
 			i.male 							///
@@ -141,7 +141,7 @@ gen anydiab= diabcat>=2
 gen any_nonwhite=ethnicity>=2
 
 *Fully adjusted
-stcox 	i.kids_cat3 	 ///
+stcox 	i.kids_cat4 	 ///
 			age1 age2 age3		///
 			i.male 							///
 			i.tot_adults_hh ///
@@ -194,7 +194,7 @@ gen highimd = imd>=3
 gen anydiab= diabcat>=2
 gen any_nonwhite=ethnicity>=2
 *Fully adjusted
-stcox 	i.kids_cat3 	 ///
+stcox 	i.kids_cat4 	 ///
 			age1 age2 age3		///
 			i.male 							///
 			i.obese4cat 					///
@@ -245,7 +245,7 @@ gen anydiab= diabcat>=2
 gen any_nonwhite=ethnicity>=2
 
 *Fully adjusted
-stcox 	i.kids_cat3 	 ///
+stcox 	i.kids_cat4 	 ///
 			age1 age2 age3		///
 			i.tot_adults_hh ///
 			i.male 							///
@@ -272,9 +272,6 @@ estimates save "./output/an_sense_covid_death_time_int_ageband_`x'", replace
 *estat phtest, d
 }
 }
-log close
-
-
-
+cap log close
 exit, clear STATA
 

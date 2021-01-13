@@ -269,7 +269,10 @@ lab define   nokids 0 none  1 "only <12 years" ///
 2 "only 12-18" ///
 3 "mixed"
 lab val nokids nokids
-tab nokids kids_cat3
+recode nokids .=0
+rename nokids kids_cat4
+tab kids_cat4 kids_cat3
+
 
 
 /* SET FU DATES===============================================================*/ 
@@ -744,7 +747,8 @@ label var imd 						"Index of Multiple Deprivation (IMD)"
 label var ethnicity					"Ethnicity"
 label var stp 						"Sustainability and Transformation Partnership"
 lab var tot_adults_hh 				"Total number adults in hh"
-lab var nokids "Age kids in household"
+lab var kids_cat4					 "Exposure (v2) with 4-cats"
+
 * Comorbidities of interest 
 label var asthma						"Asthma category"
 label var egfr_cat						"Calculated eGFR"

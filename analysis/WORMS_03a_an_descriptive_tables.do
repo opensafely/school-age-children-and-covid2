@@ -95,12 +95,12 @@ safetab worms
 *** Repeat for each expose
 
 	* Demographics
-	safetab agegroup 							kids_cat3, col
-	safetab male 								kids_cat3, col
-	safetab bmicat 								kids_cat3, col m 
-	safetab smoke 								kids_cat3, col m
-	safetab obese4cat							kids_cat3, col m 
-	safetab shield   							kids_cat3, col m 
+	safetab agegroup 							kids_cat4, col
+	safetab male 								kids_cat4, col
+	safetab bmicat 								kids_cat4, col m 
+	safetab smoke 								kids_cat4, col m
+	safetab obese4cat							kids_cat4, col m 
+	safetab shield   							kids_cat4, col m 
 
 	* Comorbidities
 	foreach var in chronic_respiratory_disease ///
@@ -120,13 +120,13 @@ safetab worms
 						hypertension  ///
 						ra_sle_psoriasis  ///
 						{
-	safetab `var' 		kids_cat3, col
+	safetab `var' 		kids_cat4, col
 }
 	
-	safetab imd  								kids_cat3, col m
-	safetab ethnicity 							kids_cat3, col m
-	*safetab urban 								kids_cat3, col
-	safetab stp 								kids_cat3, col
+	safetab imd  								kids_cat4, col m
+	safetab ethnicity 							kids_cat4, col m
+	*safetab urban 								kids_cat4, col
+	safetab stp 								kids_cat4, col
 
 ********************************************
 *  Cumulative incidence of worms.*

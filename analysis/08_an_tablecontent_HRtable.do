@@ -116,7 +116,7 @@ cap file close tablecontents
 file open tablecontents using ./output/an_tablecontents_HRtable_`outcome'.txt, t w replace 
 
 *Primary exposure
-outputHRsforvar, variable("kids_cat3") min(0) max(2) outcome(`outcome')
+outputHRsforvar, variable("kids_cat4") min(0) max(3) outcome(`outcome')
 file write tablecontents _n
 
 *Number kids

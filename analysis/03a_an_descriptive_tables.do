@@ -91,7 +91,7 @@ safetab shield
 
 
 *Exposure 
-foreach var in kids_cat3 gp_number_kids {
+foreach var in kids_cat4 gp_number_kids {
 safetab `var'
 }
 
@@ -106,7 +106,7 @@ safetab `var'
 foreach var in covid_death_icu non_covid_death  ///
  covid_tpp_prob {
 safetab `var'
-safetab `var' kids_cat3, col row
+safetab `var' kids_cat4, col row
 safetab `var' gp_number_kids, col row
 
 }
@@ -119,17 +119,17 @@ safetab `var' gp_number_kids, col row
 *** Repeat for each outcome
 
 	* Demographics
-	safetab agegroup 							kids_cat3, col
-	safetab male 								kids_cat3, col
-	safetab bmicat 								kids_cat3, col m 
-	safetab smoke 								kids_cat3, col m
-	safetab obese4cat							kids_cat3, col m 
-	safetab shield   							kids_cat3, col m 
-	safetab tot_adults_hh						kids_cat3, col m 
-	safetab household_size						kids_cat3, col m 
-	safetab imd  								kids_cat3, col m
-	safetab ethnicity 							kids_cat3, col m
-	safetab stp 								kids_cat3, col
+	safetab agegroup 							kids_cat4, col
+	safetab male 								kids_cat4, col
+	safetab bmicat 								kids_cat4, col m 
+	safetab smoke 								kids_cat4, col m
+	safetab obese4cat							kids_cat4, col m 
+	safetab shield   							kids_cat4, col m 
+	safetab tot_adults_hh						kids_cat4, col m 
+	safetab household_size						kids_cat4, col m 
+	safetab imd  								kids_cat4, col m
+	safetab ethnicity 							kids_cat4, col m
+	safetab stp 								kids_cat4, col
 	
 	
 	* Comorbidities
@@ -151,7 +151,7 @@ safetab `var' gp_number_kids, col row
 						hypertension  ///
 						ra_sle_psoriasis  ///
 						{
-	safetab `var' 		kids_cat3, col
+	safetab `var' 		kids_cat4, col
 }
 	
 

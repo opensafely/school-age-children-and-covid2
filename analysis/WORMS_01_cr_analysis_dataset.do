@@ -206,13 +206,23 @@ drop if imd_drop==9
 *No kids/kids under 12/up to 18
 *Identify kids under 12, or kids under 18
 gen nokids=1 if age<12
-recode nokids .=2 if age<18
-bysort household_id: egen min_kids=min(nokids)
+recode nokids .=2 if age<18 
+bysort household_id: egen min_kids=min(nokids) 
 gen kids_cat3=min_kids
-recode kids_cat3 .=0
+recode kids_cat3 .=0 
 lab define kids_cat3  0 "No kids" 1 "Kids under 12" 2 "Kids under 18"
 lab val kids_cat3 kids_cat3
 drop min_kids
+
+preserve
+keep if age<18
+keep household_id nokids
+duplicates drop
+bysort household_id: replace nokids=3 if _N>1
+duplicates drop
+save kids_mixed_category, replace
+restore
+
 
 *Dose-response exposure
 recode nokids 2=.
@@ -220,8 +230,8 @@ bysort household_id: egen number_kids=count(nokids)
 gen gp_number_kids=number_kids
 recode gp_number_kids 3/max=3
 recode gp_number_kids 1=2 2=3 3=4
-replace gp_number_kids=0 if kids_cat3==0
-replace gp_number_kids=1 if kids_cat3==2
+replace gp_number_kids=0 if kids_cat3==0 
+replace gp_number_kids=1 if kids_cat3==2 
 
 lab var gp_number_kids "Number kids under 12 years in hh"
 drop nokids
@@ -232,6 +242,7 @@ lab define   gp_number_kids 0 none  1 "only >12 years" ///
 lab val gp_number_kids gp_number_kids
 
 tab kids_cat3 gp_number_kids, miss
+ 
 
 /* DROP ALL KIDS, AS HH COMPOSITION VARS ARE NOW MADE */
 drop if age<18
@@ -239,6 +250,18 @@ drop if age<18
 *Total number adults in household (to check hh size)
 bysort household_id: gen tot_adults_hh=_N
 recode tot_adults_hh 3/max=3
+
+
+merge m:1 household_id using kids_mixed_category, nogen keep(master match)
+
+lab define   nokids 0 none  1 "only <12 years" ///
+2 "only 12-18" ///
+3 "mixed"
+lab val nokids nokids
+recode nokids .=0
+rename nokids kids_cat4
+tab kids_cat4 kids_cat3
+
 
 
 /* SET FU DATES===============================================================*/
@@ -627,6 +650,7 @@ label var imd 						"Index of Multiple Deprivation (IMD)"
 label var ethnicity					"Ethnicity"
 label var stp 						"Sustainability and Transformation Partnership"
 lab var tot_adults_hh 				"Total number adults in hh"
+lab var kids_cat4					 "Exposure (v2) with 4-cats"
 
 
 * Comorbidities of interest

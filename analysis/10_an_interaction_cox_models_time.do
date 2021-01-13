@@ -107,13 +107,16 @@ foreach exposure_type in kids_cat3  {
 basemodel, exposure("i.`exposure_type'") age("age1 age2 age3")  
 
 *Age spline model (not adj ethnicity, interaction)
-basemodel, exposure("i.`exposure_type'") age("age1 age2 age3") interaction(1.`int_type'#1.`exposure_type' 1.`int_type'#2.`exposure_type')
+basemodel, exposure("i.`exposure_type'") age("age1 age2 age3") ///
+interaction(1.`int_type'#1.`exposure_type' 1.`int_type'#2.`exposure_type' 1.`int_type'#3.`exposure_type')
 cap if _rc==0{
 testparm 1.`int_type'#i.`exposure_type'
 di _n "`exposure_type' " _n "****************"
 lincom 1.`exposure_type' + 1.`int_type'#1.`exposure_type', eform
 di "`exposure_type'" _n "****************"
 lincom 2.`exposure_type' + 1.`int_type'#2.`exposure_type', eform
+di "`exposure_type'" _n "****************"
+lincom 3.`exposure_type' + 1.`int_type'#3.`exposure_type', eform
 estimates save ./output/an_interaction_cox_models_`outcome'_`exposure_type'_`int_type'_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_`x', replace
 }
 else di "WARNING GROUP MODEL DID NOT FIT (OUTCOME `outcome')"

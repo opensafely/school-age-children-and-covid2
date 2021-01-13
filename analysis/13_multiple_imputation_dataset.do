@@ -65,7 +65,7 @@ replace cumhgp = cumhgp + 1
 *Do we need to include household id in some way?
 recode diabcat .=0
 mi impute mlogit ethnicity ///
-			i.kids_cat3 age1 age2 age3		///
+			i.kids_cat4 age1 age2 age3		///
 			i.male 							///
 			i.obese4cat 					///
 			i.smoke_nomiss					///

@@ -56,8 +56,8 @@ datacheck inlist(household_size, 1, 2, 3, 4, 5,6, 7, 8, 9, 10), nol
 /* EXPECTED VALUES============================================================*/ 
 
 *HH
-datacheck kids_cat3<., nol
-datacheck inlist(kids_cat3, 0,1, 2), nol
+datacheck kids_cat4<., nol
+datacheck inlist(kids_cat4, 0,1, 2), nol
 
 datacheck number_kids<., nol
 datacheck inlist(number_kids, 0,1,2,3,4,5,6,7,8,9), nol
@@ -145,7 +145,7 @@ local total_`outcome'=`r(N)'
 hist date_`outcome' if date_`outcome'<=22267, saving(`outcome', replace) ///
 xlabel(21946 22006 22067 22128 22189 22250 ,labsize(tiny))  xtitle(, size(vsmall)) ///
 graphregion(color(white))  legend(off) freq  ///
-yscale(range(0 3000)) ylab(0 (10000) 60000, labsize(vsmall)) ytitle("Number", size(vsmall))  ///
+yscale(range(0 3000)) ylab(0 (10000) 30000, labsize(vsmall)) ytitle("Number", size(vsmall))  ///
 title("N=`total_`outcome''", size(vsmall)) 
 }
 * Combine histograms
@@ -165,7 +165,7 @@ summ has_12_m
 /* LOGICAL RELATIONSHIPS======================================================*/ 
 
 *HH variables
-safetab kids_cat3 tot_adults_hh
+safetab kids_cat4 tot_adults_hh
 safetab number_kids tot_adults_hh
 safetab household_size tot_adults_hh
 

@@ -93,7 +93,7 @@ streset, origin(dob) scale(365.25)
 
 
 
-foreach exposure_type in kids_cat3  {
+foreach exposure_type in kids_cat4  {
 
 *Age spline model (not adj ethnicity)
 basecoxmodel, exposure("i.`exposure_type'") age("age1 age2 age3")
