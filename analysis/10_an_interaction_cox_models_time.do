@@ -126,7 +126,7 @@ else di "WARNING GROUP MODEL DID NOT FIT (OUTCOME `outcome')"
 }
 
 }
-stop 
+
 log close
 
 exit, clear STATA
