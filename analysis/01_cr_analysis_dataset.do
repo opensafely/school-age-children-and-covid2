@@ -24,7 +24,7 @@ log using $logdir/01_cr_analysis_dataset, replace t
 
 
 *Import dataset into STATA
-*import delimited "output/input.csv", clear
+import delimited "output/input.csv", clear
 
 
 /* CONVERT STRINGS TO DATE====================================================*/
