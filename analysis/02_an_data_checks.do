@@ -138,7 +138,7 @@ di d(01dec2020)
 di d(18dec2020)
 * 22267
 
-foreach outcome of any positive_SGSS non_covid_death  covid_tpp_prob covidadmission covid_icu covid_death    {
+foreach outcome of any covid_primary_care_codes positive_SGSS non_covid_death  covid_tpp_prob covidadmission covid_icu covid_death    {
 summ  `outcome', format d 
 summ patient_id if `outcome'==1
 local total_`outcome'=`r(N)'
@@ -153,7 +153,7 @@ graph combine covid_tpp_prob.gph covidadmission.gph covid_icu.gph covid_death.gp
 graph export "output/01_histogram_outcomes.svg", as(svg) replace 
 
 * Combine infection histograms
-graph combine covid_tpp_prob.gph positive_SGSS.gph, graphregion(color(white))
+graph combine covid_primary_care_codes.gph positive_SGSS.gph, graphregion(color(white))
 graph export "output/01_histogram_infection_outcomes.svg", as(svg) replace 
 
 *censor dates
@@ -294,8 +294,9 @@ safetab covid_death covid_icu  , row col
 safecount if covid_icu==1 & covid_death==1
 safecount if covidadmission==1 & covid_death==1
 
-safetab positive_SGSS covid_tpp_prob , row col miss
-
+safetab positive_SGSS covid_primary_care_codes , row col miss
+gen diff=date_positive_SGSS-date_covid_primary_care_codes 
+sum diff, d
 * Close log file 
 log close
 
