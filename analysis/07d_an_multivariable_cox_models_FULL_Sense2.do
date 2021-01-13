@@ -75,7 +75,7 @@ forvalues x=0/1 {
 
 use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'.dta", clear
 
-foreach exposure_type in 	kids_cat3  {
+foreach exposure_type in 	kids_cat4  {
  
 *Complete case ethnicity model
 	capture stcox 	i.`exposure_type'			///

@@ -19,7 +19,7 @@ local outcome `1'
 
 use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_0.dta", clear
 
-cap estimates use ./output/an_multivariate_cox_models_`outcome'_kids_cat3_MAINFULLYADJMODEL_noeth_ageband_0
+cap estimates use ./output/an_multivariate_cox_models_`outcome'_kids_cat4_MAINFULLYADJMODEL_noeth_ageband_0
 
 if _rc==0 {
 
@@ -47,7 +47,7 @@ if _rc==0 {
 
 use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_1.dta", clear
 
-cap estimates use ./output/an_multivariate_cox_models_`outcome'_kids_cat3_MAINFULLYADJMODEL_noeth_ageband_1
+cap estimates use ./output/an_multivariate_cox_models_`outcome'_kids_cat4_MAINFULLYADJMODEL_noeth_ageband_1
 
 if _rc==0 {
 

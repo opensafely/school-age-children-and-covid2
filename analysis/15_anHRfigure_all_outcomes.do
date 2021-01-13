@@ -20,7 +20,7 @@ forvalues x=0/1 {
 file write tablecontents_all_outcomes ("age") ("`x'") _n
 foreach outcome in  covid_tpp_prob covidadmission covid_icu covid_death non_covid_death  {
 file write tablecontents_all_outcomes ("outcome=") ("`outcome'") _n
-forvalues i=1/2 {
+forvalues i=1/3 {
 local endwith "_tab"
 
 	*put the varname and condition to left so that alignment can be checked vs shell
@@ -81,7 +81,7 @@ postfile HRestimates_all_outcomes str10 x str10 outcome str27 variable i hr lci 
 
 
 *Primary exposure
-outputHRsforvar, variable("kids_cat3") min(1) max(2) 
+outputHRsforvar, variable("kids_cat4") min(1) max(3) 
 file write tablecontents_all_outcomes _n
 
 file close tablecontents_all_outcomes
@@ -90,7 +90,6 @@ postclose HRestimates_all_outcomes
 
 use `HRestimates_all_outcomes', clear
 save ./output/HRestimates_all_outcomes, replace
-
 
 
 foreach age in 0 1 {
@@ -114,8 +113,10 @@ gen obsorder=_n
 
 *Levels
 gen leveldesc = ""
-replace leveldesc = "Children aged 0-11 years" if i==1 & hr!=1 & hr!=.
-replace leveldesc = "Children aged ≥12 years" if i==2
+replace leveldesc = "Only children aged 0-11 years" if i==1 & hr!=1 & hr!=.
+replace leveldesc = "Only children aged ≥12 years" if i==2
+replace leveldesc = "Children aged 0-11 years and ≥12 years" if i==3
+
 
 gen Name = outcome if hr==.
 replace Name = "COVID-19 death" if Name=="covid_deat"

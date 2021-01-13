@@ -101,7 +101,7 @@ keep if cat_time==`time'
 foreach int_type in cat_time  {
 
 *Age interaction for 3-level exposure vars
-foreach exposure_type in kids_cat3  {
+foreach exposure_type in kids_cat4  {
 
 *Age spline model (not adj ethnicity, interaction)
 basemodel, exposure("i.`exposure_type'") age("age1 age2 age3")

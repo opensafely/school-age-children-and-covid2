@@ -28,7 +28,7 @@ forvalues x=0/1 {
 file write tablecontents_sense ("age") ("`x'") _n
 foreach sense in AAmain CCeth_bmi_smok plus_eth_12mo age_underlying_timescale time_int {
 file write tablecontents_sense _n ("sense=") ("`sense'") _n
-forvalues i=1/2 {
+forvalues i=1/3 {
 local endwith "_tab"
 
 	foreach modeltype of any fulladj {
@@ -69,7 +69,7 @@ local endwith "_tab"
 
 } /*variable levels*/
 
-forvalues i=1/2 {
+forvalues i=1/3 {
 local endwith "_tab"
 
 	foreach modeltype of any fulladj {
@@ -134,7 +134,7 @@ postfile HRestimates_sense str10 x str10 outcome str27 variable str27 sense i hr
 
 
 *Primary exposure
-outputHRsforvar, variable("kids_cat3") min(1) max(2) outcome(`outcome')
+outputHRsforvar, variable("kids_cat4") min(1) max(3) outcome(`outcome')
 file write tablecontents_sense _n
 
 file close tablecontents_sense
@@ -183,8 +183,9 @@ gen disx=2.5
 
 *Levels
 gen leveldesc = ""
-replace leveldesc = "Children aged 0-11 years" if i==1 & hr!=1 & hr!=.
-replace leveldesc = "Children aged ≥12 years" if i==2
+replace leveldesc = "Only children aged 0-11 years" if i==1 & hr!=1 & hr!=.
+replace leveldesc = "Only children aged ≥12 years" if i==2
+replace leveldesc = "Children aged 0-11 years and ≥12 years" if i==3
 
 gen Name = sense if hr==1
 

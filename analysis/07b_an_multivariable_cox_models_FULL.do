@@ -52,8 +52,8 @@ local outcome `1'
 *First clean up all old saved estimates for this outcome
 *This is to guard against accidentally displaying left-behind results from old runs
 ************************************************************************************
-cap erase ./output/an_multivariate_cox_models_`outcome'_kids_cat3_MAINFULLYADJMODEL_ageband_0
-cap erase ./output/an_multivariate_cox_models_`outcome'_kids_cat3_MAINFULLYADJMODEL_ageband_1
+cap erase ./output/an_multivariate_cox_models_`outcome'_kids_cat4_MAINFULLYADJMODEL_ageband_0
+cap erase ./output/an_multivariate_cox_models_`outcome'_kids_cat4_MAINFULLYADJMODEL_ageband_1
 cap erase ./output/an_multivariate_cox_models_`outcome'_gp_number_kids_MAINFULLYADJMODEL_ageband_0
 cap erase ./output/an_multivariate_cox_models_`outcome'_gp_number_kids_MAINFULLYADJMODEL_ageband_1
 
@@ -92,7 +92,7 @@ use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'.dta", clear
 
 
 
-foreach exposure_type in kids_cat3  {
+foreach exposure_type in kids_cat4  {
 
 *Age spline model (not adj ethnicity)
 basecoxmodel, exposure("i.`exposure_type'") age("age1 age2 age3") 
@@ -128,7 +128,7 @@ else di "WARNING AGE SPLINE MODEL DID NOT FIT (OUTCOME `outcome')"
 
 *SENSITIVITY ANALYSIS: 12 months FUP
 keep if has_12_m_follow_up == 1
-foreach exposure_type in kids_cat3   {
+foreach exposure_type in kids_cat4   {
 
 *Age spline model (not adj ethnicity)
 basecoxmodel, exposure("i.`exposure_type'") age("age1 age2 age3")  

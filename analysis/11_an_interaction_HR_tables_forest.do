@@ -103,7 +103,7 @@ cap postutil clear
 postfile HRestimates_int str10 x str10 outcome str27 variable str27 int_type level int_level hr lci uci pval using `HRestimates_int'
 
 *Primary exposure
-outputHRsforvar, variable("kids_cat3") min(1) max(2) outcome(`outcome')
+outputHRsforvar, variable("kids_cat4") min(1) max(3) outcome(`outcome')
 file write tablecontents_int _n
 
 file close tablecontents_int

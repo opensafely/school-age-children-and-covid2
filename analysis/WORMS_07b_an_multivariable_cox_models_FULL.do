@@ -33,8 +33,8 @@ local outcome `1'
 *First clean up all old saved estimates for this outcome
 *This is to guard against accidentally displaying left-behind results from old runs
 ************************************************************************************
-cap erase ./output/an_multivariate_cox_models_`outcome'_kids_cat3_MAINFULLYADJMODEL_noeth_ageband_0.ster
-cap erase ./output/an_multivariate_cox_models_`outcome'_kids_cat3_MAINFULLYADJMODEL_noeth_ageband_1.ster
+cap erase ./output/an_multivariate_cox_models_`outcome'_kids_cat4_MAINFULLYADJMODEL_noeth_ageband_0.ster
+cap erase ./output/an_multivariate_cox_models_`outcome'_kids_cat4_MAINFULLYADJMODEL_noeth_ageband_1.ster
 cap erase ./output/an_multivariate_cox_models_`outcome'_gp_number_kids_MAINFULLYADJMODEL_noeth_ageband_0.ster
 cap erase ./output/an_multivariate_cox_models_`outcome'_gp_number_kids_MAINFULLYADJMODEL_noeth_ageband_1.ster
 
@@ -95,7 +95,7 @@ use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'.dta", clear
 
 
 
-foreach exposure_type in kids_cat3  gp_number_kids {
+foreach exposure_type in kids_cat4  gp_number_kids {
 
 *Age spline model (not adj ethnicity)
 basecoxmodel, exposure("i.`exposure_type'") age("age1 age2 age3") ethnicity(1) bmi(i.obese4cat) smoking(i.smoke_nomiss)

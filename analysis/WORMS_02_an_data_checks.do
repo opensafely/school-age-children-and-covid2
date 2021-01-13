@@ -57,8 +57,8 @@ datacheck inlist(household_size, 1, 2, 3, 4, 5,6, 7, 8, 9, 10), nol
 /* EXPECTED VALUES============================================================*/
 
 *HH
-datacheck kids_cat3<., nol
-datacheck inlist(kids_cat3, 0,1, 2), nol
+datacheck kids_cat4<., nol
+datacheck inlist(kids_cat4, 0,1, 2), nol
 
 datacheck number_kids<., nol
 datacheck inlist(number_kids, 0,1,2,3,4,5,6,7,8,9), nol
@@ -119,7 +119,7 @@ summ  worms, format
 /* LOGICAL RELATIONSHIPS======================================================*/
 
 *HH variables
-safetab kids_cat3 tot_adults_hh
+safetab kids_cat4 tot_adults_hh
 safetab number_kids tot_adults_hh
 safetab household_size tot_adults_hh
 

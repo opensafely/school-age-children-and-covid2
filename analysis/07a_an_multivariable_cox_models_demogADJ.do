@@ -52,8 +52,8 @@ local outcome `1'
 *First clean up all old saved estimates for this outcome
 *This is to guard against accidentally displaying left-behind results from old runs
 ************************************************************************************
-cap erase ./output/an_multivariate_cox_models_`outcome'_kids_cat3_DEMOGADJ_ageband_0
-cap erase ./output/an_multivariate_cox_models_`outcome'_kids_cat3_DEMOGADJ_ageband_1
+cap erase ./output/an_multivariate_cox_models_`outcome'_kids_cat4_DEMOGADJ_ageband_0
+cap erase ./output/an_multivariate_cox_models_`outcome'_kids_cat4_DEMOGADJ_ageband_1
 cap erase ./output/an_multivariate_cox_models_`outcome'_gp_number_kids_DEMOGADJ_ageband_0
 cap erase ./output/an_multivariate_cox_models_`outcome'_gp_number_kids_DEMOGADJ_ageband_1
 
@@ -87,7 +87,7 @@ forvalues x=0/1 {
 
 use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'.dta", clear
 
-foreach exposure_type in kids_cat3  ///
+foreach exposure_type in kids_cat4  ///
 		gp_number_kids {
 
 *Age spline model (not adj ethnicity)
