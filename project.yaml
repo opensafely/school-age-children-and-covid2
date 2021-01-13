@@ -65,7 +65,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/03b_an_descriptive_table_1.log
-        data: "output/03b_an_descriptive_table_1_kids_cat3_ageband*.txt"
+        data: "output/03b_an_descriptive_table_1_kids_cat4_ageband*.txt"
 
   04a_an_descriptive_tables:
     needs: [01_cr_analysis_dataset]
@@ -116,7 +116,7 @@ actions:
 
   06_univariate_analysis_non_covid_death:
     needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/06_univariate_analysis.do non_covid_death kids_cat3 gp_number_kids
+    run: stata-mp:latest analysis/06_univariate_analysis.do non_covid_death kids_cat4 gp_number_kids
     outputs:
       moderately_sensitive:
         log: log/06_univariate_analysis_non_covid_death.log
@@ -161,7 +161,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_shield_non_covid_death.log
-        data: "output/an_interaction_cox_models_non_covid_death_kids_cat3_shield_MAINFULLYADJMODEL_*.ster"
+        data: "output/an_interaction_cox_models_non_covid_death_kids_cat4_shield_MAINFULLYADJMODEL_*.ster"
 
   10_an_interaction_cox_models_time_non_covid_death:
     needs: [01_cr_analysis_dataset]
@@ -169,7 +169,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_time_non_covid_death.log
-        data: "output/an_interaction_cox_models_non_covid_death_kids_cat3_cat_time_MAINFULLYADJMODEL_*.ster"
+        data: "output/an_interaction_cox_models_non_covid_death_kids_cat4_cat_time_MAINFULLYADJMODEL_*.ster"
 
   10_an_interaction_cox_models_sex_non_covid_death:
     needs: [01_cr_analysis_dataset]
@@ -177,11 +177,11 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_sex_non_covid_death.log
-        data: "output/an_interaction_cox_models_non_covid_death_kids_cat3_male_MAINFULLYADJMODEL_*.ster"
+        data: "output/an_interaction_cox_models_non_covid_death_kids_cat4_male_MAINFULLYADJMODEL_*.ster"
 
   06_univariate_analysis_covid_tpp_prob:
     needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/06_univariate_analysis.do covid_tpp_prob kids_cat3 gp_number_kids
+    run: stata-mp:latest analysis/06_univariate_analysis.do covid_tpp_prob kids_cat4 gp_number_kids
     outputs:
       moderately_sensitive:
         log: log/06_univariate_analysis_covid_tpp_prob.log
@@ -226,7 +226,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_shield_covid_tpp_prob.log
-        data: "output/an_interaction_cox_models_covid_tpp_prob_kids_cat3_shield_MAINFULLYADJMODEL_*.ster"
+        data: "output/an_interaction_cox_models_covid_tpp_prob_kids_cat4_shield_MAINFULLYADJMODEL_*.ster"
 
   10_an_interaction_cox_models_time_covid_tpp_prob:
     needs: [01_cr_analysis_dataset]
@@ -234,7 +234,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_time_covid_tpp_prob.log
-        data: "output/an_interaction_cox_models_covid_tpp_prob_kids_cat3_cat_time_MAINFULLYADJMODEL_*.ster"
+        data: "output/an_interaction_cox_models_covid_tpp_prob_kids_cat4_cat_time_MAINFULLYADJMODEL_*.ster"
 
   10_an_interaction_cox_models_sex_covid_tpp_prob:
     needs: [01_cr_analysis_dataset]
@@ -242,11 +242,11 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_sex_covid_tpp_prob.log
-        data: "output/an_interaction_cox_models_covid_tpp_prob_kids_cat3_male_MAINFULLYADJMODEL_*.ster"
+        data: "output/an_interaction_cox_models_covid_tpp_prob_kids_cat4_male_MAINFULLYADJMODEL_*.ster"
 
   06_univariate_analysis_covid_death:
     needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/06_univariate_analysis.do covid_death kids_cat3 gp_number_kids
+    run: stata-mp:latest analysis/06_univariate_analysis.do covid_death kids_cat4 gp_number_kids
     outputs:
       moderately_sensitive:
         log: log/06_univariate_analysis_covid_death.log
@@ -291,7 +291,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_shield_covid_death.log
-        data: "output/an_interaction_cox_models_covid_death_kids_cat3_shield_MAINFULLYADJMODEL_*.ster"
+        data: "output/an_interaction_cox_models_covid_death_kids_cat4_shield_MAINFULLYADJMODEL_*.ster"
 
   10_an_interaction_cox_models_time_covid_death:
     needs: [01_cr_analysis_dataset]
@@ -299,7 +299,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_time_covid_death.log
-        data: "output/an_interaction_cox_models_covid_death_kids_cat3_cat_time_MAINFULLYADJMODEL_*.ster"
+        data: "output/an_interaction_cox_models_covid_death_kids_cat4_cat_time_MAINFULLYADJMODEL_*.ster"
 
   10_an_interaction_cox_models_sex_covid_death:
     needs: [01_cr_analysis_dataset]
@@ -307,11 +307,11 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_sex_covid_death.log
-        data: "output/an_interaction_cox_models_covid_death_kids_cat3_male_MAINFULLYADJMODEL_*.ster"
+        data: "output/an_interaction_cox_models_covid_death_kids_cat4_male_MAINFULLYADJMODEL_*.ster"
 
   06_univariate_analysis_covid_icu:
     needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/06_univariate_analysis.do covid_icu kids_cat3 gp_number_kids
+    run: stata-mp:latest analysis/06_univariate_analysis.do covid_icu kids_cat4 gp_number_kids
     outputs:
       moderately_sensitive:
         log: log/06_univariate_analysis_covid_icu.log
@@ -388,7 +388,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_shield_covid_icu.log
-        data: "output/an_interaction_cox_models_covid_icu_kids_cat3_shield_MAINFULLYADJMODEL_*.ster"
+        data: "output/an_interaction_cox_models_covid_icu_kids_cat4_shield_MAINFULLYADJMODEL_*.ster"
 
   10_an_interaction_cox_models_sex_covid_icu:
     needs: [01_cr_analysis_dataset]
@@ -396,11 +396,11 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_sex_covid_icu.log
-        data: "output/an_interaction_cox_models_covid_icu_kids_cat3_male_MAINFULLYADJMODEL_*.ster"
+        data: "output/an_interaction_cox_models_covid_icu_kids_cat4_male_MAINFULLYADJMODEL_*.ster"
 
   06_univariate_analysis_covidadmission:
     needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/06_univariate_analysis.do covidadmission kids_cat3 gp_number_kids
+    run: stata-mp:latest analysis/06_univariate_analysis.do covidadmission kids_cat4 gp_number_kids
     outputs:
       moderately_sensitive:
         log: log/06_univariate_analysis_covidadmission.log
@@ -445,7 +445,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_shield_covidadmission.log
-        data: "output/an_interaction_cox_models_covidadmission_kids_cat3_shield_MAINFULLYADJMODEL_*.ster"
+        data: "output/an_interaction_cox_models_covidadmission_kids_cat4_shield_MAINFULLYADJMODEL_*.ster"
 
   10_an_interaction_cox_models_time_covidadmission:
     needs: [01_cr_analysis_dataset]
@@ -453,7 +453,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_time_covidadmission.log
-        data: "output/an_interaction_cox_models_covidadmission_kids_cat3_cat_time_MAINFULLYADJMODEL_*.ster"
+        data: "output/an_interaction_cox_models_covidadmission_kids_cat4_cat_time_MAINFULLYADJMODEL_*.ster"
 
   10_an_interaction_cox_models_sex_covidadmission:
     needs: [01_cr_analysis_dataset]
@@ -461,11 +461,11 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_sex_covidadmission.log
-        data: "output/an_interaction_cox_models_covidadmission_kids_cat3_male_MAINFULLYADJMODEL_*.ster"
+        data: "output/an_interaction_cox_models_covidadmission_kids_cat4_male_MAINFULLYADJMODEL_*.ster"
 
   WORMS_06_univariate_analysis:
     needs: [WORMS_01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/WORMS_06_univariate_analysis.do worms kids_cat3 gp_number_kids
+    run: stata-mp:latest analysis/WORMS_06_univariate_analysis.do worms kids_cat4 gp_number_kids
     outputs:
       moderately_sensitive:
         log: log/WORMS_06_univariate_analysis.log
