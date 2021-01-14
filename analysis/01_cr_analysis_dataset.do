@@ -94,10 +94,11 @@ foreach var of varlist covid_icu_date positive_covid_test	died_date_ons covid_ad
 
 gen covid_admission_primary_date = covid_admission_date ///
 if (covid_admission_primary_diagnosi == "U071"| covid_admission_primary_diagnosi == "U072")
- 
+
 gen  covid_primary_care_codes_only=covid_tpp_probable
 format covid_primary_care_codes_only %td
 replace covid_tpp_probable=positive_covid_test_ever if covid_tpp_probable==. & covid_tpp_probable>positive_covid_test
+
 
 /*Tab all variables in initial extract*/
 sum, d f
