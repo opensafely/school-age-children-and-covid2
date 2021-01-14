@@ -140,7 +140,7 @@ di d(18dec2020)
 
 foreach outcome of any covid_primary_care_codes positive_SGSS non_covid_death  covid_tpp_prob covidadmission covid_icu covid_death    {
 summ  `outcome', format d 
-summ patient_id if `outcome'==1
+summ patient_id if `outcome'==1 & date_`outcome'<=22267
 local total_`outcome'=`r(N)'
 hist date_`outcome' if date_`outcome'<=22267, saving(`outcome', replace) ///
 xlabel(21946 22006 22067 22128 22189 22250 ,labsize(tiny))  xtitle(, size(vsmall)) ///
@@ -294,7 +294,11 @@ safetab covid_death covid_icu  , row col
 safecount if covid_icu==1 & covid_death==1
 safecount if covidadmission==1 & covid_death==1
 
-safetab positive_SGSS covid_primary_care_codes , row col miss
+sum positive_SGSS
+sum positive_SGSS if date_positive_SGSS<=22267
+
+safetab positive_SGSS covid_primary_care_codes, row col miss
+safetab positive_SGSS covid_primary_care_codes if date_positive_SGSS<=22267 & date_covid_primary_care_codes<=22267, row col miss
 gen diff=date_positive_SGSS-date_covid_primary_care_codes 
 sum diff, d
 * Close log file 

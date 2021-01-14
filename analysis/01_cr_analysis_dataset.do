@@ -94,10 +94,11 @@ foreach var of varlist covid_icu_date positive_covid_test	died_date_ons covid_ad
 
 gen covid_admission_primary_date = covid_admission_date ///
 if (covid_admission_primary_diagnosi == "U071"| covid_admission_primary_diagnosi == "U072")
- 
+
 gen  covid_primary_care_codes_only=covid_tpp_probable
 format covid_primary_care_codes_only %td
 replace covid_tpp_probable=positive_covid_test_ever if covid_tpp_probable==. & covid_tpp_probable>positive_covid_test
+
 
 /*Tab all variables in initial extract*/
 sum, d f
@@ -717,13 +718,15 @@ replace covid_icu = 0 if (covid_icu_death_date > icnarc_censor)
 replace covidadmission 	= 0 if (covid_admission_primary_date > study_end_censor  | covid_admission_primary_date > died_date_ons) 
 replace covid_death_part1 = 0 if (died_date_onscovid_part1 > study_end_censor )
 
+
 * Format date variables
 format  stime* %td  
 gen positive_SGSS = (positive_covid_test_ever < .)
 gen covid_primary_care_codes = (covid_primary_care_codes_only < .)
 rename positive_covid_test_ever date_positive_SGSS
 rename covid_primary_care_codes_only date_covid_primary_care_codes
-
+replace covid_primary_care_codes = 0 if (date_covid_primary_care_codes > study_end_censor )
+replace positive_SGSS = 0 if (date_positive_SGSS > study_end_censor )
 /* LABEL VARIABLES============================================================*/
 *  Label variables you are intending to keep, drop the rest 
 
