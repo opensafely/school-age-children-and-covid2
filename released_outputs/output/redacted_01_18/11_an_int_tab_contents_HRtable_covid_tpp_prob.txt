@@ -1,0 +1,38 @@
+age	exposure	exposure level	outcome	int_type	int_level	HR	lci	uci	pval
+0	kids_cat4	1	covid_tpp_prob	male	0	1.01	1.00	1.03	0.00
+0	kids_cat4	1	covid_tpp_prob	male	1	1.12	1.10	1.14	
+0	kids_cat4	1	covid_tpp_prob	cat_time	0	0.96	0.94	0.99	0.00
+0	kids_cat4	1	covid_tpp_prob	cat_time	1	1.08	1.07	1.09	
+0	kids_cat4	1	covid_tpp_prob	shield	0	1.06	1.04	1.07	0.45
+0	kids_cat4	1	covid_tpp_prob	shield	1	1.05	1.03	1.07	
+0	kids_cat4	2	covid_tpp_prob	male	0	1.18	1.16	1.20	0.94
+0	kids_cat4	2	covid_tpp_prob	male	1	1.18	1.16	1.21	
+0	kids_cat4	2	covid_tpp_prob	cat_time	0	1.02	0.99	1.05	0.00
+0	kids_cat4	2	covid_tpp_prob	cat_time	1	1.22	1.20	1.24	
+0	kids_cat4	2	covid_tpp_prob	shield	0	1.19	1.17	1.21	0.11
+0	kids_cat4	2	covid_tpp_prob	shield	1	1.16	1.13	1.19	
+0	kids_cat4	3	covid_tpp_prob	male	0	1.22	1.20	1.24	0.48
+0	kids_cat4	3	covid_tpp_prob	male	1	1.23	1.21	1.26	
+0	kids_cat4	3	covid_tpp_prob	cat_time	0	1.06	1.02	1.10	0.00
+0	kids_cat4	3	covid_tpp_prob	cat_time	1	1.27	1.25	1.29	
+0	kids_cat4	3	covid_tpp_prob	shield	0	1.22	1.20	1.24	0.64
+0	kids_cat4	3	covid_tpp_prob	shield	1	1.23	1.20	1.27	
+1	kids_cat4	1	covid_tpp_prob	male	0	1.12	1.03	1.21	0.92
+1	kids_cat4	1	covid_tpp_prob	male	1	1.11	1.02	1.20	
+1	kids_cat4	1	covid_tpp_prob	cat_time	0	0.90	0.81	1.00	0.00
+1	kids_cat4	1	covid_tpp_prob	cat_time	1	1.25	1.16	1.35	
+1	kids_cat4	1	covid_tpp_prob	shield	0	1.13	1.05	1.22	0.43
+1	kids_cat4	1	covid_tpp_prob	shield	1	1.08	0.98	1.19	
+1	kids_cat4	2	covid_tpp_prob	male	0	1.11	1.00	1.22	0.99
+1	kids_cat4	2	covid_tpp_prob	male	1	1.11	1.00	1.22	
+1	kids_cat4	2	covid_tpp_prob	cat_time	0	0.83	0.73	0.96	0.00
+1	kids_cat4	2	covid_tpp_prob	cat_time	1	1.28	1.16	1.40	
+1	kids_cat4	2	covid_tpp_prob	shield	0	1.12	1.02	1.24	0.62
+1	kids_cat4	2	covid_tpp_prob	shield	1	1.08	0.97	1.21	
+1	kids_cat4	3	covid_tpp_prob	male	0	1.36	1.21	1.52	0.00
+1	kids_cat4	3	covid_tpp_prob	male	1	1.06	0.93	1.21	
+1	kids_cat4	3	covid_tpp_prob	cat_time	0	1.03	0.89	1.21	0.01
+1	kids_cat4	3	covid_tpp_prob	cat_time	1	1.33	1.19	1.49	
+1	kids_cat4	3	covid_tpp_prob	shield	0	1.17	1.04	1.32	0.28
+1	kids_cat4	3	covid_tpp_prob	shield	1	1.29	1.12	1.47	
+
