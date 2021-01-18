@@ -1,0 +1,38 @@
+age	exposure	exposure level	outcome	int_type	int_level	HR	lci	uci	pval
+0	kids_cat4	1	covidadmission	male	0	0.94	0.86	1.03	0.04
+0	kids_cat4	1	covidadmission	male	1	1.06	0.98	1.15	
+0	kids_cat4	1	covidadmission	cat_time	0	0.92	0.86	1.00	0.00
+0	kids_cat4	1	covidadmission	cat_time	1	1.17	1.06	1.29	
+0	kids_cat4	1	covidadmission	shield	0	0.99	0.92	1.07	0.39
+0	kids_cat4	1	covidadmission	shield	1	1.05	0.94	1.16	
+0	kids_cat4	2	covidadmission	male	0	1.01	0.91	1.11	0.00
+0	kids_cat4	2	covidadmission	male	1	1.22	1.11	1.33	
+0	kids_cat4	2	covidadmission	cat_time	0	1.06	0.97	1.15	0.02
+0	kids_cat4	2	covidadmission	cat_time	1	1.24	1.11	1.38	
+0	kids_cat4	2	covidadmission	shield	0	1.08	1.00	1.17	0.13
+0	kids_cat4	2	covidadmission	shield	1	1.20	1.07	1.34	
+0	kids_cat4	3	covidadmission	male	0	1.18	1.05	1.31	0.28
+0	kids_cat4	3	covidadmission	male	1	1.27	1.15	1.40	
+0	kids_cat4	3	covidadmission	cat_time	0	1.12	1.02	1.24	0.00
+0	kids_cat4	3	covidadmission	cat_time	1	1.43	1.27	1.61	
+0	kids_cat4	3	covidadmission	shield	0	1.20	1.10	1.32	0.39
+0	kids_cat4	3	covidadmission	shield	1	1.29	1.13	1.48	
+1	kids_cat4	1	covidadmission	male	0	1.09	0.91	1.32	0.49
+1	kids_cat4	1	covidadmission	male	1	1.01	0.86	1.18	
+1	kids_cat4	1	covidadmission	cat_time	0	0.98	0.84	1.14	0.16
+1	kids_cat4	1	covidadmission	cat_time	1	1.17	0.96	1.44	
+1	kids_cat4	1	covidadmission	shield	0	1.10	0.93	1.29	0.32
+1	kids_cat4	1	covidadmission	shield	1	0.97	0.81	1.17	
+1	kids_cat4	2	covidadmission	male	0	1.14	0.92	1.41	0.58
+1	kids_cat4	2	covidadmission	male	1	1.05	0.86	1.28	
+1	kids_cat4	2	covidadmission	cat_time	0	0.96	0.80	1.16	0.02
+1	kids_cat4	2	covidadmission	cat_time	1	1.36	1.08	1.73	
+1	kids_cat4	2	covidadmission	shield	0	0.98	0.79	1.21	0.15
+1	kids_cat4	2	covidadmission	shield	1	1.20	0.99	1.47	
+1	kids_cat4	3	covidadmission	male	0	1.50	1.19	1.88	0.02
+1	kids_cat4	3	covidadmission	male	1	1.01	0.79	1.30	
+1	kids_cat4	3	covidadmission	cat_time	0	1.05	0.84	1.31	0.01
+1	kids_cat4	3	covidadmission	cat_time	1	1.61	1.24	2.11	
+1	kids_cat4	3	covidadmission	shield	0	1.30	1.04	1.63	0.43
+1	kids_cat4	3	covidadmission	shield	1	1.14	0.88	1.48	
+
