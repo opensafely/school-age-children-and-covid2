@@ -59,7 +59,7 @@ syntax, variable(varname) condition(string) outcome(string)
 
 	cou if kids_cat4==3 
 	local coldenom = r(N)
-	cou if kids_cat4==2 & `variable' `condition'
+	cou if kids_cat4==3 & `variable' `condition'
 	local pct = 100*(r(N)/`coldenom')
 	file write tablecontent (r(N)) (" (") %4.2f  (`pct') (")") _n
 	
