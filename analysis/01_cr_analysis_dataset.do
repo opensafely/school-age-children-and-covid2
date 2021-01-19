@@ -205,6 +205,31 @@ count
 
 *No kids/kids under 12/up to 18
 *Identify kids under 12, or kids under 18
+gen nokids=1 if age<5
+recode nokids .=2 if age<12
+recode nokids .=3 if age<18 
+
+preserve
+keep if age<18
+keep household_id nokids
+duplicates drop
+bysort household_id: replace nokids=4 if _N>1
+duplicates drop
+rename nokids kids_cat5
+list in 1/100
+save kids_mixed_category, replace
+restore
+
+merge m:1 household_id using kids_mixed_category, nogen keep(master match)
+
+lab define   kids_cat5 0 none  1 "only <5 years" ///
+2 "only 5-11" 3 "12-<18" 4 "mixed"
+lab val kids_cat5 kids_cat5
+recode kids_cat5 .=0
+tab kids_cat5
+drop nokids
+
+*Identify kids under 12, or kids under 18
 gen nokids=1 if age<12
 recode nokids .=2 if age<18 
 
@@ -241,6 +266,12 @@ lab define   gp_number_kids 0 none ///
 3 "3 children <12" ///
 4 "4+ children <12"
 lab val gp_number_kids gp_number_kids
+
+tab kids_cat4 
+tab kids_cat5
+tab kids_cat*
+stop
+
 
 /* DROP ALL KIDS, AS HH COMPOSITION VARS ARE NOW MADE */
 drop if age<18
@@ -729,7 +760,8 @@ label var imd 						"Index of Multiple Deprivation (IMD)"
 label var ethnicity					"Ethnicity"
 label var stp 						"Sustainability and Transformation Partnership"
 lab var tot_adults_hh 				"Total number adults in hh"
-lab var kids_cat4					 "Exposure (v2) with 4-cats"
+lab var kids_cat4					"Exposure (v2) with 4-cats"
+lab var kids_cat5					 "Exposure (v3) with 5-cats"
 
 * Comorbidities of interest 
 label var asthma						"Asthma category"

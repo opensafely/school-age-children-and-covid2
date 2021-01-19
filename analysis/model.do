@@ -30,7 +30,7 @@ do "01_cr_analysis_dataset.do"
 
 /*  Checks  */
 do "02_an_data_checks.do"
-
+stop
 
 *********************************************************************
 *IF PARALLEL WORKING - FOLLOWING CAN BE RUN IN ANY ORDER/IN PARALLEL*
