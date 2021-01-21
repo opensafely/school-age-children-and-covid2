@@ -763,7 +763,9 @@ actions:
   08_an_tablecontent_HRtable_covid_tpp_prob:
     needs:
       - 01_cr_analysis_dataset
-      - 06_univariate_analysis_covidadmission
+      - 01_cr_analysis_dataset_W2
+      - 06_univariate_analysis
+      - 06_univariate_analysis_W2
       - 07a_an_multivariable_cox_models_demogADJ
       - 07a_an_multivariable_cox_models_demogADJ_W2
       - 07b_an_multivariable_cox_models_FULL_covid_tpp_prob
@@ -777,7 +779,9 @@ actions:
   08_an_tablecontent_HRtable_covid_death:
     needs:
       - 01_cr_analysis_dataset
-      - 06_univariate_analysis_covidadmission
+      - 01_cr_analysis_dataset_W2
+      - 06_univariate_analysis
+      - 06_univariate_analysis_W2
       - 07a_an_multivariable_cox_models_demogADJ
       - 07a_an_multivariable_cox_models_demogADJ_W2
       - 07b_an_multivariable_cox_models_FULL_covid_death
@@ -791,7 +795,9 @@ actions:
   08_an_tablecontent_HRtable_covid_icu:
     needs:
       - 01_cr_analysis_dataset
-      - 06_univariate_analysis_covidadmission
+      - 01_cr_analysis_dataset_W2
+      - 06_univariate_analysis
+      - 06_univariate_analysis_W2
       - 07a_an_multivariable_cox_models_demogADJ
       - 07a_an_multivariable_cox_models_demogADJ_W2
       - 07b_an_multivariable_cox_models_FULL_covid_icu
@@ -805,7 +811,9 @@ actions:
   08_an_tablecontent_HRtable_covidadmission:
     needs:
       - 01_cr_analysis_dataset
-      - 06_univariate_analysis_covidadmission
+      - 01_cr_analysis_dataset_W2
+      - 06_univariate_analysis
+      - 06_univariate_analysis_W2
       - 07a_an_multivariable_cox_models_demogADJ
       - 07a_an_multivariable_cox_models_demogADJ_W2
       - 07b_an_multivariable_cox_models_FULL_covidadmission
