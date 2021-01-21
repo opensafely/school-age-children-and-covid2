@@ -913,7 +913,6 @@ actions:
       - 07b_an_multivariable_cox_models_FULL_non_covid_death_W2
       - 07b_an_multivariable_cox_models_FULL_covid_tpp_prob_W2
       - 07b_an_multivariable_cox_models_FULL_covid_death_W2
-      - 07b_an_multivariable_cox_models_FULL_covid_icu_W2
       - 07b_an_multivariable_cox_models_FULL_covidadmission_W2
     run: stata-mp:latest analysis/15_anHRfigure_all_outcomes.do covidadmission
     outputs:
