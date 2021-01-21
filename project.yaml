@@ -879,20 +879,6 @@ actions:
         data: "output/15_an_tablecontents_HRtable_all_outcomes_ANALYSES.txt"
         figure: "output/15_an_HRforest_all_outcomes_ageband_*.svg"
 
-  11_an_interaction_HR_tables_forest_non_covid_death:
-    needs:
-      - 10_an_interaction_cox_models_shield_non_covid_death
-      - 10_an_interaction_cox_models_time_non_covid_death
-      - 10_an_interaction_cox_models_sex_non_covid_death
-      - 10_an_interaction_cox_models_shield_non_covid_death_W2
-      - 10_an_interaction_cox_models_time_non_covid_death_W2
-      - 10_an_interaction_cox_models_sex_non_covid_death_W2
-    run: stata-mp:latest analysis/11_an_interaction_HR_tables_forest.do non_covid_death
-    outputs:
-      moderately_sensitive:
-        log: 11_an_interaction_HR_tables_forest_non_covid_death.log
-        data: "output/11_an_int_tab_contents_HRtable_non_covid_death.txt"
-
   11_an_interaction_HR_tables_forest_covid_tpp_prob:
     needs:
       - 10_an_interaction_cox_models_shield_covid_tpp_prob
