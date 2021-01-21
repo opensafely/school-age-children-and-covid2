@@ -60,7 +60,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/02_an_data_checksMAIN.log
-        histogram: "output/01_histogram_*.svg"
+        histogram: "output/01_histogram_*MAIN.svg"
 
   02_an_data_checks_W2:
     needs: [01_cr_analysis_dataset]
@@ -68,7 +68,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/02_an_data_checksW2.log
-        histogram: "output/01_histogram_*.svg"
+        histogram: "output/01_histogram_*W2.svg"
 
   WORMS_02_an_data_checks:
     needs: [WORMS_01_cr_analysis_dataset]
