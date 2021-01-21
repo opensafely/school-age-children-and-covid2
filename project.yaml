@@ -234,15 +234,6 @@ actions:
         data: "output/an_multivariate_cox_models_covid_icu_*_MAINFULLYADJMODEL_ageband_*MAIN.ster"
         other_data: "output/an_sense_covid_icu_plus_eth_12mo_ageband_*MAIN.ster"
 
-  07b_an_multivariable_cox_models_FULL_covid_icu_W2:
-    needs: [01_cr_analysis_dataset_W2]
-    run: stata-mp:latest analysis/07b_an_multivariable_cox_models_FULL.do covid_icu W2
-    outputs:
-      moderately_sensitive:
-        log: log/07b_an_multivariable_cox_models_covid_icuW2.log
-        data: "output/an_multivariate_cox_models_covid_icu_*_MAINFULLYADJMODEL_ageband_*W2.ster"
-        other_data: "output/an_sense_covid_icu_plus_eth_12mo_ageband_*W2.ster"
-
   07b_an_multivariable_cox_models_FULL_covidadmission:
     needs: [01_cr_analysis_dataset]
     run: stata-mp:latest analysis/07b_an_multivariable_cox_models_FULL.do covidadmission MAIN
