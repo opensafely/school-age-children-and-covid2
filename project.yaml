@@ -82,7 +82,7 @@ actions:
       moderately_sensitive:
         log: log/03a_an_descriptive_tablesMAIN.log
   
-  03a_an_descriptive_tables:
+  03a_an_descriptive_tables_W2:
     needs: [01_cr_analysis_dataset]
     run: stata-mp:latest analysis/03a_an_descriptive_tables.do W2
     outputs:
