@@ -55,14 +55,14 @@ local outcome `1'
 if "`outcome'"=="covid_tpp_prob" {
 * Open a log file
 capture log close
-log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense5_time_ints", text replace
+log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense5_time_ints`dataset'", text replace
 
 
 foreach x in 0 1 {
 ******************************
 *  Multivariable Cox models  *
 ******************************
-use "$tempdir/cr_create_analysis_dataset_STSET_covid_tpp_prob_ageband_`x'.dta", clear
+use "$tempdir/cr_create_analysis_dataset_STSET_covid_tpp_prob_ageband_`x'`dataset'.dta", clear
 stsplit timeperiod, at(60 90)
 
 *make vars binary
@@ -116,7 +116,7 @@ stcox 	i.kids_cat4 	 ///
 			90.timeperiod#1.reduced_kidney_function_cat					///
 			, strata(stp) vce(cluster household_id)
 estimates
-estimates save "./output/an_sense_covid_tpp_prob_time_int_ageband_`x'", replace
+estimates save "./output/an_sense_covid_tpp_prob_time_int_ageband_`x'`dataset'", replace
 *estat phtest, d
 }
 }
@@ -124,13 +124,13 @@ estimates save "./output/an_sense_covid_tpp_prob_time_int_ageband_`x'", replace
 if "`outcome'"=="covidadmission" {
 * Open a log file
 capture log close
-log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense5_time_ints", text replace
+log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense5_time_ints`dataset'", text replace
 
 foreach x in 0 1 {
 ******************************
 *  Multivariable Cox models  *
 ******************************
-use "$tempdir/cr_create_analysis_dataset_STSET_covidadmission_ageband_`x'.dta", clear
+use "$tempdir/cr_create_analysis_dataset_STSET_covidadmission_ageband_`x'`dataset'.dta", clear
 stsplit timeperiod, at(60 90)
 
 *make vars binary
@@ -170,7 +170,7 @@ stcox 	i.kids_cat4 	 ///
 			90.timeperiod#1.cancer_haem_cat					///
 			, strata(stp) vce(cluster household_id)
 estimates
-estimates save "./output/an_sense_covidadmission_time_int_ageband_`x'", replace
+estimates save "./output/an_sense_covidadmission_time_int_ageband_`x'`dataset'", replace
 *estat phtest, d
 }
 }
@@ -178,13 +178,13 @@ estimates save "./output/an_sense_covidadmission_time_int_ageband_`x'", replace
 if "`outcome'"=="covid_icu" {
 * Open a log file
 capture log close
-log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense5_time_ints", text replace
+log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense5_time_ints`dataset'", text replace
 
 foreach x in 0 1 {
 ******************************
 *  Multivariable Cox models  *
 ******************************
-use "$tempdir/cr_create_analysis_dataset_STSET_covid_icu_ageband_`x'.dta", clear
+use "$tempdir/cr_create_analysis_dataset_STSET_covid_icu_ageband_`x'`dataset'.dta", clear
 stsplit timeperiod, at(60 90)
 
 *make vars binary
@@ -219,7 +219,7 @@ stcox 	i.kids_cat4 	 ///
 			90.timeperiod#1.stroke_dementia					///
 			, strata(stp) vce(cluster household_id)
 estimates
-estimates save "./output/an_sense_covid_icu_time_int_ageband_`x'", replace
+estimates save "./output/an_sense_covid_icu_time_int_ageband_`x'`dataset'", replace
 *estat phtest, d
 }
 }
@@ -228,13 +228,13 @@ estimates save "./output/an_sense_covid_icu_time_int_ageband_`x'", replace
 if "`outcome'"=="covid_death" {
 * Open a log file
 capture log close
-log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense5_time_ints", text replace
+log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense5_time_ints`dataset'", text replace
 
 foreach x in 0 1 {
 ******************************
 *  Multivariable Cox models  *
 ******************************
-use "$tempdir/cr_create_analysis_dataset_STSET_covid_death_ageband_`x'.dta", clear
+use "$tempdir/cr_create_analysis_dataset_STSET_covid_death_ageband_`x'`dataset'.dta", clear
 stsplit timeperiod, at(60 90)
 
 *make vars binary
@@ -268,7 +268,7 @@ stcox 	i.kids_cat4 	 ///
 			90.timeperiod#1.cancer_haem_cat					///
 			, strata(stp) vce(cluster household_id)
 estimates
-estimates save "./output/an_sense_covid_death_time_int_ageband_`x'", replace
+estimates save "./output/an_sense_covid_death_time_int_ageband_`x'`dataset'", replace
 *estat phtest, d
 }
 }

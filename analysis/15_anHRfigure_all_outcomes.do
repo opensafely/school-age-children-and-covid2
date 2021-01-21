@@ -16,8 +16,9 @@
 cap prog drop outputHRsforvar
 prog define outputHRsforvar
 syntax, variable(string) min(real) max(real)
+foreach dataset in MAIN W2 {
 forvalues x=0/1 {
-file write tablecontents_all_outcomes ("age") ("`x'") _n
+file write tablecontents_all_outcomes ("dataset") ("age") ("`x'") _n
 foreach outcome in  covid_tpp_prob covidadmission covid_icu covid_death non_covid_death  {
 file write tablecontents_all_outcomes ("outcome=") ("`outcome'") _n
 forvalues i=1/3 {
@@ -37,7 +38,7 @@ local endwith "_tab"
 		*1) GET THE RIGHT ESTIMATES INTO MEMORY
 	
 		if "`modeltype'"=="plus_ethadj" {
-				cap estimates use ./output/an_multivariate_cox_models_`outcome'_`variable'_MAINFULLYADJMODEL_ageband_`x' 
+				cap estimates use ./output/an_multivariate_cox_models_`outcome'_`variable'_MAINFULLYADJMODEL_ageband_`x'`dataset' 
 				if _rc!=0 local noestimatesflag 1
 				}
 		
@@ -57,11 +58,11 @@ local endwith "_tab"
 				local lb = r(lb)
 				local ub = r(ub)
 				local N=e(N)
-				post HRestimates_all_outcomes ("`x'") ("`outcome'") ("`variable'") (`i') (`hr') (`lb') (`ub') (`N') 
+				post HRestimates_all_outcomes ("`dataset'") ("`x'") ("`outcome'") ("`variable'") (`i') (`hr') (`lb') (`ub') (`N') 
 				}
 		}	
 		} /*min adj, full adj*/
-	
+	} /*datasets*/
 		
 } /*variable levels*/
 } /*age levels*/
@@ -77,7 +78,7 @@ file open tablecontents_all_outcomes using ./output/15_an_tablecontents_HRtable_
 
 tempfile HRestimates_all_outcomes
 cap postutil clear
-postfile HRestimates_all_outcomes str10 x str10 outcome str27 variable i hr lci uci N using `HRestimates_all_outcomes'
+postfile HRestimates_all_outcomes str10 dataset str10 x str10 outcome str27 variable i hr lci uci N using `HRestimates_all_outcomes'
 
 
 *Primary exposure
@@ -91,10 +92,10 @@ postclose HRestimates_all_outcomes
 use `HRestimates_all_outcomes', clear
 save ./output/HRestimates_all_outcomes, replace
 
-
+foreach dataset in MAIN W2 { 
 foreach age in 0 1 {
 use `HRestimates_all_outcomes', clear
-
+keep if dataset=="`dataset'"
 keep if x=="`age'"
 gen littlen=_n
 sort littlen i
@@ -167,5 +168,6 @@ scatter graphorder hr, mcol(black)	msize(small)		///										///
 		text(-0.5 0.1 "Lower risk in those living with children", place(e) size(vsmall)) ///
 		text(-0.5 1.5 "Higher risk in those living with children", place(e) size(vsmall))
 
-graph export ./output/15_an_HRforest_all_outcomes_ageband_`age'.svg, as(svg) replace
+graph export ./output/15_an_HRforest_all_outcomes_ageband_`age'_`dataset'.svg, as(svg) replace
+}
 }

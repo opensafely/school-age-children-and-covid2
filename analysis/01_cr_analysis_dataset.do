@@ -18,14 +18,29 @@ global outdir  	  "output"
 global logdir     "log"
 global tempdir    "tempdata"
 
+*first argument main W2 
+local dataset `1' 
+if "`dataset'"=="MAIN" local fileextension
+else local fileextension "_`1'"
+local inputfile "input`fileextension'.csv"
+
+*Start dates
+if "`dataset'"=="MAIN" global indexdate = "1/2/2020"
+else if "`dataset'"=="W2" global indexdate = "1/9/2020"
+
+*Censor dates
+if "`dataset'"=="MAIN" global study_end_censor   	= "31/08/2020"
+else if "`dataset'"=="W2" global study_end_censor   	= "18/12/2020"
+if "`dataset'"=="MAIN" global icnarc_censor   	= "17/08/2020"
+else if "`dataset'"=="W2" global icnarc_censor   	= "17/08/2020"
+
 * Open a log file
 cap log close
-log using $logdir/01_cr_analysis_dataset, replace t
+log using $logdir/01_cr_analysis_dataset`fileextension', replace t
 
 
 *Import dataset into STATA
-import delimited "output/input.csv", clear
-
+import delimited "output/`inputfile'", clear
 
 /* CONVERT STRINGS TO DATE====================================================*/
 /* Comorb dates and TPP case outcome dates are given with month only, so adding day 
@@ -270,7 +285,6 @@ lab val gp_number_kids gp_number_kids
 tab kids_cat4 
 tab kids_cat5
 tab kids_cat*
-stop
 
 
 /* DROP ALL KIDS, AS HH COMPOSITION VARS ARE NOW MADE */
@@ -286,17 +300,6 @@ tab gp_num if kids_cat4==1
 /* SET FU DATES===============================================================*/ 
 * Censoring dates for each outcome (largely, last date outcome data available)
 *****NEEDS UPDATING WHEN INFO AVAILABLE*******************
-global study_end_censor   	= "18/12/2020"
-global icnarc_censor   	= "17/08/2020"
-
-*Start dates
-global indexdate 			    = "01/02/2020"
-
-
-
-
-
-
 
 * Note - outcome dates are handled separtely below 
 
@@ -715,13 +718,22 @@ gen stime_covid_icu = min(icnarc_censor, died_date_ons, covid_icu_date, dereg_da
 gen stime_covidadmission 	= min(study_end_censor   , covid_admission_primary_date, died_date_ons, dereg_date)
 
 * If outcome was after censoring occurred, set to zero
-replace covid_tpp_prob = 0 if (date_covid_tpp_prob > study_end_censor )
+replace covid_tpp_prob = 0 if (date_covid_tpp_prob > study_end_censor ) 
 replace non_covid_death = 0 if (died_date_onsnoncovid > study_end_censor )
 replace covid_death_icu = 0 if (covid_icu_death_date > study_end_censor )
 replace covid_death = 0 if (died_date_onscovid > study_end_censor )
 replace covid_icu = 0 if (covid_icu_death_date > icnarc_censor)
 replace covidadmission 	= 0 if (covid_admission_primary_date > study_end_censor  | covid_admission_primary_date > died_date_ons) 
 replace covid_death_part1 = 0 if (died_date_onscovid_part1 > study_end_censor )
+
+* If outcome was after censoring occurred, set date to missing
+replace date_covid_tpp_prob = . if (date_covid_tpp_prob > study_end_censor ) 
+replace died_date_onsnoncovid = . if (died_date_onsnoncovid > study_end_censor )
+replace covid_icu_death_date = . if (covid_icu_death_date > study_end_censor )
+replace died_date_onscovid = . if (died_date_onscovid > study_end_censor )
+replace covid_icu_death_date = . if (covid_icu_death_date > icnarc_censor)
+replace covid_admission_primary_date 	= . if (covid_admission_primary_date > study_end_censor  | covid_admission_primary_date > died_date_ons) 
+replace died_date_onscovid_part1 = . if (died_date_onscovid_part1 > study_end_censor )
 
 
 * Format date variables
@@ -732,6 +744,9 @@ rename positive_covid_test_ever date_positive_SGSS
 rename covid_primary_care_codes_only date_covid_primary_care_codes
 replace covid_primary_care_codes = 0 if (date_covid_primary_care_codes > study_end_censor )
 replace positive_SGSS = 0 if (date_positive_SGSS > study_end_censor )
+
+replace date_covid_primary_care_codes = . if (date_covid_primary_care_codes > study_end_censor )
+replace date_positive_SGSS = . if (date_positive_SGSS > study_end_censor )
 
 
 
@@ -867,11 +882,11 @@ drop if age > 110 & age != .
 count
 
 noi di "DROP IF DIED BEFORE INDEX"
-drop if died_date_ons <= date("$indexdate", "DMY")
+drop if died_date_ons <=enter_date
 count
 
 noi di "DROP IF COVID IN TPP BEFORE INDEX"
-drop if date_covid_tpp_prob <= date("$indexdate", "DMY")
+drop if date_covid_tpp_prob <=enter_date
 count
 
 noi di "DROP IMD MISSING"
@@ -890,33 +905,33 @@ count
 *  Save data  *
 ***************
 sort patient_id
-save $tempdir/analysis_dataset_with_missing_ethnicity, replace
+save $tempdir/analysis_dataset_with_missing_ethnicity`dataset', replace
 
 noi di "DROP NO ETHNICITY DATA"
 keep if ethnicity!=.u	
 
-save $tempdir/analysis_dataset, replace
+save $tempdir/analysis_dataset`dataset', replace
 
 
 
-use  $tempdir/analysis_dataset, clear
+use  $tempdir/analysis_dataset`dataset', clear
 keep if age<=65
 * Create restricted cubic splines for age
 mkspline age = age, cubic nknots(4)
-save $tempdir/analysis_dataset_ageband_0, replace
+save $tempdir/analysis_dataset_ageband_0`dataset', replace
 
 
-use  $tempdir/analysis_dataset, clear
+use  $tempdir/analysis_dataset`dataset', clear
 keep if age>65
 * Create restricted cubic splines for age
 mkspline age = age, cubic nknots(4)
-save $tempdir/analysis_dataset_ageband_1, replace
+save $tempdir/analysis_dataset_ageband_1`dataset', replace
 
 
 
 forvalues x=0/1 {
 
-use $tempdir/analysis_dataset_ageband_`x', clear
+use $tempdir/analysis_dataset_ageband_`x'`dataset', clear
 * Save a version set on NON ONS covid death outcome
 stset stime_non_covid_death, fail(non_covid_death) 				///
 	id(patient_id) enter(enter_date) origin(enter_date)
@@ -927,45 +942,45 @@ gen pw = 1
 replace pw = (1/0.03) if _d==0
 stset stime_non_covid_death [pweight = pw],  fail(non_covid_death) 				///
 	id(patient_id) enter(enter_date) origin(enter_date)*/
-save "$tempdir/cr_create_analysis_dataset_STSET_non_covid_death_ageband_`x'.dta", replace
+save "$tempdir/cr_create_analysis_dataset_STSET_non_covid_death_ageband_`x'`dataset'.dta", replace
 	
 /*no longer using composite outcome
-use $tempdir/analysis_dataset_ageband_`x', clear
+use $tempdir/analysis_dataset_ageband_`x'`dataset', clear
 * Save a version set on covid death/icu  outcome
 stset stime_covid_death_icu, fail(covid_death_icu) 				///
 	id(patient_id) enter(enter_date) origin(enter_date)
-save "$tempdir/cr_create_analysis_dataset_STSET_covid_death_icu_ageband_`x'.dta", replace
+save "$tempdir/cr_create_analysis_dataset_STSET_covid_death_icu_ageband_`x'`dataset'.dta", replace
 */
-use $tempdir/analysis_dataset_ageband_`x', clear
+use $tempdir/analysis_dataset_ageband_`x'`dataset', clear
 * Save a version set on covid icu  outcome only
 stset stime_covid_icu, fail(covid_icu) 				///
 	id(patient_id) enter(enter_date) origin(enter_date)
-save "$tempdir/cr_create_analysis_dataset_STSET_covid_icu_ageband_`x'.dta", replace
+save "$tempdir/cr_create_analysis_dataset_STSET_covid_icu_ageband_`x'`dataset'.dta", replace
 
-use $tempdir/analysis_dataset_ageband_`x', clear
+use $tempdir/analysis_dataset_ageband_`x'`dataset', clear
 * Save a version set on covid death only
 stset stime_covid_death, fail(covid_death) 				///
 	id(patient_id) enter(enter_date) origin(enter_date)
-save "$tempdir/cr_create_analysis_dataset_STSET_covid_death_ageband_`x'.dta", replace
+save "$tempdir/cr_create_analysis_dataset_STSET_covid_death_ageband_`x'`dataset'.dta", replace
 
 /*this was created for investigation only
-use $tempdir/analysis_dataset_ageband_`x', clear
+use $tempdir/analysis_dataset_ageband_`x'`dataset', clear
 * Save a version set on covid death only
 stset stime_covid_death_part1, fail(covid_death_part1) 				///
 	id(patient_id) enter(enter_date) origin(enter_date)
-save "$tempdir/cr_create_analysis_dataset_STSET_covid_death_part1_ageband_`x'.dta", replace
+save "$tempdir/cr_create_analysis_dataset_STSET_covid_death_part1_ageband_`x'`dataset'.dta", replace
 */
-use $tempdir/analysis_dataset_ageband_`x', clear
+use $tempdir/analysis_dataset_ageband_`x'`dataset', clear
 * Save a version set on probable covid
 stset stime_covid_tpp_prob, fail(covid_tpp_prob) 				///
 	id(patient_id) enter(enter_date) origin(enter_date)
-save "$tempdir/cr_create_analysis_dataset_STSET_covid_tpp_prob_ageband_`x'.dta", replace	
+save "$tempdir/cr_create_analysis_dataset_STSET_covid_tpp_prob_ageband_`x'`dataset'.dta", replace	
 
-use $tempdir/analysis_dataset_ageband_`x', clear
+use $tempdir/analysis_dataset_ageband_`x'`dataset', clear
 * Save a version set on hosp admission for covid
 stset stime_covidadmission, fail(covidadmission) 				///
 	id(patient_id) enter(enter_date) origin(enter_date)
-save "$tempdir/cr_create_analysis_dataset_STSET_covidadmission_ageband_`x'.dta", replace	
+save "$tempdir/cr_create_analysis_dataset_STSET_covidadmission_ageband_`x'`dataset'.dta", replace	
 
 }
 

@@ -19,13 +19,22 @@ global outdir  	  "output"
 global logdir     "log"
 global tempdir    "tempdata"
 
+
+
+
+*first argument main W2 
+local dataset `1'
+if "`dataset'"=="MAIN" local fileextension
+else local fileextension "`1'"
+local inputfile "analysis_dataset`dataset'"
+
 * Open a log file
 
 capture log close
-log using $logdir/02_an_data_checks, replace t
+log using $logdir/02_an_data_checks`fileextension', replace t
 
 * Open Stata dataset
-use $tempdir/analysis_dataset, clear
+use $tempdir/`inputfile', clear
 
 *run ssc install if not on local machine - server needs datacheck.ado file
 *ssc install datacheck 
@@ -145,16 +154,17 @@ local total_`outcome'=`r(N)'
 hist date_`outcome' if date_`outcome'<=22267, saving(`outcome', replace) ///
 xlabel(21946 22006 22067 22128 22189 22250 ,labsize(tiny))  xtitle(, size(vsmall)) ///
 graphregion(color(white))  legend(off) freq  ///
-yscale(range(0 3000)) ylab(0 (10000) 30000, labsize(vsmall)) ytitle("Number", size(vsmall))  ///
+yscale(range(0 3000)) ylab(0 (100) 300, labsize(vsmall)) ytitle("Number", size(vsmall))  ///
 title("N=`total_`outcome''", size(vsmall)) 
 }
+
 * Combine histograms
 graph combine covid_tpp_prob.gph covidadmission.gph covid_icu.gph covid_death.gph non_covid_death.gph  , graphregion(color(white))
-graph export "output/01_histogram_outcomes.svg", as(svg) replace 
+graph export "output/01_histogram_outcomes_`dataset'.svg", as(svg) replace 
 
 * Combine infection histograms
 graph combine covid_primary_care_codes.gph positive_SGSS.gph, graphregion(color(white))
-graph export "output/01_histogram_infection_outcomes.svg", as(svg) replace 
+graph export "output/01_histogram_infection_outcomes_`dataset'.svg", as(svg) replace 
 
 *censor dates
 summ dereg_date, format

@@ -36,34 +36,16 @@ global comordidadjlist  i.htdiag_or_highbp				///
 			i.other_immuno		
 
 local outcome `1' 
+local dataset `2' 
 
 * Open a log file
 capture log close
-log using "$logdir/14_multiple_imputation_analysis_`outcome'", text replace
+log using "$logdir/14_multiple_imputation_analysis_`outcome'`dataset'", text replace
 
 
 
 forvalues x=0/1 {
-use "$tempdir/cr_imputed_analysis_dataset_STSET_`outcome'_ageband_`x'.dta", clear
-
-/*
-*Age and sex adjusted
-mi estimate, hr: stcox i.kids_cat4 age1 age2 age3 i.male, strata(stp) vce(cluster household_id) 
-estimates
-
-estimates save ./output/an_univariable_cox_models_`outcome'_AGESEX_multiple_imputation_ageband_`x', replace						
-
-*Minimally adjusted
-mi estimate, hr:  stcox 	i.kids_cat4 	///
-			age1 age2 age3		///
-			i.male 							///
-			i.obese4cat 					///
-			i.smoke_nomiss					///
-			i.imd 						///
-			, strata(stp) vce(cluster household_id)  
-estimates
-estimates save ./output/an_multivariate_cox_models_`outcome'_kids_cat4_DEMOGADJ_multiple_imputation_ageband_`x', replace
-*/
+use "$tempdir/cr_imputed_analysis_dataset_STSET_`outcome'_ageband_`x'`dataset'.dta", clear
 
 *Fully adjusted
 mi estimate, hr:  stcox 	i.kids_cat4 	 ///
@@ -76,7 +58,7 @@ mi estimate, hr:  stcox 	i.kids_cat4 	 ///
 			$comordidadjlist				///	
 			, strata(stp) vce(cluster household_id)  
 estimates
-estimates save ./output/an_sense_`outcome'_multiple_imputation_ageband_`x', replace
+estimates save ./output/an_sense_`outcome'_multiple_imputation_ageband_`x'`dataset', replace
 }
 
 log close

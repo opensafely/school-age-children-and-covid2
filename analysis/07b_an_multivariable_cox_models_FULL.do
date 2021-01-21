@@ -46,20 +46,16 @@ global comordidadjlist  i.htdiag_or_highbp				///
 			i.other_immuno		
 
 local outcome `1' 
-
+local dataset `2'
 
 ************************************************************************************
 *First clean up all old saved estimates for this outcome
 *This is to guard against accidentally displaying left-behind results from old runs
 ************************************************************************************
-cap erase ./output/an_multivariate_cox_models_`outcome'_kids_cat4_MAINFULLYADJMODEL_ageband_0
-cap erase ./output/an_multivariate_cox_models_`outcome'_kids_cat4_MAINFULLYADJMODEL_ageband_1
-cap erase ./output/an_multivariate_cox_models_`outcome'_gp_number_kids_MAINFULLYADJMODEL_ageband_0
-cap erase ./output/an_multivariate_cox_models_`outcome'_gp_number_kids_MAINFULLYADJMODEL_ageband_1
 
 * Open a log file
 capture log close
-log using "$logdir/07b_an_multivariable_cox_models_`outcome'", text replace
+log using "$logdir/07b_an_multivariable_cox_models_`outcome'`dataset'", text replace
 
 
 *************************************************************************************
@@ -84,7 +80,7 @@ end
 * Open dataset and fit specified model(s)
 forvalues x=0/1 {
 
-use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'.dta", clear
+use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'`dataset'.dta", clear
 
 ******************************
 *  Multivariable Cox models  *
@@ -95,10 +91,11 @@ use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'.dta", clear
 foreach exposure_type in kids_cat4  {
 
 *Age spline model (not adj ethnicity)
+cap erase "./output/an_multivariate_cox_models_`outcome'_`exposure_type'_MAINFULLYADJMODEL_ageband_`x'`dataset'"
 basecoxmodel, exposure("i.`exposure_type'") age("age1 age2 age3") 
 if _rc==0{
 estimates
-estimates save "./output/an_multivariate_cox_models_`outcome'_`exposure_type'_MAINFULLYADJMODEL_ageband_`x'", replace
+estimates save "./output/an_multivariate_cox_models_`outcome'_`exposure_type'_MAINFULLYADJMODEL_ageband_`x'`dataset'", replace
 	*  Proportional Hazards test 
 	* Based on Schoenfeld residuals
 	timer clear 
@@ -113,13 +110,12 @@ else di "WARNING AGE SPLINE MODEL DID NOT FIT (OUTCOME `outcome')"
 }
 
 foreach exposure_type in  gp_number_kids {
-
 *Age spline model (not adj ethnicity)
+cap erase "./output/an_multivariate_cox_models_`outcome'_`exposure_type'_MAINFULLYADJMODEL_ageband_`x'`dataset'"
 basecoxmodel, exposure("i.`exposure_type'") age("age1 age2 age3") 
 if _rc==0{
 estimates
-estimates save "./output/an_multivariate_cox_models_`outcome'_`exposure_type'_MAINFULLYADJMODEL_ageband_`x'", replace
-	
+estimates save "./output/an_multivariate_cox_models_`outcome'_`exposure_type'_MAINFULLYADJMODEL_ageband_`x'`dataset'", replace
 }
 else di "WARNING AGE SPLINE MODEL DID NOT FIT (OUTCOME `outcome')"
 
@@ -131,17 +127,15 @@ keep if has_12_m_follow_up == 1
 foreach exposure_type in kids_cat4   {
 
 *Age spline model (not adj ethnicity)
+cap erase ./output/an_sense_`outcome'_plus_eth_12mo_ageband_`x'`dataset'
 basecoxmodel, exposure("i.`exposure_type'") age("age1 age2 age3")  
 if _rc==0{
 estimates
-estimates save ./output/an_sense_`outcome'_plus_eth_12mo_ageband_`x', replace
+estimates save ./output/an_sense_`outcome'_plus_eth_12mo_ageband_`x'`dataset', replace
 *estat concordance /*c-statistic*/
 }
 else di "WARNING 12 MO FUP MODEL W/ AGE SPLINE  DID NOT FIT (OUTCOME `outcome')"
-
-
 }	
-
 }
 
 log close

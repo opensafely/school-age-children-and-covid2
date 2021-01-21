@@ -46,6 +46,7 @@ global comordidadjlist  i.htdiag_or_highbp				///
 			i.other_immuno		
 
 local outcome `1' 
+local dataset `2'
 
 
 ************************************************************************************
@@ -55,7 +56,7 @@ local outcome `1'
 
 * Open a log file
 capture log close
-log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense4_agetimescale", text replace
+log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense4_agetimescale`dataset'", text replace
 
 
 *************************************************************************************
@@ -78,7 +79,7 @@ end
 * Open dataset and fit specified model(s)
 forvalues x=0/1 {
 
-use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'.dta", clear
+use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'`dataset'.dta", clear
 
 *reset underlying timescale to age
 stset
@@ -99,7 +100,7 @@ foreach exposure_type in kids_cat4  {
 basecoxmodel, exposure("i.`exposure_type'") age("age1 age2 age3")
 if _rc==0{
 estimates
-estimates save ./output/an_sense_`outcome'_age_underlying_timescale_ageband_`x', replace
+estimates save ./output/an_sense_`outcome'_age_underlying_timescale_ageband_`x'`dataset', replace
 *estat concordance /*c-statistic*/
 	/*  Proportional Hazards test  
 	* Based on Schoenfeld residuals
