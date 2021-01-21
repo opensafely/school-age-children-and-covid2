@@ -33,7 +33,7 @@ actions:
         data_eth: "tempdata/analysis_dataset_with_missing_ethnicityMAIN.dta"
 
   01_cr_analysis_dataset_W2:
-    needs: [generate_cohort]
+    needs: [W2_generate_cohort]
     run: stata-mp:latest analysis/01_cr_analysis_dataset.do W2
     outputs:
       moderately_sensitive:
