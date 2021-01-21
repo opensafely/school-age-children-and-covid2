@@ -1031,7 +1031,6 @@ actions:
       - 07d_an_multivariable_cox_models_FULL_Sense3_covid_icu_W2
       - 07d_an_multivariable_cox_models_FULL_Sense4_covid_icu_W2
       - 07d_an_multivariable_cox_models_FULL_Sense5_covid_icu_W2
-      - 07b_an_multivariable_cox_models_FULL_covid_icu_W2
     run: stata-mp:latest analysis/12_an_tablecontent_HRtable_SENSE.do covid_icu
     outputs:
       moderately_sensitive:
