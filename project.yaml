@@ -750,8 +750,10 @@ actions:
       - 01_cr_analysis_dataset_W2
       - 06_univariate_analysis
       - 06_univariate_analysis_W2
-      - 07a_an_multivariable_cox_models_demogADJ_non_covid_death
+      - 07a_an_multivariable_cox_models_demogADJ
+      - 07a_an_multivariable_cox_models_demogADJ_W2
       - 07b_an_multivariable_cox_models_FULL_non_covid_death
+      - 07b_an_multivariable_cox_models_FULL_non_covid_death_W2
     run: stata-mp:latest analysis/08_an_tablecontent_HRtable.do non_covid_death
     outputs:
       moderately_sensitive:
