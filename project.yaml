@@ -1030,7 +1030,6 @@ actions:
       - 11_an_interaction_HR_tables_forest_covid_icu
       - 11_an_interaction_HR_tables_forest_covid_tpp_prob
       - 11_an_interaction_HR_tables_forest_covidadmission
-      - 11_an_interaction_HR_tables_forest_non_covid_death
       - 12_an_tablecontent_HRtable_SENSE_covid_death
       - 12_an_tablecontent_HRtable_SENSE_covid_icu
       - 12_an_tablecontent_HRtable_SENSE_covid_tpp_prob
@@ -1049,7 +1048,6 @@ actions:
       - 11_an_interaction_HR_tables_forest_covid_death_W2
       - 11_an_interaction_HR_tables_forest_covid_tpp_prob_W2
       - 11_an_interaction_HR_tables_forest_covidadmission_W2
-      - 11_an_interaction_HR_tables_forest_non_covid_death_W2
       - 12_an_tablecontent_HRtable_SENSE_covid_death_W2
       - 12_an_tablecontent_HRtable_SENSE_covid_icu_W2
       - 12_an_tablecontent_HRtable_SENSE_covid_tpp_prob_W2
