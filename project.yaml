@@ -1020,11 +1020,7 @@ actions:
       - 03a_an_descriptive_tables
       - 03b_an_descriptive_table_1
       - 04a_an_descriptive_tables
-      - 04b_an_descriptive_table_2_covid_death
-      - 04b_an_descriptive_table_2_covid_icu
-      - 04b_an_descriptive_table_2_covid_tpp_prob
-      - 04b_an_descriptive_table_2_covidadmission
-      - 04b_an_descriptive_table_2_non_covid_death
+      - 04b_an_descriptive_table_2
       - 08_an_tablecontent_HRtable_covid_death
       - 08_an_tablecontent_HRtable_covid_icu
       - 08_an_tablecontent_HRtable_covid_tpp_prob
@@ -1044,18 +1040,13 @@ actions:
       - 03a_an_descriptive_tables_W2
       - 03b_an_descriptive_table_1_W2
       - 04a_an_descriptive_tables_W2
-      - 04b_an_descriptive_table_2_covid_death_W2
-      - 04b_an_descriptive_table_2_covid_icu_W2
-      - 04b_an_descriptive_table_2_covid_tpp_prob_W2
-      - 04b_an_descriptive_table_2_covidadmission_W2
-      - 04b_an_descriptive_table_2_non_covid_death_W2
+      - 04b_an_descriptive_table_2_W2
       - 08_an_tablecontent_HRtable_covid_death_W2
       - 08_an_tablecontent_HRtable_covid_icu_W2
       - 08_an_tablecontent_HRtable_covid_tpp_prob_W2
       - 08_an_tablecontent_HRtable_covidadmission_W2
       - 08_an_tablecontent_HRtable_non_covid_death_W2
       - 11_an_interaction_HR_tables_forest_covid_death_W2
-      - 11_an_interaction_HR_tables_forest_covid_icu_W2
       - 11_an_interaction_HR_tables_forest_covid_tpp_prob_W2
       - 11_an_interaction_HR_tables_forest_covidadmission_W2
       - 11_an_interaction_HR_tables_forest_non_covid_death_W2
