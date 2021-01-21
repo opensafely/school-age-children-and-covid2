@@ -869,7 +869,6 @@ actions:
       - 07a_an_multivariable_cox_models_demogADJ
       - 07a_an_multivariable_cox_models_demogADJ_W2
       - 07b_an_multivariable_cox_models_FULL_covid_icu
-      - 07b_an_multivariable_cox_models_FULL_covid_icu_W2
     run: stata-mp:latest analysis/08_an_tablecontent_HRtable.do covid_icu
     outputs:
       moderately_sensitive:
