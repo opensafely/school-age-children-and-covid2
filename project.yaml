@@ -31,7 +31,7 @@ actions:
         check_data: "tempdata/analysis_dataset.dta"
         data: "tempdata/cr_create_analysis_dataset_STSET_*_ageband_*MAIN.dta"
         ageband_data: "tempdata/analysis_dataset_ageband_*MAIN.dta"
-	all_data: "tempdata/analysis_datasetMAIN.dta"
+	nall_data: "tempdata/analysis_datasetMAIN.dta"
 	MI_data: "tempdata/analysis_dataset_with_missing_ethnicityMAIN.dta"
 
   01_cr_analysis_dataset_W2:
