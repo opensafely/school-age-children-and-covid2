@@ -97,7 +97,7 @@ actions:
         log: log/03b_an_descriptive_table_1MAIN.log
         data: "output/03b_an_descriptive_table_1_kids_cat4_ageband*MAIN.txt"
   
-  03b_an_descriptive_table_1:
+  03b_an_descriptive_table_1_W2:
     needs: [01_cr_analysis_dataset]
     run: stata-mp:latest analysis/03b_an_descriptive_table_1.do W2
     outputs:
@@ -112,7 +112,7 @@ actions:
       moderately_sensitive:
         log: log/04a_an_descriptive_tablesMAIN.log
 
-  04a_an_descriptive_tables:
+  04a_an_descriptive_tables_W2:
     needs: [01_cr_analysis_dataset]
     run: stata-mp:latest analysis/04a_an_descriptive_tables.do W2
     outputs:
