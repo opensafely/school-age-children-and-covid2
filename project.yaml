@@ -29,6 +29,7 @@ actions:
         log: log/01_cr_analysis_dataset.log
       highly_sensitive:
         check_data: "tempdata/analysis_datasetMAIN.dta"
+        check_data2: "tempdata/analysis_dataset_ageband_*MAIN.dta"
         data: "tempdata/cr_create_analysis_dataset_STSET_*_ageband_*MAIN.dta"
         data_eth: "tempdata/analysis_dataset_with_missing_ethnicityMAIN.dta"
 
@@ -40,6 +41,7 @@ actions:
         log: log/01_cr_analysis_dataset_W2.log
       highly_sensitive:
         check_data: "tempdata/analysis_datasetW2.dta"
+        check_data2: "tempdata/analysis_dataset_ageband_*W2.dta"
         data: "tempdata/cr_create_analysis_dataset_STSET_*_ageband_*W2.dta"
         data_eth: "tempdata/analysis_dataset_with_missing_ethnicityW2.dta"
 
