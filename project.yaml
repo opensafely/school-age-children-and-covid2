@@ -128,7 +128,7 @@ actions:
     run: stata-mp:latest analysis/04b_an_descriptive_table_2.do MAIN
     outputs:
       moderately_sensitive:
-        log: 04b_an_descriptive_table_2_MAIN.log
+        log: log/04b_an_descriptive_table_2_MAIN.log
         data: "output/04b_an_descriptive_table_2_MAIN_ageband*.txt"
 
   04b_an_descriptive_table_2_W2:
@@ -136,7 +136,7 @@ actions:
     run: stata-mp:latest analysis/04b_an_descriptive_table_2.do W2
     outputs:
       moderately_sensitive:
-        log: 04b_an_descriptive_table_2_W2.log
+        log: log/04b_an_descriptive_table_2_W2.log
         data: "output/04b_an_descriptive_table_2_W2_ageband*.txt"
 
   06_univariate_analysis:
