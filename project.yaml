@@ -911,8 +911,6 @@ actions:
     needs:
       - 10_an_interaction_cox_models_shield_covid_icu
       - 10_an_interaction_cox_models_sex_covid_icu
-      - 10_an_interaction_cox_models_shield_covid_icu_W2
-      - 10_an_interaction_cox_models_sex_covid_icu_W2
     run: stata-mp:latest analysis/11_an_interaction_HR_tables_forest.do covid_icu
     outputs:
       moderately_sensitive:
