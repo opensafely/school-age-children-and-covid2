@@ -651,7 +651,7 @@ actions:
         log: log/10_an_interaction_cox_models_time_covidadmissionW2.log
         data: "output/an_interaction_cox_models_covidadmission_kids_cat4_cat_time_MAINFULLYADJMODEL_*W2.ster"
 
-  10_an_interaction_cox_models_sex_covidadmissionW2:
+  10_an_interaction_cox_models_sex_covidadmission_W2:
     needs: [01_cr_analysis_dataset]
     run: stata-mp:latest analysis/10_an_interaction_cox_models_sex.do covidadmission W2
     outputs:
