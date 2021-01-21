@@ -59,7 +59,7 @@ actions:
     run: stata-mp:latest analysis/02_an_data_checks.do MAIN
     outputs:
       moderately_sensitive:
-        log: log/02_an_data_checksMAIN.log
+        log: log/02_an_data_checks.log
         histogram: "output/01_histogram_*MAIN.svg"
 
   02_an_data_checks_W2:
