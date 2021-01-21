@@ -40,8 +40,6 @@ actions:
       highly_sensitive:
         check_data: "tempdata/analysis_dataset*.dta"
         data: "tempdata/cr_create_analysis_dataset_STSET_*_ageband_*W2.dta"
-        ageband_data: "tempdata/analysis_dataset_ageband_*W2.dta"
-	MI_data: "tempdata/analysis_dataset_with_missing_ethnicityW2.dta"
 
   WORMS_01_cr_analysis_dataset:
     needs: [worms_generate_cohort]
