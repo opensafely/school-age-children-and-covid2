@@ -1,6 +1,6 @@
 version: "3.0"
 expectations:
-  population_size: 40000
+  population_size: 60000
 
 actions:
   generate_cohort:
@@ -631,7 +631,7 @@ actions:
 
   13_multiple_imputation_dataset_covidadmission:
     needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/13_multiple_imputation_dataset.do covidadmissionMAIN
+    run: stata-mp:latest analysis/13_multiple_imputation_dataset.do covidadmission MAIN
     outputs:
       moderately_sensitive:
         log: log/13_multiple_imputation_dataset_covidadmissionMAIN.log
@@ -648,7 +648,7 @@ actions:
 
   13_multiple_imputation_dataset_covid_icu:
     needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/13_multiple_imputation_dataset.do covid_icuMAIN
+    run: stata-mp:latest analysis/13_multiple_imputation_dataset.do covid_icu MAIN
     outputs:
       moderately_sensitive:
         log: log/13_multiple_imputation_dataset_covid_icuMAIN.log
@@ -699,7 +699,7 @@ actions:
 
   13_multiple_imputation_dataset_covidadmission_W2:
     needs: [01_cr_analysis_dataset_W2]
-    run: stata-mp:latest analysis/13_multiple_imputation_dataset.do covidadmissionW2
+    run: stata-mp:latest analysis/13_multiple_imputation_dataset.do covidadmission W2
     outputs:
       moderately_sensitive:
         log: log/13_multiple_imputation_dataset_covidadmissionW2.log
@@ -716,7 +716,7 @@ actions:
 
   13_multiple_imputation_dataset_covid_icu_W2:
     needs: [01_cr_analysis_dataset_W2]
-    run: stata-mp:latest analysis/13_multiple_imputation_dataset.do covid_icuW2
+    run: stata-mp:latest analysis/13_multiple_imputation_dataset.do covid_icu W2
     outputs:
       moderately_sensitive:
         log: log/13_multiple_imputation_dataset_covid_icuW2.log

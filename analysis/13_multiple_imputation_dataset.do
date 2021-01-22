@@ -22,6 +22,7 @@ global tempdir    "tempdata"
 
 local outcome `1' 
 local dataset `2'
+
 * Open a log file
 capture log close
 log using "$logdir/13_multiple_imputation_dataset_`outcome'`dataset'", text replace
