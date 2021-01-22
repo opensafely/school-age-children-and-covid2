@@ -28,23 +28,23 @@ capture log close
 log using "$logdir/13_multiple_imputation_dataset_`outcome'`dataset'", text replace
 
 
-use  $tempdir/analysis_dataset_with_missing_ethnicity`dataset', clear
+use  "$tempdir/analysis_dataset_with_missing_ethnicity`dataset'", clear
 keep if age<=65
 * Create restricted cubic splines for age
 mkspline age = age, cubic nknots(4)
-save $tempdir/analysis_dataset_with_missing_ethnicity_ageband_0`dataset', replace
+save "$tempdir/analysis_dataset_with_missing_ethnicity_ageband_0`dataset'", replace
 
 
-use  $tempdir/analysis_dataset_with_missing_ethnicity`dataset', clear
+use  "$tempdir/analysis_dataset_with_missing_ethnicity`dataset'", clear
 keep if age>65
 * Create restricted cubic splines for age
 mkspline age = age, cubic nknots(4)
-save $tempdir/analysis_dataset_with_missing_ethnicity_ageband_1`dataset', replace
+save "$tempdir/analysis_dataset_with_missing_ethnicity_ageband_1`dataset'", replace
 
 *******************************************************************************
 forvalues x=0/1 {
 
-use $tempdir/analysis_dataset_with_missing_ethnicity_ageband_`x'`dataset', clear
+use "$tempdir/analysis_dataset_with_missing_ethnicity_ageband_`x'`dataset'", clear
 replace ethnicity=. if ethnicity==.u 
 count
 * Save a version set on NON ONS covid death outcome

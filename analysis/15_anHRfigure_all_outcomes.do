@@ -122,7 +122,7 @@ replace leveldesc = "Children aged 0-11 years and ≥12 years" if i==3
 gen Name = outcome if hr==.
 replace Name = "COVID-19 death" if Name=="covid_deat"
 replace Name = "COVID-19 ICU admission" if Name=="covid_icu"
-replace Name = "SARS-CoV-2 infection" if Name=="covid_tpp_"
+replace Name = "Reported SARS-CoV-2 infection" if Name=="covid_tpp_"
 replace Name = "COVID-19 hospital admission" if Name=="covidadmis"
 replace Name = "Non COVID-19 death" if Name=="non_covid_"
 
@@ -161,7 +161,7 @@ scatter graphorder hr, mcol(black)	msize(small)		///										///
 	|| scatter graphorder intx, m(i) mlab(leveldesc) mlabsize(vsmall) mlabcol(black) 	///
 	|| scatter graphorder disx, m(i) mlab(displayhrci) mlabsize(vsmall) mlabcol(black) ///
 	|| scatter graphorder disx, m(i) mlab(bf_hrtitle) mlabsize(vsmall) mlabcol(black) ///
-		xline(1,lp(dash)) 															///
+		xline(1,lp(solid)) 															///
 		xscale(log range(0.1 6)) xlab(0.5 1 2, labsize(vsmall)) xtitle("")  ///
 		ylab(none) ytitle("")		yscale( lcolor(white))					/// 
 		graphregion(color(white))  legend(off)  ysize(4) ///
