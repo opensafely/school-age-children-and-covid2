@@ -21,7 +21,7 @@ forvalues x=0/1 {
 file write tablecontents_all_outcomes ("dataset") ("age") ("`x'") _n
 foreach outcome in  covid_tpp_prob covidadmission covid_icu covid_death non_covid_death  {
 file write tablecontents_all_outcomes ("outcome=") ("`outcome'") _n
-forvalues i=1/3 {
+forvalues i=1/4 {
 local endwith "_tab"
 
 	*put the varname and condition to left so that alignment can be checked vs shell
@@ -38,7 +38,7 @@ local endwith "_tab"
 		*1) GET THE RIGHT ESTIMATES INTO MEMORY
 	
 		if "`modeltype'"=="plus_ethadj" {
-				cap estimates use ./output/an_multivariate_cox_models_`outcome'_`variable'_MAINFULLYADJMODEL_ageband_`x'`dataset' 
+				cap estimates use ./output/an_sense_`outcome'_nursery_cat_ageband_`x'`dataset'
 				if _rc!=0 local noestimatesflag 1
 				}
 		
@@ -74,7 +74,7 @@ end
 
 
 cap file close tablecontents_all_outcomes
-file open tablecontents_all_outcomes using ./output/15_an_tablecontents_HRtable_all_outcomes_ANALYSES.txt, t w replace 
+file open tablecontents_all_outcomes using ./output/15_an_tablecontents_HRtable_all_outcomes_KIDS_CAT5.txt, t w replace 
 
 tempfile HRestimates_all_outcomes
 cap postutil clear
@@ -82,7 +82,7 @@ postfile HRestimates_all_outcomes str10 dataset str10 x str10 outcome str27 vari
 
 
 *Primary exposure
-outputHRsforvar, variable("kids_cat4") min(1) max(3) 
+outputHRsforvar, variable("kids_cat5") min(1) max(3) 
 file write tablecontents_all_outcomes _n
 
 file close tablecontents_all_outcomes
@@ -114,9 +114,11 @@ gen obsorder=_n
 
 *Levels
 gen leveldesc = ""
-replace leveldesc = "Only children aged 0-11 years" if i==1 & hr!=1 & hr!=.
-replace leveldesc = "Only children aged ≥12 years" if i==2
-replace leveldesc = "Children aged 0-11 years and ≥12 years" if i==3
+replace leveldesc = "Only children aged 0-4 years" if i==1 & hr!=1 & hr!=.
+replace leveldesc = "Only children aged 5-11 years" if i==2 & hr!=1 & hr!=.
+replace leveldesc = "Only children aged ≥12 years" if i==3 & hr!=1 & hr!=.
+replace leveldesc = "Children in a least 2 of above age categories" if i==4 & hr!=1 & hr!=.
+
 
 
 gen Name = outcome if hr==.
@@ -168,6 +170,6 @@ scatter graphorder hr, mcol(black)	msize(small)		///										///
 		text(-0.5 0.1 "Lower risk in those living with children", place(e) size(vsmall)) ///
 		text(-0.5 1.5 "Higher risk in those living with children", place(e) size(vsmall))
 
-graph export ./output/15_an_HRforest_all_outcomes_ageband_`age'_`dataset'.svg, as(svg) replace
+graph export ./output/15_an_HRforest_all_outcomes_ageband_`age'_`dataset'_KIDS_CAT5.svg, as(svg) replace
 }
 }
