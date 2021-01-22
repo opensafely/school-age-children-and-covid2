@@ -462,7 +462,7 @@ actions:
 
   10_an_interaction_cox_models_time_covid_death:
     needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/10_an_interaction_cox_models_time.do covid_death MAIN
+    run: stata-mp:latest analysis/10_an_interaction_cox_models_time.do covid_death MAIN 
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_time_covid_deathMAIN.log

@@ -48,8 +48,6 @@ global comordidadjlist  i.htdiag_or_highbp				///
 			
 local outcome `1' 
 local dataset `2'
- 
-
 
 ************************************************************************************
 *First clean up all old saved estimates for this outcome
@@ -88,8 +86,8 @@ forvalues x=0/1 {
 use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'`dataset'.dta", clear
 
 *Split data by time of study period: days to 1st September
-stsplit cat_time, at(0,212,400)
-recode cat_time 212=1 400=2
+stsplit cat_time, at(0,61,400)
+recode cat_time 61=1 400=2
 recode `outcome' .=0 
 tab cat_time
 tab cat_time `outcome'
