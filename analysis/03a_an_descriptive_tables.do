@@ -99,14 +99,14 @@ safetab `var'
 }
 
 * Outcomes
-foreach var in covid_death_icu non_covid_death  ///
+foreach var in  non_covid_death  ///
  covid_tpp_prob {
 safetab `var'
 }
 
 
 * Outcomes by exposure
-foreach var in covid_death_icu non_covid_death  ///
+foreach var in non_covid_death  ///
  covid_tpp_prob {
 safetab `var'
 safetab `var' kids_cat4, col row
