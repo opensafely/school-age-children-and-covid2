@@ -92,7 +92,6 @@ safetab stp
 safetab non_covid_death
 safetab covid_death
 safetab covid_tpp_prob
-safetab covid_death_icu
 safetab covid_icu
 
 * Outcome dates
