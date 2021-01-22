@@ -205,14 +205,33 @@ drop if imd_drop==9
 
 *No kids/kids under 12/up to 18
 *Identify kids under 12, or kids under 18
+gen nokids=1 if age<5
+recode nokids .=2 if age<12
+recode nokids .=3 if age<18 
+
+preserve
+keep if age<18
+keep household_id nokids
+duplicates drop
+bysort household_id: replace nokids=4 if _N>1
+duplicates drop
+rename nokids kids_cat5
+list in 1/100
+save kids_mixed_category, replace
+restore
+
+merge m:1 household_id using kids_mixed_category, nogen keep(master match)
+
+lab define   kids_cat5 0 none  1 "only <5 years" ///
+2 "only 5-11" 3 "12-<18" 4 "mixed"
+lab val kids_cat5 kids_cat5
+recode kids_cat5 .=0
+tab kids_cat5
+drop nokids
+
+*Identify kids under 12, or kids under 18
 gen nokids=1 if age<12
 recode nokids .=2 if age<18 
-bysort household_id: egen min_kids=min(nokids) 
-gen kids_cat3=min_kids
-recode kids_cat3 .=0 
-lab define kids_cat3  0 "No kids" 1 "Kids under 12" 2 "Kids under 18"
-lab val kids_cat3 kids_cat3
-drop min_kids
 
 preserve
 keep if age<18
@@ -220,29 +239,37 @@ keep household_id nokids
 duplicates drop
 bysort household_id: replace nokids=3 if _N>1
 duplicates drop
+rename nokids kids_cat4
+list in 1/100
 save kids_mixed_category, replace
 restore
 
+merge m:1 household_id using kids_mixed_category, nogen keep(master match)
+
+lab define   kids_cat4 0 none  1 "only <12 years" ///
+2 "only 12-18" ///
+3 "mixed"
+lab val kids_cat4 kids_cat4
+recode kids_cat4 .=0
+tab kids_cat4
 
 *Dose-response exposure
-recode nokids 2=.
-bysort household_id: egen number_kids=count(nokids)
+bysort household_id: egen number_kids=sum(nokids) if kids_cat4==1
+
 gen gp_number_kids=number_kids
-recode gp_number_kids 3/max=3
-recode gp_number_kids 1=2 2=3 3=4
-replace gp_number_kids=0 if kids_cat3==0 
-replace gp_number_kids=1 if kids_cat3==2 
+recode gp_number_kids 4/max=4
 
 lab var gp_number_kids "Number kids under 12 years in hh"
-drop nokids
-lab define   gp_number_kids 0 none  1 "only >12 years" ///
-2 "1 child <12" ///
-3 "2 children <12" ///
-4 "3+ children <12"
+lab define   gp_number_kids 0 none ///
+1 "1 child <12" ///
+2 "2 children <12" ///
+3 "3 children <12" ///
+4 "4+ children <12"
 lab val gp_number_kids gp_number_kids
 
-tab kids_cat3 gp_number_kids, miss
- 
+tab kids_cat4 
+tab kids_cat5
+tab kids_cat*
 
 /* DROP ALL KIDS, AS HH COMPOSITION VARS ARE NOW MADE */
 drop if age<18
@@ -251,17 +278,8 @@ drop if age<18
 bysort household_id: gen tot_adults_hh=_N
 recode tot_adults_hh 3/max=3
 
-
-merge m:1 household_id using kids_mixed_category, nogen keep(master match)
-
-lab define   nokids 0 none  1 "only <12 years" ///
-2 "only 12-18" ///
-3 "mixed"
-lab val nokids nokids
-recode nokids .=0
-rename nokids kids_cat4
-tab kids_cat4 kids_cat3
-
+tab kids_cat4
+tab gp_num if kids_cat4==1
 
 
 /* SET FU DATES===============================================================*/
@@ -627,7 +645,7 @@ format  stime* %td
 *  Label variables you are intending to keep, drop the rest
 
 *HH variable
-label var kids_cat3 "Presence of children or young people in the household"
+label var kids_cat4 "Presence of children or young people in the household"
 label var  number_kids "Number of children aged 1-<12 years in household"
 label var  household_size "Number people in household"
 label var  household_id "Household ID"
