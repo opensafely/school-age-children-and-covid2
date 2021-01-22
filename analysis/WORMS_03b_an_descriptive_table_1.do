@@ -38,7 +38,7 @@ syntax, variable(varname) condition(string) outcome(string)
 	file write tablecontent (r(N)) (" (") %4.2f  (`pct') (")") _tab
 	cou if kids_cat4==2 & `variable' `condition'
 	local pct = 100*(r(N)/`rowdenom')
-	file write tablecontent (r(N)) (" (") %4.2f  (`pct') (")") _n
+	file write tablecontent (r(N)) (" (") %4.2f  (`pct') (")") _tab
 	cou if kids_cat4==3 & `variable' `condition'
 	local pct = 100*(r(N)/`rowdenom')
 	file write tablecontent (r(N)) (" (") %4.2f  (`pct') (")") _n
