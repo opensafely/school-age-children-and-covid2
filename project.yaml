@@ -1072,7 +1072,7 @@ actions:
       - 03b_an_descriptive_table_1_W2
       - 04a_an_descriptive_tables_W2
       - 04b_an_descriptive_table_2_W2
-      - 15_anHRfigure_all_outcomes_covidadmission
+      - 15_anHRfigure_all_outcomes
       - 15_anHRfigure_all_outcomes_nursery_cat
       - WORMS_02_an_data_checks
       - WORMS_08_an_tablecontent_HRtable
