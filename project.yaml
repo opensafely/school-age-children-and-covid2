@@ -398,7 +398,7 @@ actions:
         data: "output/an_sense_covid_icu_age_underlying_timescale_ageband_*MAIN.ster"
 
   07d_an_multivariable_cox_models_FULL_Sense4_covid_icu_W2:
-    needs: [01_cr_analysis_datasetW2]
+    needs: [01_cr_analysis_dataset_W2]
     run: stata-mp:latest analysis/07d_an_multivariable_cox_models_FULL_Sense4.do covid_icu W2
     outputs:
       moderately_sensitive:
