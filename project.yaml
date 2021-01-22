@@ -261,22 +261,6 @@ actions:
         data: "output/an_multivariate_cox_models_covidadmission_*_MAINFULLYADJMODEL_ageband_*W2.ster"
         other_data: "output/an_sense_covidadmission_plus_eth_12mo_ageband_*W2.ster"
 
-  07d_an_multivariable_cox_models_FULL_Sense3_non_covid_death:
-    needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/07d_an_multivariable_cox_models_FULL_Sense3.do non_covid_death MAIN
-    outputs:
-      moderately_sensitive:
-        log: log/07d_an_multivariable_cox_models_FULL_Sense3_non_covid_deathMAIN.log
-        data: "output/an_sense_non_covid_death_CCeth_bmi_smok_ageband_*MAIN.ster"
-
-  07d_an_multivariable_cox_models_FULL_Sense3_non_covid_death_W2:
-    needs: [01_cr_analysis_dataset_W2]
-    run: stata-mp:latest analysis/07d_an_multivariable_cox_models_FULL_Sense3.do non_covid_death W2
-    outputs:
-      moderately_sensitive:
-        log: log/07d_an_multivariable_cox_models_FULL_Sense3_non_covid_deathW2.log
-        data: "output/an_sense_non_covid_death_CCeth_bmi_smok_ageband_*W2.ster"
-
   07d_an_multivariable_cox_models_FULL_Sense3_covid_death:
     needs: [01_cr_analysis_dataset]
     run: stata-mp:latest analysis/07d_an_multivariable_cox_models_FULL_Sense3.do covid_death MAIN
@@ -340,22 +324,6 @@ actions:
       moderately_sensitive:
         log: log/07d_an_multivariable_cox_models_FULL_Sense3_covid_tpp_probW2.log
         data: "output/an_sense_covid_tpp_prob_CCeth_bmi_smok_ageband_*W2.ster"
-
-  07d_an_multivariable_cox_models_FULL_Sense4_non_covid_death:
-    needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/07d_an_multivariable_cox_models_FULL_Sense4.do non_covid_death MAIN
-    outputs:
-      moderately_sensitive:
-        log: log/07d_an_multivariable_cox_models_non_covid_death_Sense4_*MAIN.log
-        data: "output/an_sense_non_covid_death_age_underlying_timescale_ageband_*MAIN.ster"
-
-  07d_an_multivariable_cox_models_FULL_Sense4_non_covid_death_W2:
-    needs: [01_cr_analysis_dataset_W2]
-    run: stata-mp:latest analysis/07d_an_multivariable_cox_models_FULL_Sense4.do non_covid_death W2
-    outputs:
-      moderately_sensitive:
-        log: log/07d_an_multivariable_cox_models_non_covid_death_Sense4_*W2.log
-        data: "output/an_sense_non_covid_death_age_underlying_timescale_ageband_*W2.ster"
 
   07d_an_multivariable_cox_models_FULL_Sense4_covid_tpp_prob:
     needs: [01_cr_analysis_dataset]
@@ -484,22 +452,6 @@ actions:
       moderately_sensitive:
         log: log/07d_an_multivariable_cox_models_covid_death_Sense5_time_intsW2.log
         data: "output/an_sense_covid_death_time_int_ageband_*W2.ster" 
-
-  07d_an_multivariable_cox_models_FULL_Sense5_non_covid_death:
-    needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/07d_an_multivariable_cox_models_FULL_Sense5.do non_covid_death MAIN
-    outputs:
-      moderately_sensitive:
-        log: log/07d_an_multivariable_cox_models_non_covid_death_Sense5_*MAIN.log
-        data: "output/an_sense_non_covid_death_age_underlying_timescale_ageband_*MAIN.ster"
-
-  07d_an_multivariable_cox_models_FULL_Sense5_non_covid_death_W2:
-    needs: [01_cr_analysis_dataset_W2]
-    run: stata-mp:latest analysis/07d_an_multivariable_cox_models_FULL_Sense5.do non_covid_death W2
-    outputs:
-      moderately_sensitive:
-        log: log/07d_an_multivariable_cox_models_non_covid_death_Sense5_*W2.log
-        data: "output/an_sense_non_covid_death_age_underlying_timescale_ageband_*W2.ster"
 
   07d_an_multivariable_cox_models_FULL_Sense6_covid_tpp_prob:
     needs: [01_cr_analysis_dataset]
@@ -1028,21 +980,6 @@ actions:
       moderately_sensitive:
         log: 11_an_interaction_HR_tables_forest_covidadmission.log
         data: "output/11_an_int_tab_contents_HRtable_covidadmission.txt"
-
-  12_an_tablecontent_HRtable_SENSE_non_covid_death:
-    needs:
-      - 07d_an_multivariable_cox_models_FULL_Sense3_non_covid_death
-      - 07d_an_multivariable_cox_models_FULL_Sense4_non_covid_death
-      - 07b_an_multivariable_cox_models_FULL_non_covid_death      
-      - 07d_an_multivariable_cox_models_FULL_Sense3_non_covid_death_W2
-      - 07d_an_multivariable_cox_models_FULL_Sense4_non_covid_death_W2
-      - 07b_an_multivariable_cox_models_FULL_non_covid_death_W2
-    run: stata-mp:latest analysis/12_an_tablecontent_HRtable_SENSE.do non_covid_death
-    outputs:
-      moderately_sensitive:
-        log: 12_an_tablecontent_HRtable_SENSE_non_covid_death.log
-        data: "output/12_an_sense_HRtable_non_covid_death_SENSE_ANALYSES.txt"
-        figure: "output/12_an_HRforest_SENSE_non_covid_death_ageband_*.svg"
 
   12_an_tablecontent_HRtable_SENSE_covid_tpp_prob:
     needs:
