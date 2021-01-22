@@ -50,6 +50,7 @@ local comordidadjlist  i.htdiag_or_highbp				///
 *This is to guard against accidentally displaying left-behind results from old runs
 ************************************************************************************
 local outcome `1' 
+local dataset `2'
 
 
 if "`outcome'"=="covid_tpp_prob" {
