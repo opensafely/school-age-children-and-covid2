@@ -897,7 +897,7 @@ actions:
         log: log/WORMS_08_an_tablecontent_HRtable.log
         data: "output/an_tablecontents_HRtable_worms.txt"
 
-  15_anHRfigure_all_outcomes_covidadmission:
+  15_anHRfigure_all_outcomes:
     needs:
       - 07b_an_multivariable_cox_models_FULL_non_covid_death
       - 07b_an_multivariable_cox_models_FULL_covid_tpp_prob
@@ -909,7 +909,7 @@ actions:
       - 07b_an_multivariable_cox_models_FULL_covid_death_W2
       - 07b_an_multivariable_cox_models_FULL_covid_icu_W2
       - 07b_an_multivariable_cox_models_FULL_covidadmission_W2
-    run: stata-mp:latest analysis/15_anHRfigure_all_outcomes.do covidadmission
+    run: stata-mp:latest analysis/15_anHRfigure_all_outcomes.do 
     outputs:
       moderately_sensitive:
         data: "output/15_an_tablecontents_HRtable_all_outcomes_ANALYSES.txt"
@@ -925,11 +925,11 @@ actions:
       - 07d_an_multivariable_cox_models_FULL_Sense6_covid_tpp_prob_W2
       - 07d_an_multivariable_cox_models_FULL_Sense6_covid_death_W2
       - 07d_an_multivariable_cox_models_FULL_Sense6_covid_icu_W2
-    run: stata-mp:latest analysis/15_anHRfigure_all_outcomes.do covidadmission
+    run: stata-mp:latest analysis/15_anHRfigure_all_outcomes_kids_cat5.do
     outputs:
       moderately_sensitive:
-        data: "output/15_an_tablecontents_HRtable_all_outcomes_ANALYSES.txt"
-        figure: "output/15_an_HRforest_all_outcomes_ageband_*.svg"
+        data: "output/15_an_tablecontents_HRtable_all_outcomes_KIDS_CAT5.txt"
+        figure: "output/15_an_HRforest_all_outcomes_ageband_*_KIDS_CAT5.svg"
 
   11_an_interaction_HR_tables_forest_covid_tpp_prob:
     needs:
