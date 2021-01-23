@@ -92,7 +92,6 @@ safetab stp
 safetab non_covid_death
 safetab covid_death
 safetab covid_tpp_prob
-safetab covid_death_icu
 safetab covid_icu
 
 * Outcome dates
@@ -103,7 +102,7 @@ sum date*, format
 *  Number (%) with each outcome  *
 **********************************
 
-foreach outvar of varlist covid_tpp_prob covid_death_icu non_covid_death {
+foreach outvar of varlist covid_tpp_prob covid_death non_covid_death {
 
 *** Repeat for each outcome
 
