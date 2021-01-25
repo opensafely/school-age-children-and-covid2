@@ -82,11 +82,11 @@ forvalues x=0/1 {
 use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'`dataset'.dta", clear
 
 *reset underlying timescale to age
-stset
 gen dob=d(01feb2020)-(age*365.25)
 format dob %td
 *list age dob in 1/20
 streset, origin(dob) scale(365.25) 
+
 
 ******************************
 *  Multivariable Cox models  *
