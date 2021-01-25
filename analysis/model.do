@@ -106,6 +106,15 @@ winexec "C:/Program Files (x86)/Stata15/Stata-64.exe" do "07d_an_multivariable_c
 foreach outcome of any non_covid_death covid_tpp_prob covidadmission covid_icu covid_death {
 winexec "C:/Program Files (x86)/Stata15/Stata-64.exe" do "07d_an_multivariable_cox_models_FULL_Sense5.do" `outcome' MAIN
 }
+
+
+foreach outcome of any covidadmission  {
+winexec "C:/Program Files (x86)/Stata15/Stata-64.exe" do "07d_an_multivariable_cox_models_FULL_Sense7.do" `outcome' W2
+}
+
+
+
+
 *INTERACTIONS 
 *Sex
 foreach outcome of any  non_covid_death covid_tpp_prob covid_death covid_icu covidadmission   {
