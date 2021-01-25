@@ -56,7 +56,7 @@ local dataset `2'
 
 * Open a log file
 capture log close
-log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense6_SUS_censor`dataset'", text replace
+log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense7_SUS_censor`dataset'", text replace
 
 
 *************************************************************************************
