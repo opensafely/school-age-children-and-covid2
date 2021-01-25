@@ -21,6 +21,7 @@
   * [output/04b_an_descriptive_table_2_MAIN_ageband1.txt](output/04b_an_descriptive_table_2_MAIN_ageband1.txt)
   * [output/04b_an_descriptive_table_2_W2_ageband0.txt](output/04b_an_descriptive_table_2_W2_ageband0.txt)
   * [output/04b_an_descriptive_table_2_W2_ageband1.txt](output/04b_an_descriptive_table_2_W2_ageband1.txt)
+  * [output/15_an_tablecontents_HRtable_all_outcomes_ANALYSES.txt](output/15_an_tablecontents_HRtable_all_outcomes_ANALYSES.txt)
   * output/redacted_01_18
     * [output/redacted_01_18/01_histogram_infection_outcomes.svg](output/redacted_01_18/01_histogram_infection_outcomes.svg)
     * [output/redacted_01_18/03b_an_descriptive_table_1_kids_cat4_ageband0.txt](output/redacted_01_18/03b_an_descriptive_table_1_kids_cat4_ageband0.txt)
