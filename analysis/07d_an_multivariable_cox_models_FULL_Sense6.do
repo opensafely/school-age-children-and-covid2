@@ -15,7 +15,7 @@
 ********************************************************************************
 *
 *	Purpose:		This do-file performs multivariable (fully adjusted) 
-*					Cox models, with age as the underlying timescale
+*					Cox models, with exposure variable identifying nursery school kids
 *  
 ********************************************************************************
 *	

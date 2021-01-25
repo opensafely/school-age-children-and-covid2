@@ -27,7 +27,7 @@ syntax, variable(string) min(real) max(real) outcome(string)
 foreach dataset in MAIN W2 {
 forvalues x=0/1 {
 file write tablecontents_sense ("dataset") ("age") ("`x'") _n
-foreach sense in AAmain CCeth_bmi_smok plus_eth_12mo age_underlying_timescale time_int {
+foreach sense in AAmain CCeth_bmi_smok plus_eth_12mo age_underlying_timescale time_int SUS_censor {
 file write tablecontents_sense _n ("sense=") ("`sense'") _n
 forvalues i=1/3 {
 local endwith "_tab"

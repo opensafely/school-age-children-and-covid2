@@ -15,7 +15,7 @@
 ********************************************************************************
 *
 *	Purpose:		This do-file performs multivariable (fully adjusted) 
-*					Cox models, with age as the underlying timescale
+*					Cox models, with SUS censored 1st November
 *  
 ********************************************************************************
 *	
@@ -56,7 +56,7 @@ local dataset `2'
 
 * Open a log file
 capture log close
-log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense4_agetimescale`dataset'", text replace
+log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense7_SUS_censor`dataset'", text replace
 
 
 *************************************************************************************
@@ -82,17 +82,15 @@ forvalues x=0/1 {
 use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'`dataset'.dta", clear
 
 *reset underlying timescale to age
-gen dob=d(01feb2020)-(age*365.25)
-format dob %td
-*list age dob in 1/20
-streset, origin(dob) scale(365.25) 
-
-
+stset
+replace study_end_censor=d(01nove2020)
+drop stime_covidadmission
+gen stime_covidadmission 	= min(study_end_censor   , date_covidadmission, died_date_ons, dereg_date)
+stset stime_covidadmission, fail(covidadmission) 				///
+	id(patient_id) enter(enter_date) origin(enter_date)
 ******************************
 *  Multivariable Cox models  *
 ******************************
-
-
 
 foreach exposure_type in kids_cat4  {
 
@@ -100,7 +98,7 @@ foreach exposure_type in kids_cat4  {
 basecoxmodel, exposure("i.`exposure_type'") age("age1 age2 age3")
 if _rc==0{
 estimates
-estimates save ./output/an_sense_`outcome'_age_underlying_timescale_ageband_`x'`dataset', replace
+estimates save ./output/an_sense_`outcome'_SUS_censor_ageband_`x'`dataset', replace
 *estat concordance /*c-statistic*/
 	/*  Proportional Hazards test  
 	* Based on Schoenfeld residuals
