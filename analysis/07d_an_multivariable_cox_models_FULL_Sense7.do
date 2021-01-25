@@ -86,6 +86,7 @@ stset
 replace study_end_censor=d(01nove2020)
 drop stime_covidadmission
 gen stime_covidadmission 	= min(study_end_censor   , date_covidadmission, died_date_ons, dereg_date)
+replace covidadmission 	= 0 if (date_covidadmission > study_end_censor  | date_covidadmission > died_date_ons) 
 stset stime_covidadmission, fail(covidadmission) 				///
 	id(patient_id) enter(enter_date) origin(enter_date)
 ******************************
