@@ -24,8 +24,9 @@ log using "12_an_tablecontent_HRtable_SENSE_`outcome'.log", text replace
 cap prog drop outputHRsforvar
 prog define outputHRsforvar
 syntax, variable(string) min(real) max(real) outcome(string)
+foreach dataset in MAIN W2 {
 forvalues x=0/1 {
-file write tablecontents_sense ("age") ("`x'") _n
+file write tablecontents_sense ("dataset") ("age") ("`x'") _n
 foreach sense in AAmain CCeth_bmi_smok plus_eth_12mo age_underlying_timescale time_int {
 file write tablecontents_sense _n ("sense=") ("`sense'") _n
 forvalues i=1/3 {
@@ -42,7 +43,7 @@ local endwith "_tab"
 		*1) GET THE RIGHT ESTIMATES INTO MEMORY
 
 		if "`modeltype'"=="fulladj" {
-	    cap estimates use  ./output/an_sense_`outcome'_`sense'_ageband_`x'
+	    cap estimates use  ./output/an_sense_`outcome'_`sense'_ageband_`x'`dataset'
 				if _rc!=0 local noestimatesflag 1
 				}
 
@@ -62,7 +63,7 @@ local endwith "_tab"
 				local lb = r(lb)
 				local ub = r(ub)
 				local N=e(N_sub)
-				post HRestimates_sense ("`x'") ("`outcome'") ("`variable'") ("`sense'") (`i') (`hr') (`lb') (`ub') (`N')
+				post HRestimates_sense ("`dataset'") ("`x'") ("`outcome'") ("`variable'") ("`sense'") (`i') (`hr') (`lb') (`ub') (`N')
 				}
 		}
 		} /*min adj, full adj*/
@@ -91,7 +92,7 @@ local endwith "_tab"
 			if _rc!=0 local noestimatesflag 1
 			}*/
 		if "`modeltype'"=="fulladj" & "`sense'"=="AAmain"  {
-		cap estimates use  ./output/an_multivariate_cox_models_`outcome'_`variable'_MAINFULLYADJMODEL_ageband_`x'
+		cap estimates use  ./output/an_multivariate_cox_models_`outcome'_`variable'_MAINFULLYADJMODEL_ageband_`x'`dataset'
 				if _rc!=0 local noestimatesflag 1
 				}
 
@@ -111,7 +112,7 @@ local endwith "_tab"
 				local lb = r(lb)
 				local ub = r(ub)
 				local N=e(N_sub)
-				post HRestimates_sense ("`x'") ("`outcome'") ("`variable'") ("`sense'") (`i') (`hr') (`lb') (`ub') (`N')
+				post HRestimates_sense ("`dataset'") ("`x'") ("`outcome'") ("`variable'") ("`sense'") (`i') (`hr') (`lb') (`ub') (`N')
 				}
 
 		} /*min adj, full adj*/
@@ -119,6 +120,7 @@ local endwith "_tab"
 } /*variable levels*/
 } /*age levels*/
 } /*sense levels*/
+} /*datsets*/
 
 end
 
@@ -130,7 +132,7 @@ file open tablecontents_sense using ./output/12_an_sense_HRtable_`outcome'_SENSE
 
 tempfile HRestimates_sense
 cap postutil clear
-postfile HRestimates_sense str10 x str10 outcome str27 variable str27 sense i hr lci uci N using `HRestimates_sense'
+postfile HRestimates_sense str10 dataset str10 x str10 outcome str27 variable str27 sense i hr lci uci N using `HRestimates_sense'
 
 
 *Primary exposure
@@ -145,11 +147,13 @@ postclose HRestimates_sense
 *save HRestimates_sense, replace
 *stop
 
-
+foreach dataset in MAIN W2 {
 forvalues x=0/1 {
 
 use `HRestimates_sense', clear
 keep if x=="`x'"
+ 
+keep if dataset=="`dataset'"
 drop outcome variable
 sort sense i
 gen varorder = 1
@@ -227,14 +231,14 @@ scatter graphorder hr, mcol(black)	msize(small)		///										///
 	|| scatter graphorder levelx, m(i) mlab(leveldesc) mlabsize(vsmall) mlabcol(black) 	///
 	|| scatter graphorder disx, m(i) mlab(displayhrci) mlabsize(vsmall) mlabcol(black) ///
 	|| scatter graphorder disx, m(i) mlab(bf_hrtitle) mlabsize(vsmall) mlabcol(black) ///
-		xline(1,lp(dash)) 															///
+		xline(1,lp(solid)) 															///
 		xscale(log range(0.1 6)) xlab(0.5 1 2, labsize(vsmall)) xtitle("")  ///
 		ylab(none) ytitle("")		yscale( lcolor(white))					///
 		graphregion(color(white))  legend(off)  ysize(4) ///
 		text(-2 0.2 "Lower risk in those living with children", place(e) size(vsmall)) ///
 		text(-2 1.5 "Higher risk in those living with children", place(e) size(vsmall))
 
-graph export ./output/12_an_HRforest_SENSE_`outcome'_ageband_`x'.svg, as(svg) replace
+graph export ./output/12_an_HRforest_SENSE_`outcome'_ageband_`x'_`dataset'.svg, as(svg) replace
 }
-
+}
 log close

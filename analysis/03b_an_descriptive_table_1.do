@@ -20,10 +20,14 @@ global outdir  	  "output"
 global logdir     "log"
 global tempdir    "tempdata"
 
+*first argument main W2 
+local dataset `1'
+
+
 *******************************************************************************
 *Generic code to output one row of table
 cap prog drop generaterow
-log using $logdir/03b_an_descriptive_table_1, replace t
+log using $logdir/03b_an_descriptive_table_1`dataset', replace t
 
 program define generaterow
 syntax, variable(varname) condition(string) outcome(string)
@@ -55,7 +59,7 @@ syntax, variable(varname) condition(string) outcome(string)
 	local coldenom = r(N)
 	cou if kids_cat4==2 & `variable' `condition'
 	local pct = 100*(r(N)/`coldenom')
-	file write tablecontent (r(N)) (" (") %4.2f  (`pct') (")") _n
+	file write tablecontent (r(N)) (" (") %4.2f  (`pct') (")") _tab
 
 	cou if kids_cat4==3 
 	local coldenom = r(N)
@@ -85,9 +89,9 @@ end
 forvalues x=0/1 {
 
 cap file close tablecontent
-file open tablecontent using ./output/03b_an_descriptive_table_1_kids_cat4_ageband`x'.txt, write text replace
+file open tablecontent using ./output/03b_an_descriptive_table_1_kids_cat4_ageband`x'`dataset'.txt, write text replace
 
-use $tempdir/analysis_dataset_ageband_`x', clear
+use $tempdir/analysis_dataset_ageband_`x'`dataset', clear
 
 gen byte cons=1
 tabulatevariable, variable(cons) start(1) end(1) outcome(kids_cat4)
@@ -161,3 +165,5 @@ tabulatevariable, variable(anycomorb) start(1) end(1) outcome(kids_cat4)
 file close tablecontent
 
 }
+
+log close

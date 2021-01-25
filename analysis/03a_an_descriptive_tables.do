@@ -27,13 +27,16 @@ global outdir  	  "output"
 global logdir     "log"
 global tempdir    "tempdata"
 
+*first argument main W2 
+local dataset `1'
+
 * Open a log file
 capture log close
-log using "$logdir/03a_an_descriptive_tables", replace t
+log using "$logdir/03a_an_descriptive_tables`dataset'", replace t
 
 forvalues x=0/1 {
 
-use $tempdir/analysis_dataset_ageband_`x', clear
+use $tempdir/analysis_dataset_ageband_`x'`dataset', clear
 
 
 **********************************
@@ -96,14 +99,14 @@ safetab `var'
 }
 
 * Outcomes
-foreach var in covid_death_icu non_covid_death  ///
+foreach var in  non_covid_death  ///
  covid_tpp_prob {
 safetab `var'
 }
 
 
 * Outcomes by exposure
-foreach var in covid_death_icu non_covid_death  ///
+foreach var in non_covid_death  ///
  covid_tpp_prob {
 safetab `var'
 safetab `var' kids_cat4, col row

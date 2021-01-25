@@ -45,8 +45,9 @@ global comordidadjlist  i.htdiag_or_highbp				///
 			i.asplenia 						///
 			i.ra_sle_psoriasis  			///
 			i.other_immuno		
+			
 local outcome `1' 
-
+local dataset `2'
 
 ************************************************************************************
 *First clean up all old saved estimates for this outcome
@@ -58,7 +59,7 @@ cap erase ./output/an_interaction_cox_models_`outcome'_`exposure_type'_cat_time_
 
 
 cap log close
-log using "$logdir/10_an_interaction_cox_models_time_`outcome'", text replace
+log using "$logdir/10_an_interaction_cox_models_time_`outcome'`dataset'", text replace
 
 *PROG TO DEFINE THE BASIC COX MODEL WITH OPTIONS FOR HANDLING OF AGE, BMI, ETHNICITY:
 cap prog drop basemodel
@@ -82,11 +83,11 @@ end
 * Open dataset and fit specified model(s)
 forvalues x=0/1 {
 
-use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'.dta", clear
+use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'`dataset'.dta", clear
 
 *Split data by time of study period: days to 1st September
-stsplit cat_time, at(0,212,400)
-recode cat_time 212=1 400=2
+stsplit cat_time, at(0,61,400)
+recode cat_time 61=1 400=2
 recode `outcome' .=0 
 tab cat_time
 tab cat_time `outcome'
@@ -117,7 +118,7 @@ di "`exposure_type'" _n "****************"
 lincom 2.`exposure_type' + 1.`int_type'#2.`exposure_type', eform
 di "`exposure_type'" _n "****************"
 lincom 3.`exposure_type' + 1.`int_type'#3.`exposure_type', eform
-estimates save ./output/an_interaction_cox_models_`outcome'_`exposure_type'_`int_type'_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_`x', replace
+estimates save ./output/an_interaction_cox_models_`outcome'_`exposure_type'_`int_type'_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_`x'`dataset', replace
 }
 else di "WARNING GROUP MODEL DID NOT FIT (OUTCOME `outcome')"
 

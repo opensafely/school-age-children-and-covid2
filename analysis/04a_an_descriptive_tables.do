@@ -27,13 +27,16 @@ global outdir  	  "output"
 global logdir     "log"
 global tempdir    "tempdata"
 
+*first argument main W2 
+local dataset `1'
+
 * Open a log file
 capture log close
-log using "$logdir/04a_an_descriptive_tables", replace t
+log using "$logdir/04a_an_descriptive_tables`dataset'", replace t
 
 forvalues x=0/1 {
 
-use $tempdir/analysis_dataset_ageband_`x', clear
+use $tempdir/analysis_dataset_ageband_`x'`dataset', clear
 
 **********************************
 *  Distribution in whole cohort  *
@@ -89,17 +92,17 @@ safetab stp
 safetab non_covid_death
 safetab covid_death
 safetab covid_tpp_prob
-safetab covid_death_icu
 safetab covid_icu
 
-
+* Outcome dates
+sum date*, format
 
 
 **********************************
 *  Number (%) with each outcome  *
 **********************************
 
-foreach outvar of varlist covid_tpp_prob covid_death_icu non_covid_death {
+foreach outvar of varlist covid_tpp_prob covid_death non_covid_death {
 
 *** Repeat for each outcome
 
@@ -138,23 +141,6 @@ foreach outvar of varlist covid_tpp_prob covid_death_icu non_covid_death {
 	*safetab urban 								`outvar', col
 	safetab stp 								`outvar', col
 }
-
-
-********************************************
-*  Cumulative incidence of ONS NON COVID DEATH*
-********************************************
-
-use "$tempdir/cr_create_analysis_dataset_STSET_non_covid_death_ageband_`x'.dta", clear
-
-sts list , at(0 80) by(agegroup male) fail
-
-***************************************
-*  Cumulative incidence of TPP COVID PROBABLE CASES *
-***************************************
-
-use "$tempdir/cr_create_analysis_dataset_STSET_covid_tpp_prob_ageband_`x'.dta", clear
-
-sts list , at(0 80) by(agegroup male) fail
 
 }
 

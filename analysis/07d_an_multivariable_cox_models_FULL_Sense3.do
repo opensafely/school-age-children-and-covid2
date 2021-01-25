@@ -47,7 +47,8 @@ global comordidadjlist  i.htdiag_or_highbp				///
 			i.other_immuno		
 			
 local outcome `1' 
-
+local dataset `2'
+ 
 
 ************************************************************************************
 *First clean up all old saved estimates for this outcome
@@ -61,12 +62,12 @@ cap erase ./output/an_multivariate_cox_models_`outcome'_MAINFULLYADJMODEL_agespl
 
 * Open a log file
 capture log close
-log using "$logdir/07d_an_multivariable_cox_models_FULL_Sense3_`outcome'", text replace
+log using "$logdir/07d_an_multivariable_cox_models_FULL_Sense3_`outcome'`dataset'", text replace
 
 * Open dataset and fit specified model(s)
 forvalues x=0/1 {
 
-use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'.dta", clear
+use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'`dataset'.dta", clear
 
 ******************************
 *  Multivariable Cox models  *
@@ -82,7 +83,7 @@ stcox 	i.`exposure_type'			///
 			, strata(stp) vce(cluster household_id)
 if _rc==0{
 estimates
-estimates save ./output/an_sense_`outcome'_CCeth_bmi_smok_ageband_`x', replace
+estimates save ./output/an_sense_`outcome'_CCeth_bmi_smok_ageband_`x'`dataset', replace
 *estat concordance /*c-statistic*/
  }
  else di "WARNING CC BMI SMOK MODEL WITH AGESPLINE DID NOT FIT (OUTCOME `outcome')" 

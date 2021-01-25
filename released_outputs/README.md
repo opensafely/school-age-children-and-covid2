@@ -1,27 +1,6 @@
 # Table of contents
 
-* log
-  * [log/01_cr_analysis_dataset.log](log/01_cr_analysis_dataset.log)
-  * [log/01_cr_analysis_dataset_W2.log](log/01_cr_analysis_dataset_W2.log)
-  * [log/02_an_data_checks.log](log/02_an_data_checks.log)
-  * [log/02_an_data_checksW2.log](log/02_an_data_checksW2.log)
-  * [log/03b_an_descriptive_table_1MAIN.log](log/03b_an_descriptive_table_1MAIN.log)
-  * [log/03b_an_descriptive_table_1W2.log](log/03b_an_descriptive_table_1W2.log)
-  * [log/04a_an_descriptive_tables.log](log/04a_an_descriptive_tables.log)
-  * [log/04b_an_descriptive_table_2_MAIN.log](log/04b_an_descriptive_table_2_MAIN.log)
-  * [log/04b_an_descriptive_table_2_W2.log](log/04b_an_descriptive_table_2_W2.log)
 * output
-  * [output/01_histogram_outcomes_MAIN.svg](output/01_histogram_outcomes_MAIN.svg)
-  * [output/01_histogram_outcomes_W2.svg](output/01_histogram_outcomes_W2.svg)
-  * [output/03b_an_descriptive_table_1_kids_cat4_ageband0MAIN.txt](output/03b_an_descriptive_table_1_kids_cat4_ageband0MAIN.txt)
-  * [output/03b_an_descriptive_table_1_kids_cat4_ageband0W2.txt](output/03b_an_descriptive_table_1_kids_cat4_ageband0W2.txt)
-  * [output/03b_an_descriptive_table_1_kids_cat4_ageband1MAIN.txt](output/03b_an_descriptive_table_1_kids_cat4_ageband1MAIN.txt)
-  * [output/03b_an_descriptive_table_1_kids_cat4_ageband1W2.txt](output/03b_an_descriptive_table_1_kids_cat4_ageband1W2.txt)
-  * [output/04b_an_descriptive_table_2_MAIN_ageband0.txt](output/04b_an_descriptive_table_2_MAIN_ageband0.txt)
-  * [output/04b_an_descriptive_table_2_MAIN_ageband1.txt](output/04b_an_descriptive_table_2_MAIN_ageband1.txt)
-  * [output/04b_an_descriptive_table_2_W2_ageband0.txt](output/04b_an_descriptive_table_2_W2_ageband0.txt)
-  * [output/04b_an_descriptive_table_2_W2_ageband1.txt](output/04b_an_descriptive_table_2_W2_ageband1.txt)
-  * [output/15_an_tablecontents_HRtable_all_outcomes_ANALYSES.txt](output/15_an_tablecontents_HRtable_all_outcomes_ANALYSES.txt)
   * output/redacted_01_18
     * [output/redacted_01_18/01_histogram_infection_outcomes.svg](output/redacted_01_18/01_histogram_infection_outcomes.svg)
     * [output/redacted_01_18/03b_an_descriptive_table_1_kids_cat4_ageband0.txt](output/redacted_01_18/03b_an_descriptive_table_1_kids_cat4_ageband0.txt)

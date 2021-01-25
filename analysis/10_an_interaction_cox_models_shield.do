@@ -46,10 +46,12 @@ global comordidadjlist  i.htdiag_or_highbp				///
 			i.ra_sle_psoriasis  			///
 			i.other_immuno		
 			
-local outcome `1'
+local outcome `1' 
+local dataset `2'
+ 
 
 cap log close
-log using "$logdir/10_an_interaction_cox_models_shield_`outcome'", text replace
+log using "$logdir/10_an_interaction_cox_models_shield_`outcome'`dataset'", text replace
 
 
 ************************************************************************************
@@ -83,7 +85,7 @@ end
 * Open dataset and fit specified model(s)
 forvalues x=0/1 {
 
-use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'.dta", clear
+use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'`dataset'.dta", clear
 	
 
 
@@ -106,7 +108,7 @@ di "`exposure_type'" _n "****************"
 lincom 2.`exposure_type' + 1.`int_type'#2.`exposure_type', eform
 di "`exposure_type'" _n "****************"
 lincom 3.`exposure_type' + 1.`int_type'#3.`exposure_type', eform
-estimates save "$outdir/an_interaction_cox_models_`outcome'_`exposure_type'_`int_type'_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_`x'", replace
+estimates save "$outdir/an_interaction_cox_models_`outcome'_`exposure_type'_`int_type'_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_`x'`dataset'", replace
 }
 else di "WARNING GROUP MODEL DID NOT FIT (OUTCOME `outcome')"
 

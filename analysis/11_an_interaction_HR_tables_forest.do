@@ -23,9 +23,10 @@ log using "11_an_interaction_HR_tables_forest_`outcome'.log", text replace
 cap prog drop outputHRsforvar
 prog define outputHRsforvar
 syntax, variable(string) min(real) max(real) outcome(string)
-file write tablecontents_int ("age") _tab ("exposure") _tab ("exposure level") ///
+file write tablecontents_int ("dataset") _tab ("age") _tab ("exposure") _tab ("exposure level") ///
 _tab ("outcome") _tab ("int_type") _tab ("int_level") ///
 _tab ("HR")  _tab ("lci")  _tab ("uci") _tab ("pval") _n
+foreach dataset in MAIN W2 {
 forvalues x=0/1 {
 forvalues i=`min'/`max'{
 foreach int_type in male cat_time shield {
@@ -35,7 +36,7 @@ forvalues int_level=0/1 {
 local endwith "_tab"
 
 	*put the varname and condition to left so that alignment can be checked vs shell
-	file write tablecontents_int ("`x'") _tab ("`variable'") _tab ("`i'") _tab ("`outcome'") _tab ("`int_type'") _tab ("`int_level'") _tab
+	file write tablecontents_int ("`dataset'") _tab ("`x'") _tab ("`variable'") _tab ("`i'") _tab ("`outcome'") _tab ("`int_type'") _tab ("`int_level'") _tab
 
 	foreach modeltype of any fulladj {
 
@@ -48,7 +49,7 @@ local endwith "_tab"
 		*1) GET THE RIGHT ESTIMATES INTO MEMORY
 
 		if "`modeltype'"=="fulladj" {
-				cap estimates use ./output/an_interaction_cox_models_`outcome'_`variable'_`int_type'_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_`x'
+				cap estimates use ./output/an_interaction_cox_models_`outcome'_`variable'_`int_type'_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_`x'`dataset'
 				if _rc!=0 local noestimatesflag 1
 				}
 		***********************
@@ -81,7 +82,7 @@ local endwith "_tab"
 				cap gen `variable'=.
 				test 1.`int_type'#2.`variable' 1.`int_type'#1.`variable'
 				local pval=r(p)
-				post HRestimates_int ("`x'") ("`outcome'") ("`variable'") ("`int_type'") (`i') (`int_level') (`hr') (`lb') (`ub') (`pval')
+				post HRestimates_int ("`dataset'") ("`x'") ("`outcome'") ("`variable'") ("`int_type'") (`i') (`int_level') (`hr') (`lb') (`ub') (`pval')
 				drop `variable'
 				}
 		}
@@ -91,6 +92,7 @@ local endwith "_tab"
 
 } /*variable levels*/
 } /*agebands*/
+} /*datsets*/
 end
 ***********************************************************************************************************************
 
@@ -100,7 +102,7 @@ file open tablecontents_int using ./output/11_an_int_tab_contents_HRtable_`outco
 
 tempfile HRestimates_int
 cap postutil clear
-postfile HRestimates_int str10 x str10 outcome str27 variable str27 int_type level int_level hr lci uci pval using `HRestimates_int'
+postfile HRestimates_int str10 dataset str10 x str10 outcome str27 variable str27 int_type level int_level hr lci uci pval using `HRestimates_int'
 
 *Primary exposure
 outputHRsforvar, variable("kids_cat4") min(1) max(3) outcome(`outcome')
