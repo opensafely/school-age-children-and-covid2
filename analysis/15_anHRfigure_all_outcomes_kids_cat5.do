@@ -16,17 +16,17 @@
 cap prog drop outputHRsforvar
 prog define outputHRsforvar
 syntax, variable(string) min(real) max(real)
+file write tablecontents_all_outcomes ("dataset") _tab ("age") _tab ("exposure") _tab ("exposure level") ///
+_tab ("outcome") _tab ("HR")  _tab ("lci")  _tab ("uci")  _n
 foreach dataset in MAIN W2 {
 forvalues x=0/1 {
-file write tablecontents_all_outcomes ("dataset") ("age") ("`x'") _n
 foreach outcome in  covid_tpp_prob covidadmission covid_icu covid_death non_covid_death  {
-file write tablecontents_all_outcomes ("outcome=") ("`outcome'") _n
 forvalues i=1/4 {
 local endwith "_tab"
 
 	*put the varname and condition to left so that alignment can be checked vs shell
-	file write tablecontents_all_outcomes("`variable'") _tab ("`i'") _tab
-	
+	file write tablecontents_all_outcomes ("`dataset'") _tab ("`x'") _tab ("`variable'") _tab ("`i'") _tab ("`outcome'") _tab
+
 	foreach modeltype of any plus_ethadj {
 	
 		local noestimatesflag 0 /*reset*/
@@ -47,7 +47,7 @@ local endwith "_tab"
 		
 		if `noestimatesflag'==0 & "`modeltype'"=="plus_ethadj"  {
 			cap lincom `i'.`variable', eform
-			if _rc==0 file write tablecontents_all_outcomes %4.2f (r(estimate)) (" (") %4.2f (r(lb)) ("-") %4.2f (r(ub)) (")") (e(N))  `endwith'
+			if _rc==0 file write tablecontents_all_outcomes %4.2f (r(estimate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab (e(N))  `endwith'
 				else file write tablecontents_all_outcomes %4.2f ("ERR IN MODEL") `endwith'
 			}
 			
@@ -74,7 +74,7 @@ end
 
 
 cap file close tablecontents_all_outcomes
-file open tablecontents_all_outcomes using ./output/15_an_tablecontents_HRtable_all_outcomes_KIDS_CAT5.txt, t w replace 
+file open tablecontents_all_outcomes using ./output/15_an_tablecontents_HRtable_all_outcomes_ANALYSES_KIDS_CAT5.txt, t w replace 
 
 tempfile HRestimates_all_outcomes
 cap postutil clear
@@ -118,7 +118,6 @@ replace leveldesc = "Only children aged 0-4 years" if i==1 & hr!=1 & hr!=.
 replace leveldesc = "Only children aged 5-11 years" if i==2 & hr!=1 & hr!=.
 replace leveldesc = "Only children aged ≥12 years" if i==3 & hr!=1 & hr!=.
 replace leveldesc = "Children in a least 2 of above age categories" if i==4 & hr!=1 & hr!=.
-
 
 
 gen Name = outcome if hr==.
