@@ -74,7 +74,7 @@ end
 
 
 cap file close tablecontents_all_outcomes
-file open tablecontents_all_outcomes using ./output/15_an_tablecontents_HRtable_all_outcomes_ANALYSES_KIDS_CAT5.txt, t w replace 
+file open tablecontents_all_outcomes using ./output/15_an_tablecontents_HRtable_all_outcomes_KIDS_CAT5.txt, t w replace 
 
 tempfile HRestimates_all_outcomes
 cap postutil clear
