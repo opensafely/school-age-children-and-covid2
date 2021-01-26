@@ -76,7 +76,7 @@ study = StudyDefinition(
         returning="date",
         find_first_match_in_period=True,
         date_format="YYYY-MM-DD",
-        return_expectations={"rate" : "exponential_increase"},
+        return_expectations={"date": {"earliest": "2020-09-01"}, "incidence" : 0.95},
     ), 
    
     covid_admission_date=patients.admitted_to_hospital(
