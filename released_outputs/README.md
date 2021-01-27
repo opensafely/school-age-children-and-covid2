@@ -34,6 +34,12 @@
   * [output/15_an_HRforest_all_outcomes_ageband_1_MAIN_KIDS_CAT5.svg](output/15_an_HRforest_all_outcomes_ageband_1_MAIN_KIDS_CAT5.svg)
   * [output/15_an_HRforest_all_outcomes_ageband_1_W2_KIDS_CAT5.svg](output/15_an_HRforest_all_outcomes_ageband_1_W2_KIDS_CAT5.svg)
   * [output/15_an_tablecontents_HRtable_all_outcomes_ANALYSES.txt](output/15_an_tablecontents_HRtable_all_outcomes_ANALYSES.txt)
+  * [output/an_tablecontents_HRtable_covid_death.txt](output/an_tablecontents_HRtable_covid_death.txt)
+  * [output/an_tablecontents_HRtable_covid_icu.txt](output/an_tablecontents_HRtable_covid_icu.txt)
+  * [output/an_tablecontents_HRtable_covid_tpp_prob.txt](output/an_tablecontents_HRtable_covid_tpp_prob.txt)
+  * [output/an_tablecontents_HRtable_covidadmission.txt](output/an_tablecontents_HRtable_covidadmission.txt)
+  * [output/an_tablecontents_HRtable_non_covid_death.txt](output/an_tablecontents_HRtable_non_covid_death.txt)
+  * [output/an_tablecontents_HRtable_worms.txt](output/an_tablecontents_HRtable_worms.txt)
   * output/redacted_01_18
     * [output/redacted_01_18/01_histogram_infection_outcomes.svg](output/redacted_01_18/01_histogram_infection_outcomes.svg)
     * [output/redacted_01_18/03b_an_descriptive_table_1_kids_cat4_ageband0.txt](output/redacted_01_18/03b_an_descriptive_table_1_kids_cat4_ageband0.txt)
