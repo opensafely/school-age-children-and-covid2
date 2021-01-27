@@ -1,0 +1,74 @@
+dataset	age	exposure	exposure level	outcome	int_type	int_level	HR	lci	uci	pval
+MAIN	0	kids_cat4	1	covidadmission	male	0	0.85	0.76	0.96	0.07
+MAIN	0	kids_cat4	1	covidadmission	male	1	0.98	0.88	1.08	
+MAIN	0	kids_cat4	1	covidadmission	cat_time	0	DID NOT FIT
+MAIN	0	kids_cat4	1	covidadmission	cat_time	1	DID NOT FIT
+MAIN	0	kids_cat4	1	covidadmission	shield	0	0.90	0.82	0.99	0.41
+MAIN	0	kids_cat4	1	covidadmission	shield	1	0.97	0.84	1.11	
+MAIN	0	kids_cat4	2	covidadmission	male	0	0.93	0.81	1.05	0.00
+MAIN	0	kids_cat4	2	covidadmission	male	1	1.18	1.06	1.32	
+MAIN	0	kids_cat4	2	covidadmission	cat_time	0	DID NOT FIT
+MAIN	0	kids_cat4	2	covidadmission	cat_time	1	DID NOT FIT
+MAIN	0	kids_cat4	2	covidadmission	shield	0	1.06	0.95	1.17	0.84
+MAIN	0	kids_cat4	2	covidadmission	shield	1	1.08	0.93	1.25	
+MAIN	0	kids_cat4	3	covidadmission	male	0	1.08	0.94	1.25	0.61
+MAIN	0	kids_cat4	3	covidadmission	male	1	1.14	1.00	1.29	
+MAIN	0	kids_cat4	3	covidadmission	cat_time	0	DID NOT FIT
+MAIN	0	kids_cat4	3	covidadmission	cat_time	1	DID NOT FIT
+MAIN	0	kids_cat4	3	covidadmission	shield	0	1.15	1.03	1.28	0.31
+MAIN	0	kids_cat4	3	covidadmission	shield	1	1.03	0.85	1.24	
+MAIN	1	kids_cat4	1	covidadmission	male	0	1.07	0.84	1.36	0.94
+MAIN	1	kids_cat4	1	covidadmission	male	1	1.06	0.87	1.28	
+MAIN	1	kids_cat4	1	covidadmission	cat_time	0	DID NOT FIT
+MAIN	1	kids_cat4	1	covidadmission	cat_time	1	DID NOT FIT
+MAIN	1	kids_cat4	1	covidadmission	shield	0	1.18	0.97	1.44	0.10
+MAIN	1	kids_cat4	1	covidadmission	shield	1	0.93	0.73	1.17	
+MAIN	1	kids_cat4	2	covidadmission	male	0	1.07	0.82	1.42	0.71
+MAIN	1	kids_cat4	2	covidadmission	male	1	1.00	0.78	1.28	
+MAIN	1	kids_cat4	2	covidadmission	cat_time	0	DID NOT FIT
+MAIN	1	kids_cat4	2	covidadmission	cat_time	1	DID NOT FIT
+MAIN	1	kids_cat4	2	covidadmission	shield	0	0.90	0.68	1.18	0.14
+MAIN	1	kids_cat4	2	covidadmission	shield	1	1.18	0.92	1.51	
+MAIN	1	kids_cat4	3	covidadmission	male	0	1.54	1.15	2.06	0.01
+MAIN	1	kids_cat4	3	covidadmission	male	1	0.87	0.62	1.21	
+MAIN	1	kids_cat4	3	covidadmission	cat_time	0	DID NOT FIT
+MAIN	1	kids_cat4	3	covidadmission	cat_time	1	DID NOT FIT
+MAIN	1	kids_cat4	3	covidadmission	shield	0	1.18	0.87	1.59	0.87
+MAIN	1	kids_cat4	3	covidadmission	shield	1	1.13	0.81	1.59	
+W2	0	kids_cat4	1	covidadmission	male	0	1.12	0.97	1.29	0.30
+W2	0	kids_cat4	1	covidadmission	male	1	1.23	1.08	1.41	
+W2	0	kids_cat4	1	covidadmission	cat_time	0	DID NOT FIT
+W2	0	kids_cat4	1	covidadmission	cat_time	1	DID NOT FIT
+W2	0	kids_cat4	1	covidadmission	shield	0	1.17	1.04	1.31	0.80
+W2	0	kids_cat4	1	covidadmission	shield	1	1.20	1.01	1.42	
+W2	0	kids_cat4	2	covidadmission	male	0	1.13	0.96	1.33	0.09
+W2	0	kids_cat4	2	covidadmission	male	1	1.36	1.18	1.57	
+W2	0	kids_cat4	2	covidadmission	cat_time	0	DID NOT FIT
+W2	0	kids_cat4	2	covidadmission	cat_time	1	DID NOT FIT
+W2	0	kids_cat4	2	covidadmission	shield	0	1.15	1.01	1.32	0.03
+W2	0	kids_cat4	2	covidadmission	shield	1	1.47	1.23	1.74	
+W2	0	kids_cat4	3	covidadmission	male	0	1.41	1.18	1.68	0.71
+W2	0	kids_cat4	3	covidadmission	male	1	1.47	1.26	1.72	
+W2	0	kids_cat4	3	covidadmission	cat_time	0	DID NOT FIT
+W2	0	kids_cat4	3	covidadmission	cat_time	1	DID NOT FIT
+W2	0	kids_cat4	3	covidadmission	shield	0	1.34	1.15	1.54	0.04
+W2	0	kids_cat4	3	covidadmission	shield	1	1.71	1.40	2.09	
+W2	1	kids_cat4	1	covidadmission	male	0	1.09	0.80	1.48	0.27
+W2	1	kids_cat4	1	covidadmission	male	1	0.87	0.65	1.15	
+W2	1	kids_cat4	1	covidadmission	cat_time	0	DID NOT FIT
+W2	1	kids_cat4	1	covidadmission	cat_time	1	DID NOT FIT
+W2	1	kids_cat4	1	covidadmission	shield	0	0.91	0.68	1.23	0.64
+W2	1	kids_cat4	1	covidadmission	shield	1	1.01	0.75	1.35	
+W2	1	kids_cat4	2	covidadmission	male	0	0.94	0.65	1.38	0.48
+W2	1	kids_cat4	2	covidadmission	male	1	1.12	0.82	1.53	
+W2	1	kids_cat4	2	covidadmission	cat_time	0	DID NOT FIT
+W2	1	kids_cat4	2	covidadmission	cat_time	1	DID NOT FIT
+W2	1	kids_cat4	2	covidadmission	shield	0	1.03	0.72	1.45	0.92
+W2	1	kids_cat4	2	covidadmission	shield	1	1.05	0.74	1.49	
+W2	1	kids_cat4	3	covidadmission	male	0	1.49	1.04	2.13	0.09
+W2	1	kids_cat4	3	covidadmission	male	1	0.95	0.63	1.42	
+W2	1	kids_cat4	3	covidadmission	cat_time	0	DID NOT FIT
+W2	1	kids_cat4	3	covidadmission	cat_time	1	DID NOT FIT
+W2	1	kids_cat4	3	covidadmission	shield	0	1.34	0.94	1.90	0.33
+W2	1	kids_cat4	3	covidadmission	shield	1	1.03	0.68	1.57	
+
