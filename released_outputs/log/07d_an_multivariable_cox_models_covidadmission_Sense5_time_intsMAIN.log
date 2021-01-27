@@ -1,0 +1,207 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /workspace/log/07d_an_multivariable_cox_models_covidadmission_Sens
+> e5_time_intsMAIN.log
+  log type:  text
+ opened on:  27 Jan 2021, 03:52:10
+
+. 
+. 
+. foreach x in 0 1 {
+  2. ******************************
+. *  Multivariable Cox models  *
+. ******************************
+. display "$S_TIME  $S_DATE"
+  3. use "$tempdir/cr_create_analysis_dataset_STSET_covid_tpp_prob_ageband_`x'`
+> dataset'.dta", clear
+  4. display "$S_TIME  $S_DATE"
+  5. stsplit timeperiod, at(60 90)
+  6. 
+. *make vars binary
+. gen anyreduced_kidney_function = reduced_kidney_function_cat>=2
+  7. gen anyobesity = obese4cat>=2
+  8. gen highimd = imd>=3
+  9. gen anydiab= diabcat>=2
+ 10. gen any_nonwhite=ethnicity>=2
+ 11.    
+. *Fully adjusted
+. stcox   i.kids_cat4      ///
+>                         age1 age2 age3          ///
+>                         i.tot_adults_hh ///
+>                         i.male                                               
+>    ///
+>                         i.obese4cat                                     ///
+>                         i.smoke_nomiss                                  ///
+>                         i.imd                                           ///
+>                         i.ethnicity ///
+>                         `comordidadjlist'       ///     
+>                         60.timeperiod#1.male                                 
+>                    ///
+>                         90.timeperiod#1.male                                 
+>            ///
+>                         60.timeperiod#1.tot_adults_hh                        
+>                            ///
+>                         90.timeperiod#1.tot_adults_hh                        
+>                    ///
+>                         60.timeperiod#1.anyobesity                           
+>                            ///
+>                         90.timeperiod#1.anyobesity                           
+>                    ///
+>                         60.timeperiod#1.any_nonwhite                         
+>                            ///
+>                         90.timeperiod#1.any_nonwhite                         
+>                    ///
+>                         60.timeperiod#3.smoke_nomiss                         
+>                    ///
+>                         90.timeperiod#3.smoke_nomiss                         
+>            ///
+>                         60.timeperiod#1.highimd                              
+>                            ///
+>                         90.timeperiod#1.highimd                              
+>                    ///
+>                         , strata(stp) vce(cluster household_id)
+ 12. display "$S_TIME  $S_DATE"
+ 13. estimates save "./output/an_sense_`outcome'_time_int_ageband_`x'`dataset'"
+> , replace
+ 14. estat phtest, d
+ 15. display "$S_TIME  $S_DATE"
+ 16. }
+03:52:10  27 Jan 2021
+03:52:15  27 Jan 2021
+(18,532,865 observations (episodes) created)
+
+         failure _d:  covid_tpp_prob
+   analysis time _t:  (stime_covid_tpp_prob-origin)
+             origin:  time enter_date
+  enter on or after:  time enter_date
+                 id:  patient_id
+
+Iteration 0:   log pseudolikelihood = -666494.96
+Iteration 1:   log pseudolikelihood = -659888.34
+Iteration 2:   log pseudolikelihood = -658083.39
+Iteration 3:   log pseudolikelihood = -658010.45
+Iteration 4:   log pseudolikelihood = -658007.19
+Iteration 5:   log pseudolikelihood = -658007.18
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -658007.18
+
+Stratified Cox regr. -- Breslow method for ties
+
+No. of subjects      =    9,334,392             Number of obs    =  27,867,257
+No. of failures      =       51,560
+Time at risk         =   1958675680
+                                                Wald chi2(59)    =    18171.56
+Log pseudolikelihood =   -658007.18             Prob > chi2      =      0.0000
+
+                   (Std. Err. adjusted for 5,833,113 clusters in household_id)
+------------------------------------------------------------------------------
+             |               Robust
+          _t | Haz. Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   kids_cat4 |
+only <12 ..  |   .9820582   .0134006    -1.33   0.185     .9561415    1.008677
+ only 12-18  |   1.048889   .0177294     2.82   0.005     1.014709     1.08422
+      mixed  |   1.008968   .0189036     0.48   0.634       .97259    1.046707
+             |
+        age1 |   1.009071   .0017743     5.14   0.000     1.005599    1.012554
+        age2 |   1.001045   .0053833     0.19   0.846     .9905492    1.011652
+        age3 |   .9546902   .0148283    -2.99   0.003     .9260652       .9842
+             |
+tot_adults~h |
+          2  |   .8666867   .0315184    -3.93   0.000     .8070619    .9307165
+          3  |   .9641677    .034907    -1.01   0.314     .8981222     1.03507
+             |
+      1.male |   1.029893   .0317974     0.95   0.340     .9694198    1.094139
+             |
+   obese4cat |
+Obese I ..)  |   1.577042   .0540745    13.29   0.000     1.474541    1.686669
+Obese II..)  |   1.698754   .0618645    14.55   0.000     1.581728    1.824438
+Obese II..)  |   1.910362   .0741979    16.67   0.000     1.770334    2.061465
+             |
+smoke_nomiss |
+     Former  |   1.033472   .0109308     3.11   0.002     1.012268    1.055119
+    Current  |   .5488478   .0270504   -12.17   0.000     .4983103    .6045108
+             |
+         imd |
+          2  |   1.094006   .0189326     5.19   0.000     1.057521     1.13175
+          3  |   .7852744   .0290459    -6.54   0.000       .73036    .8443177
+          4  |   .8391259   .0308272    -4.77   0.000     .7808297    .9017744
+5 most de..  |   .8891921   .0328748    -3.18   0.001     .8270378    .9560174
+             |
+   ethnicity |
+      Mixed  |   1.168526   .0587946     3.10   0.002      1.05879    1.289635
+Asian or ..  |   1.946941   .0783374    16.56   0.000     1.799301    2.106696
+      Black  |   1.322843   .0589677     6.28   0.000     1.212174    1.443617
+      Other  |   .9870495   .0468796    -0.27   0.784     .8993141    1.083344
+             |
+1.htdiag_o~p |   1.133211   .0127199    11.14   0.000     1.108552    1.158418
+1.~y_disease |    1.51587   .0389186    16.20   0.000     1.441479    1.594101
+    1.asthma |   1.111314   .0129358     9.07   0.000     1.086248    1.136959
+1.~c_disease |   1.284684   .0282271    11.40   0.000     1.230534    1.341217
+             |
+     diabcat |
+T1DM, con..  |   1.058977   .1173105     0.52   0.605     .8523008    1.315771
+T1DM, unc..  |   1.438764   .0819353     6.39   0.000     1.286811    1.608659
+T2DM, con..  |   1.237622   .0282216     9.35   0.000     1.183526     1.29419
+T2DM, unc..  |   1.514764   .0353059    17.82   0.000     1.447123    1.585568
+Diabetes,..  |   1.251506    .201293     1.39   0.163     .9131141    1.715302
+             |
+cancer_exh~t |
+  Last year  |   1.598831   .1116348     6.72   0.000     1.394342     1.83331
+2-5 years..  |   1.114715   .0541549     2.24   0.025      1.01347    1.226075
+   5+ years  |   1.069384   .0407823     1.76   0.079     .9923666    1.152379
+             |
+cancer_hae~t |
+  Last year  |   3.085547   .4603386     7.55   0.000     2.303244    4.133563
+2-5 years..  |   2.273767     .22576     8.27   0.000     1.871677    2.762237
+   5+ years  |   1.197364   .1020202     2.11   0.035     1.013212    1.414986
+             |
+1.~r_disease |   1.604437   .0695376    10.91   0.000     1.473774    1.746685
+1.stroke_d~a |   1.409528   .0529956     9.13   0.000     1.309394    1.517321
+1.other_ne~o |   1.210662   .0564225     4.10   0.000     1.104976    1.326456
+             |
+reduced_ki~t |
+Stage 3a/..  |   1.236163   .0441314     5.94   0.000     1.152624    1.325757
+Stage 4/5..  |    2.56919   .1870186    12.96   0.000     2.227588    2.963177
+             |
+      1.esrd |   2.325509   .1671871    11.74   0.000     2.019867    2.677399
+1.other_tr~t |   .9680995   .1664481    -0.19   0.850     .6911471    1.356031
+  1.asplenia |    1.63025   .1591344     5.01   0.000     1.346373    1.973981
+1.ra_sle_p~s |   1.065153   .0216405     3.11   0.002     1.023572    1.108423
+1.other_im~o |   1.570634   .0842308     8.42   0.000     1.413924    1.744712
+             |
+  timeperiod#|
+        male |
+       60 1  |   .6332626   .0216707   -13.35   0.000     .5921818    .6771932
+       90 1  |   .7095966   .0233023   -10.45   0.000     .6653638    .7567701
+             |
+  timeperiod#|
+tot_adults~h |
+       60 1  |   .8448667   .0338719    -4.20   0.000     .7810204    .9139323
+       90 1  |   .7675934    .029845    -6.80   0.000     .7112715    .8283751
+             |
+  timeperiod#|
+  anyobesity |
+       60 1  |   .9259305   .0343645    -2.07   0.038     .8609687    .9957937
+       90 1  |   .7071469   .0255812    -9.58   0.000     .6587448    .7591053
+             |
+  timeperiod#|
+any_nonwhite |
+       60 1  |   1.174972   .0523133     3.62   0.000     1.076786    1.282111
+       90 1  |   1.490028   .0634821     9.36   0.000     1.370658    1.619793
+             |
+  timeperiod#|
+smoke_nomiss |
+ 60#Current  |   .9515987   .0519893    -0.91   0.364     .8549674    1.059152
+ 90#Current  |   1.267785   .0660451     4.55   0.000     1.144728    1.404071
+             |
+  timeperiod#|
+     highimd |
+       60 1  |   1.342216    .051346     7.69   0.000      1.24526    1.446721
+       90 1  |   1.766028   .0662432    15.16   0.000     1.640851    1.900754
+------------------------------------------------------------------------------
+                                                             Stratified by stp
+09:05:38  27 Jan 2021
+(note: file ./output/an_sense_covidadmission_time_int_ageband_0MAIN.ster not fo
+> und)
+file ./output/an_sense_covidadmission_time_int_ageband_0MAIN.ster saved
