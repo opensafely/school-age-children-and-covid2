@@ -204,6 +204,7 @@ replace Name = "Participants with complete BMI and smoking data  (N=`number_CCet
 replace Name = "Underlying timescale in the cox model revised to age   (N=`number_age_underlying_timescale')" if Name=="age_underlying_timescale"
 replace Name = "Participants with at least 12 months registration at GP  (N=`number_plus_eth_12mo')" if Name=="plus_eth_12mo"
 replace Name = "Non-proportional hazards fitted (N=`number_time_int')" if Name=="time_int"
+replace Name = "Censor study at 1st November (N=`number_SUS_censor')" if Name=="SUS_censor"
 
 for var hr lci uci: replace X = . if X==1
 
