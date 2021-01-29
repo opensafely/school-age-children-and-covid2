@@ -14,7 +14,7 @@ venv/
 .cache
 *.exe
 output/*
-.dta
+*.dta
 analysis/tempdata/
 /tempdata/
 analysis/output/
