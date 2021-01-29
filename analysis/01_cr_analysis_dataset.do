@@ -218,50 +218,59 @@ drop if age_drop==9
 count
 
 **************************** HOUSEHOLD VARS*******************************************
+***KIDS_CAT5 (5 categories)
+*Identify kids under 5/5-11/12-18
+gen no_of_kids=1 if age<5
+recode no_of_kids .=2 if age<12
+recode no_of_kids .=3 if age<18 
 
-*No kids/kids under 12/up to 18
-*Identify kids under 12, or kids under 18
-gen nokids=1 if age<5
-recode nokids .=2 if age<12
-recode nokids .=3 if age<18 
-
+*Make seperate files with only kids and household number
 preserve
 keep if age<18
-keep household_id nokids
+keep household_id no_of_kids
+*Drop duplicates (i.e. for hh with kids of same age, keep only one)
 duplicates drop
-bysort household_id: replace nokids=4 if _N>1
+*If a hh has >1 record, there must be mixed ages in it: flag these as category 4
+bysort household_id: replace no_of_kids=4 if _N>1
 duplicates drop
-rename nokids kids_cat5
-list in 1/100
+rename no_of_kids kids_cat5
 save kids_mixed_category, replace
 restore
 
+*merge in kids identifier
 merge m:1 household_id using kids_mixed_category, nogen keep(master match)
 
+*label variable
 lab define   kids_cat5 0 none  1 "only <5 years" ///
 2 "only 5-11" 3 "12-<18" 4 "mixed"
 lab val kids_cat5 kids_cat5
 recode kids_cat5 .=0
 tab kids_cat5
-drop nokids
+drop no_of_kids
 
-*Identify kids under 12, or kids under 18
-gen nokids=1 if age<12
-recode nokids .=2 if age<18 
+***KIDS_CAT4 (4 categories)
+*Identify kids under 0-11/12-18
+gen no_of_kids=1 if age<12
+recode no_of_kids .=2 if age<18 
 
+*Make seperate files with only kids and household number
 preserve
 keep if age<18
-keep household_id nokids
+keep household_id no_of_kids
+*Drop duplicates (i.e. for hh with kids of same age, keep only one)
 duplicates drop
-bysort household_id: replace nokids=3 if _N>1
+*If a hh has >1 record, there must be mixed ages in it: flag these as category 4
+bysort household_id: replace no_of_kids=3 if _N>1
 duplicates drop
-rename nokids kids_cat4
+rename no_of_kids kids_cat4
 list in 1/100
 save kids_mixed_category, replace
 restore
 
+*merge in kids identifier
 merge m:1 household_id using kids_mixed_category, nogen keep(master match)
 
+*label variable
 lab define   kids_cat4 0 none  1 "only <12 years" ///
 2 "only 12-18" ///
 3 "mixed"
@@ -269,8 +278,8 @@ lab val kids_cat4 kids_cat4
 recode kids_cat4 .=0
 tab kids_cat4
 
-*Dose-response exposure
-bysort household_id: egen number_kids=sum(nokids) if kids_cat4==1
+*Dose-response exposure: identify number of kids in hh where there are ONLY under 11 yr olds
+bysort household_id: egen number_kids=sum(no_of_kids) if kids_cat4==1
 
 gen gp_number_kids=number_kids
 recode gp_number_kids 4/max=4
@@ -297,6 +306,8 @@ recode tot_adults_hh 3/max=3
 
 tab kids_cat4
 tab gp_num if kids_cat4==1
+
+erase kids_mixed_category.dta
 
 /* SET FU DATES===============================================================*/ 
 * Censoring dates for each outcome (largely, last date outcome data available)
@@ -694,7 +705,7 @@ format covid_icu_date %td
 format died_date_onscovid_part1 %td
 format covid_admission_primary_date %td
 
-* Binary indicators for outcomes
+* Binary indicators (0/1) for outcomes
 gen covid_tpp_prob = (date_covid_tpp_prob < .)
 gen non_covid_death = (died_date_onsnoncovid < .)
 gen covid_death = (died_date_onscovid < .)
