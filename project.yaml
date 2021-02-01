@@ -429,14 +429,6 @@ actions:
         log: log/07d_an_multivariable_cox_models_covid_icu_Sense5_time_intsMAIN.log
         data: "output/an_sense_covid_icu_time_int_ageband_*MAIN.ster"  
 
-  07d_an_multivariable_cox_models_FULL_Sense5_covid_icu_W2:
-    needs: [01_cr_analysis_dataset]
-    run: stata-mp:latest analysis/07d_an_multivariable_cox_models_FULL_Sense5.do covid_icu W2
-    outputs:
-      moderately_sensitive:
-        log: log/07d_an_multivariable_cox_models_covid_icu_Sense5_time_intsW2.log
-        data: "output/an_sense_covid_icu_time_int_ageband_*W2.ster" 
-
   07d_an_multivariable_cox_models_FULL_Sense5_covid_death:
     needs: [01_cr_analysis_dataset]
     run: stata-mp:latest analysis/07d_an_multivariable_cox_models_FULL_Sense5.do covid_death MAIN
@@ -1029,7 +1021,6 @@ actions:
       - 07b_an_multivariable_cox_models_FULL_covid_icu
       - 07d_an_multivariable_cox_models_FULL_Sense3_covid_icu_W2
       - 07d_an_multivariable_cox_models_FULL_Sense4_covid_icu_W2
-      - 07d_an_multivariable_cox_models_FULL_Sense5_covid_icu_W2
       - 07b_an_multivariable_cox_models_FULL_covid_icu_W2
     run: stata-mp:latest analysis/12_an_tablecontent_HRtable_SENSE.do covid_icu
     outputs:
