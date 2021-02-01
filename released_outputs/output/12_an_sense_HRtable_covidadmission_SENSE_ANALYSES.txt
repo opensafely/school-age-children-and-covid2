@@ -21,6 +21,9 @@ kids_cat4	2	1.07	0.98	1.16	9334392
 kids_cat4	3	1.13	1.02	1.25	9334392
 
 sense=time_int
+kids_cat4	1	0.92	0.85	1.00	9334392
+kids_cat4	2	1.06	0.97	1.16	9334392
+kids_cat4	3	1.11	1.01	1.23	9334392
 
 sense=SUS_censor
 datasetage1
@@ -46,6 +49,9 @@ kids_cat4	2	1.03	0.85	1.24	2684524
 kids_cat4	3	1.15	0.92	1.45	2684524
 
 sense=time_int
+kids_cat4	1	1.06	0.91	1.24	2684524
+kids_cat4	2	1.03	0.86	1.24	2684524
+kids_cat4	3	1.15	0.92	1.45	2684524
 
 sense=SUS_censor
 datasetage0
@@ -71,6 +77,9 @@ kids_cat4	2	1.27	1.13	1.41	9266918
 kids_cat4	3	1.48	1.31	1.68	9266918
 
 sense=time_int
+kids_cat4	1	1.18	1.06	1.31	9266918
+kids_cat4	2	1.25	1.12	1.40	9266918
+kids_cat4	3	1.44	1.28	1.63	9266918
 
 sense=SUS_censor
 kids_cat4	1	1.16	1.01	1.34	9266918
@@ -99,6 +108,9 @@ kids_cat4	2	1.04	0.81	1.34	2706502
 kids_cat4	3	1.21	0.91	1.59	2706502
 
 sense=time_int
+kids_cat4	1	0.96	0.77	1.19	2706502
+kids_cat4	2	1.04	0.81	1.33	2706502
+kids_cat4	3	1.19	0.90	1.58	2706502
 
 sense=SUS_censor
 kids_cat4	1	1.15	0.89	1.49	2706502

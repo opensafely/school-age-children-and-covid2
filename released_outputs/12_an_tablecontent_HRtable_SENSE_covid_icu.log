@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /workspace/12_an_tablecontent_HRtable_SENSE_covid_icu.log
   log type:  text
- opened on:  27 Jan 2021, 16:12:23
+ opened on:   1 Feb 2021, 12:33:05
 
 . 
 . *set trace on
@@ -231,28 +231,30 @@
 > N=`number_plus_eth_12mo')" if Name=="plus_eth_12mo"
  41. replace Name = "Non-proportional hazards fitted (N=`number_time_int')" if 
 > Name=="time_int"
- 42. 
-. for var hr lci uci: replace X = . if X==1
+ 42. replace Name = "Censor study at 1st November (N=`number_SUS_censor')" if N
+> ame=="SUS_censor"
  43. 
+. for var hr lci uci: replace X = . if X==1
+ 44. 
 . 
 . gen displayhrci = string(hr, "%3.2f") + " (" + string(lci, "%3.2f") + "-" + s
 > tring(uci, "%3.2f") + ")"
- 44. replace displayhrci="" if hr==.
- 45. list display
- 46. 
-. drop obsorder
+ 45. replace displayhrci="" if hr==.
+ 46. list display
  47. 
+. drop obsorder
+ 48. 
 . gen obsorder=_n
- 48. gsort -obsorder
- 49. gen graphorder = _n
- 50. sort graphorder
- 51. list graphorder Name leveldesc hr  lci uci
- 52. 
-. gen hrtitle="Hazard Ratio (95% CI)" if graphorder == 28
+ 49. gsort -obsorder
+ 50. gen graphorder = _n
+ 51. sort graphorder
+ 52. list graphorder Name leveldesc hr  lci uci
  53. 
+. gen hrtitle="Hazard Ratio (95% CI)" if graphorder == 28
+ 54. 
 . gen bf_hrtitle = "{bf:" + hrtitle + "}"
- 54. gen bf_Name = "{bf:" + Name + "}"
- 55. 
+ 55. gen bf_Name = "{bf:" + Name + "}"
+ 56. 
 . scatter graphorder hr, mcol(black)      msize(small)            ///          
 >                                                                    ///
 >         || rcap lci uci graphorder, hor mcol(black)     lcol(black)          
@@ -277,41 +279,41 @@
 > (e) size(vsmall)) ///
 >                 text(-2 1.5 "Higher risk in those living with children", plac
 > e(e) size(vsmall))
- 56. 
+ 57. 
 . graph export ./output/12_an_HRforest_SENSE_`outcome'_ageband_`x'_`dataset'.sv
 > g, as(svg) replace
- 57. }
  58. }
-(24 observations deleted)
+ 59. }
+(27 observations deleted)
 (12 observations deleted)
-(4 observations created)
+(5 observations created)
 
 ->  replace hr = 1 if expanded==1
-(4 real changes made)
+(5 real changes made)
 
 ->  replace lci = 1 if expanded==1
-(4 real changes made)
+(5 real changes made)
 
 ->  replace uci = 1 if expanded==1
-(4 real changes made)
-(4 observations created)
+(5 real changes made)
+(5 observations created)
 
 ->  replace hr=. if expanded==1 & expanded2==1
-(4 real changes made, 4 to missing)
+(5 real changes made, 5 to missing)
 
 ->  replace lci=. if expanded==1 & expanded2==1
-(4 real changes made, 4 to missing)
+(5 real changes made, 5 to missing)
 
 ->  replace uci=. if expanded==1 & expanded2==1
-(4 real changes made, 4 to missing)
-(20 missing values generated)
+(5 real changes made, 5 to missing)
+(25 missing values generated)
 variable leveldesc was str1 now str29
-(4 real changes made)
+(5 real changes made)
 variable leveldesc was str29 now str30
-(4 real changes made)
+(5 real changes made)
 variable leveldesc was str30 now str40
-(4 real changes made)
-(16 missing values generated)
+(5 real changes made)
+(20 missing values generated)
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
@@ -335,8 +337,8 @@ variable leveldesc was str30 now str40
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-           N |          0
-.
+           N |          5     9334392           0    9334392    9334392
+9334392
 variable Name was str24 now str34
 (1 real change made)
 variable Name was str34 now str60
@@ -345,17 +347,18 @@ variable Name was str60 now str66
 (1 real change made)
 variable Name was str66 now str68
 (1 real change made)
+(1 real change made)
 (0 real changes made)
 
 ->  replace hr = . if hr==1
-(4 real changes made, 4 to missing)
+(5 real changes made, 5 to missing)
 
 ->  replace lci = . if lci==1
-(4 real changes made, 4 to missing)
+(5 real changes made, 5 to missing)
 
 ->  replace uci = . if uci==1
-(4 real changes made, 4 to missing)
-(8 real changes made)
+(5 real changes made, 5 to missing)
+(10 real changes made)
 
      +------------------+
      |      displayhrci |
@@ -383,6 +386,12 @@ variable Name was str66 now str68
  18. | 0.95 (0.80-1.13) |
  19. | 1.08 (0.90-1.28) |
  20. | 1.03 (0.83-1.28) |
+     |------------------|
+ 21. |                  |
+ 22. |                  |
+ 23. | 0.90 (0.76-1.07) |
+ 24. | 1.05 (0.88-1.24) |
+ 25. | 1.00 (0.81-1.23) |
      +------------------+
 
      +----------------------------------------------------------------------+
@@ -393,10 +402,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |  Children aged 0-11 years and ≥12 years  |  1.030718   |  .8305284   |
+     |  Children aged 0-11 years and ≥12 years  |  .9982641   |  .8095889   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.279162                               |
+     |                                1.23091                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -407,10 +416,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |            Only children aged ≥12 years  |  1.076639   |  .9036145   |
+     |            Only children aged ≥12 years  |   1.04823   |  .8828738   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.282795                               |
+     |                               1.244556                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -421,10 +430,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |           Only children aged 0-11 years  |  .9493526   |  .7974428   |
+     |           Only children aged 0-11 years  |  .9046561   |  .7634691   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.130201                               |
+     |                               1.071952                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -432,7 +441,7 @@ variable Name was str66 now str68
      |                                      4                               |
      |----------------------------------------------------------------------|
      |                                                                 Name |
-     | Participants with at least 12 months registration at GP  (N=8585489) |
+     |                          Non-proportional hazards fitted (N=9334392) |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
      |                                          |         .   |         .   |
@@ -463,10 +472,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |  Children aged 0-11 years and ≥12 years  |  1.001663   |  .8098112   |
+     |  Children aged 0-11 years and ≥12 years  |  1.030718   |  .8305284   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.238967                               |
+     |                               1.279162                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -477,10 +486,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |            Only children aged ≥12 years  |  1.050723   |  .8835855   |
+     |            Only children aged ≥12 years  |  1.076639   |  .9036145   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.249477                               |
+     |                               1.282795                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -491,10 +500,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |           Only children aged 0-11 years  |  .8962027   |  .7544181   |
+     |           Only children aged 0-11 years  |  .9493526   |  .7974428   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.064634                               |
+     |                               1.130201                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -502,7 +511,7 @@ variable Name was str66 now str68
      |                                      9                               |
      |----------------------------------------------------------------------|
      |                                                                 Name |
-     |   Underlying timescale in the cox model revised to age   (N=9334392) |
+     | Participants with at least 12 months registration at GP  (N=8585489) |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
      |                                          |         .   |         .   |
@@ -533,10 +542,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |  Children aged 0-11 years and ≥12 years  |  1.015838   |  .8158028   |
+     |  Children aged 0-11 years and ≥12 years  |  1.001663   |  .8098112   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.264921                               |
+     |                               1.238967                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -547,10 +556,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |            Only children aged ≥12 years  |  1.005768   |  .8371556   |
+     |            Only children aged ≥12 years  |  1.050723   |  .8835855   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                                1.20834                               |
+     |                               1.249477                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -561,10 +570,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |           Only children aged 0-11 years  |  .8546314   |  .7116708   |
+     |           Only children aged 0-11 years  |  .8962027   |  .7544181   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                                1.02631                               |
+     |                               1.064634                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -572,7 +581,7 @@ variable Name was str66 now str68
      |                                     14                               |
      |----------------------------------------------------------------------|
      |                                                                 Name |
-     |         Participants with complete BMI and smoking data  (N=7665303) |
+     |   Underlying timescale in the cox model revised to age   (N=9334392) |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
      |                                          |         .   |         .   |
@@ -603,10 +612,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |  Children aged 0-11 years and ≥12 years  |  .9985669   |  .8097942   |
+     |  Children aged 0-11 years and ≥12 years  |  1.015838   |  .8158028   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.231345                               |
+     |                               1.264921                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -617,10 +626,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |            Only children aged ≥12 years  |  1.047787   |  .8824851   |
+     |            Only children aged ≥12 years  |  1.005768   |  .8371556   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.244053                               |
+     |                                1.20834                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -631,10 +640,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |           Only children aged 0-11 years  |  .9051911   |  .7638949   |
+     |           Only children aged 0-11 years  |  .8546314   |  .7116708   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.072623                               |
+     |                                1.02631                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -642,7 +651,7 @@ variable Name was str66 now str68
      |                                     19                               |
      |----------------------------------------------------------------------|
      |                                                                 Name |
-     |                                   Fully adjusted result  (N=9334392) |
+     |         Participants with complete BMI and smoking data  (N=7665303) |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
      |                                          |         .   |         .   |
@@ -664,41 +673,111 @@ variable Name was str66 now str68
      |                                    uci                               |
      |                                      .                               |
      +----------------------------------------------------------------------+
-(20 missing values generated)
+
+     +----------------------------------------------------------------------+
+ 21. |                               grapho~r                               |
+     |                                     21                               |
+     |----------------------------------------------------------------------|
+     |                                                                 Name |
+     |                                                                      |
+     |----------------------------------------------------------------------|
+     |                               leveldesc  |        hr   |       lci   |
+     |  Children aged 0-11 years and ≥12 years  |  .9985669   |  .8097942   |
+     |----------------------------------------------------------------------|
+     |                                    uci                               |
+     |                               1.231345                               |
+     +----------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------+
+ 22. |                               grapho~r                               |
+     |                                     22                               |
+     |----------------------------------------------------------------------|
+     |                                                                 Name |
+     |                                                                      |
+     |----------------------------------------------------------------------|
+     |                               leveldesc  |        hr   |       lci   |
+     |            Only children aged ≥12 years  |  1.047787   |  .8824851   |
+     |----------------------------------------------------------------------|
+     |                                    uci                               |
+     |                               1.244053                               |
+     +----------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------+
+ 23. |                               grapho~r                               |
+     |                                     23                               |
+     |----------------------------------------------------------------------|
+     |                                                                 Name |
+     |                                                                      |
+     |----------------------------------------------------------------------|
+     |                               leveldesc  |        hr   |       lci   |
+     |           Only children aged 0-11 years  |  .9051911   |  .7638949   |
+     |----------------------------------------------------------------------|
+     |                                    uci                               |
+     |                               1.072623                               |
+     +----------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------+
+ 24. |                               grapho~r                               |
+     |                                     24                               |
+     |----------------------------------------------------------------------|
+     |                                                                 Name |
+     |                                   Fully adjusted result  (N=9334392) |
+     |----------------------------------------------------------------------|
+     |                               leveldesc  |        hr   |       lci   |
+     |                                          |         .   |         .   |
+     |----------------------------------------------------------------------|
+     |                                    uci                               |
+     |                                      .                               |
+     +----------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------+
+ 25. |                               grapho~r                               |
+     |                                     25                               |
+     |----------------------------------------------------------------------|
+     |                                                                 Name |
+     |                                                                      |
+     |----------------------------------------------------------------------|
+     |                               leveldesc  |        hr   |       lci   |
+     |                                          |         .   |         .   |
+     |----------------------------------------------------------------------|
+     |                                    uci                               |
+     |                                      .                               |
+     +----------------------------------------------------------------------+
+(25 missing values generated)
 (note: file ./output/12_an_HRforest_SENSE_covid_icu_ageband_0_MAIN.svg not foun
 > d)
 (file ./output/12_an_HRforest_SENSE_covid_icu_ageband_0_MAIN.svg written in SVG
 >  format)
-(24 observations deleted)
+(27 observations deleted)
 (12 observations deleted)
-(4 observations created)
+(5 observations created)
 
 ->  replace hr = 1 if expanded==1
-(4 real changes made)
+(5 real changes made)
 
 ->  replace lci = 1 if expanded==1
-(4 real changes made)
+(5 real changes made)
 
 ->  replace uci = 1 if expanded==1
-(4 real changes made)
-(4 observations created)
+(5 real changes made)
+(5 observations created)
 
 ->  replace hr=. if expanded==1 & expanded2==1
-(4 real changes made, 4 to missing)
+(5 real changes made, 5 to missing)
 
 ->  replace lci=. if expanded==1 & expanded2==1
-(4 real changes made, 4 to missing)
+(5 real changes made, 5 to missing)
 
 ->  replace uci=. if expanded==1 & expanded2==1
-(4 real changes made, 4 to missing)
-(20 missing values generated)
+(5 real changes made, 5 to missing)
+(25 missing values generated)
 variable leveldesc was str1 now str29
-(4 real changes made)
+(5 real changes made)
 variable leveldesc was str29 now str30
-(4 real changes made)
+(5 real changes made)
 variable leveldesc was str30 now str40
-(4 real changes made)
-(16 missing values generated)
+(5 real changes made)
+(20 missing values generated)
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
@@ -722,8 +801,8 @@ variable leveldesc was str30 now str40
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-           N |          0
-.
+           N |          5     2684524           0    2684524    2684524
+2684524
 variable Name was str24 now str34
 (1 real change made)
 variable Name was str34 now str60
@@ -732,17 +811,18 @@ variable Name was str60 now str66
 (1 real change made)
 variable Name was str66 now str68
 (1 real change made)
+(1 real change made)
 (0 real changes made)
 
 ->  replace hr = . if hr==1
-(4 real changes made, 4 to missing)
+(5 real changes made, 5 to missing)
 
 ->  replace lci = . if lci==1
-(4 real changes made, 4 to missing)
+(5 real changes made, 5 to missing)
 
 ->  replace uci = . if uci==1
-(4 real changes made, 4 to missing)
-(8 real changes made)
+(5 real changes made, 5 to missing)
+(10 real changes made)
 
      +------------------+
      |      displayhrci |
@@ -770,6 +850,12 @@ variable Name was str66 now str68
  18. | 1.17 (0.76-1.78) |
  19. | 1.16 (0.67-2.01) |
  20. | 0.79 (0.35-1.79) |
+     |------------------|
+ 21. |                  |
+ 22. |                  |
+ 23. | 1.08 (0.71-1.66) |
+ 24. | 1.26 (0.75-2.11) |
+ 25. | 0.86 (0.40-1.83) |
      +------------------+
 
      +----------------------------------------------------------------------+
@@ -780,10 +866,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |  Children aged 0-11 years and ≥12 years  |  .7879593   |  .3474619   |
+     |  Children aged 0-11 years and ≥12 years  |  .8560189   |  .4011263   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                                 1.7869                               |
+     |                               1.826777                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -794,10 +880,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |            Only children aged ≥12 years  |   1.15996   |  .6677805   |
+     |            Only children aged ≥12 years  |   1.25925   |  .7505965   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               2.014894                               |
+     |                               2.112599                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -808,10 +894,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |           Only children aged 0-11 years  |  1.166278   |  .7620897   |
+     |           Only children aged 0-11 years  |    1.0843   |  .7091151   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.784835                               |
+     |                               1.657992                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -819,7 +905,7 @@ variable Name was str66 now str68
      |                                      4                               |
      |----------------------------------------------------------------------|
      |                                                                 Name |
-     | Participants with at least 12 months registration at GP  (N=2611987) |
+     |                          Non-proportional hazards fitted (N=2684524) |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
      |                                          |         .   |         .   |
@@ -850,10 +936,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |  Children aged 0-11 years and ≥12 years  |  .8709735   |  .4071044   |
+     |  Children aged 0-11 years and ≥12 years  |  .7879593   |  .3474619   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.863391                               |
+     |                                 1.7869                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -864,10 +950,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |            Only children aged ≥12 years  |   1.25735   |  .7484356   |
+     |            Only children aged ≥12 years  |   1.15996   |  .6677805   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               2.112311                               |
+     |                               2.014894                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -878,10 +964,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |           Only children aged 0-11 years  |  1.081561   |  .7062209   |
+     |           Only children aged 0-11 years  |  1.166278   |  .7620897   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.656387                               |
+     |                               1.784835                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -889,7 +975,7 @@ variable Name was str66 now str68
      |                                      9                               |
      |----------------------------------------------------------------------|
      |                                                                 Name |
-     |   Underlying timescale in the cox model revised to age   (N=2684524) |
+     | Participants with at least 12 months registration at GP  (N=2611987) |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
      |                                          |         .   |         .   |
@@ -920,10 +1006,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |  Children aged 0-11 years and ≥12 years  |  .7847102   |  .3455497   |
+     |  Children aged 0-11 years and ≥12 years  |  .8709735   |  .4071044   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.782001                               |
+     |                               1.863391                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -934,10 +1020,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |            Only children aged ≥12 years  |  1.163124   |   .668828   |
+     |            Only children aged ≥12 years  |   1.25735   |  .7484356   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               2.022729                               |
+     |                               2.112311                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -948,10 +1034,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |           Only children aged 0-11 years  |  1.104944   |  .7158473   |
+     |           Only children aged 0-11 years  |  1.081561   |  .7062209   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.705533                               |
+     |                               1.656387                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -959,7 +1045,7 @@ variable Name was str66 now str68
      |                                     14                               |
      |----------------------------------------------------------------------|
      |                                                                 Name |
-     |         Participants with complete BMI and smoking data  (N=2531893) |
+     |   Underlying timescale in the cox model revised to age   (N=2684524) |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
      |                                          |         .   |         .   |
@@ -990,10 +1076,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |  Children aged 0-11 years and ≥12 years  |  .8650044   |  .4051625   |
+     |  Children aged 0-11 years and ≥12 years  |  .7847102   |  .3455497   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.846747                               |
+     |                               1.782001                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -1004,10 +1090,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |            Only children aged ≥12 years  |  1.264654   |  .7540041   |
+     |            Only children aged ≥12 years  |  1.163124   |   .668828   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               2.121143                               |
+     |                               2.022729                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -1018,10 +1104,10 @@ variable Name was str66 now str68
      |                                                                      |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
-     |           Only children aged 0-11 years  |  1.091587   |  .7137356   |
+     |           Only children aged 0-11 years  |  1.104944   |  .7158473   |
      |----------------------------------------------------------------------|
      |                                    uci                               |
-     |                               1.669472                               |
+     |                               1.705533                               |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -1029,7 +1115,7 @@ variable Name was str66 now str68
      |                                     19                               |
      |----------------------------------------------------------------------|
      |                                                                 Name |
-     |                                   Fully adjusted result  (N=2684524) |
+     |         Participants with complete BMI and smoking data  (N=2531893) |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
      |                                          |         .   |         .   |
@@ -1051,13 +1137,83 @@ variable Name was str66 now str68
      |                                    uci                               |
      |                                      .                               |
      +----------------------------------------------------------------------+
-(20 missing values generated)
+
+     +----------------------------------------------------------------------+
+ 21. |                               grapho~r                               |
+     |                                     21                               |
+     |----------------------------------------------------------------------|
+     |                                                                 Name |
+     |                                                                      |
+     |----------------------------------------------------------------------|
+     |                               leveldesc  |        hr   |       lci   |
+     |  Children aged 0-11 years and ≥12 years  |  .8650044   |  .4051625   |
+     |----------------------------------------------------------------------|
+     |                                    uci                               |
+     |                               1.846747                               |
+     +----------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------+
+ 22. |                               grapho~r                               |
+     |                                     22                               |
+     |----------------------------------------------------------------------|
+     |                                                                 Name |
+     |                                                                      |
+     |----------------------------------------------------------------------|
+     |                               leveldesc  |        hr   |       lci   |
+     |            Only children aged ≥12 years  |  1.264654   |  .7540041   |
+     |----------------------------------------------------------------------|
+     |                                    uci                               |
+     |                               2.121143                               |
+     +----------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------+
+ 23. |                               grapho~r                               |
+     |                                     23                               |
+     |----------------------------------------------------------------------|
+     |                                                                 Name |
+     |                                                                      |
+     |----------------------------------------------------------------------|
+     |                               leveldesc  |        hr   |       lci   |
+     |           Only children aged 0-11 years  |  1.091587   |  .7137356   |
+     |----------------------------------------------------------------------|
+     |                                    uci                               |
+     |                               1.669472                               |
+     +----------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------+
+ 24. |                               grapho~r                               |
+     |                                     24                               |
+     |----------------------------------------------------------------------|
+     |                                                                 Name |
+     |                                   Fully adjusted result  (N=2684524) |
+     |----------------------------------------------------------------------|
+     |                               leveldesc  |        hr   |       lci   |
+     |                                          |         .   |         .   |
+     |----------------------------------------------------------------------|
+     |                                    uci                               |
+     |                                      .                               |
+     +----------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------+
+ 25. |                               grapho~r                               |
+     |                                     25                               |
+     |----------------------------------------------------------------------|
+     |                                                                 Name |
+     |                                                                      |
+     |----------------------------------------------------------------------|
+     |                               leveldesc  |        hr   |       lci   |
+     |                                          |         .   |         .   |
+     |----------------------------------------------------------------------|
+     |                                    uci                               |
+     |                                      .                               |
+     +----------------------------------------------------------------------+
+(25 missing values generated)
 (note: file ./output/12_an_HRforest_SENSE_covid_icu_ageband_1_MAIN.svg not foun
 > d)
 (file ./output/12_an_HRforest_SENSE_covid_icu_ageband_1_MAIN.svg written in SVG
 >  format)
-(24 observations deleted)
-(12 observations deleted)
+(27 observations deleted)
+(15 observations deleted)
 (4 observations created)
 
 ->  replace hr = 1 if expanded==1
@@ -1119,6 +1275,7 @@ variable Name was str60 now str66
 (1 real change made)
 variable Name was str66 now str68
 (1 real change made)
+(0 real changes made)
 (0 real changes made)
 
 ->  replace hr = . if hr==1
@@ -1442,8 +1599,8 @@ variable Name was str66 now str68
 (note: file ./output/12_an_HRforest_SENSE_covid_icu_ageband_0_W2.svg not found)
 (file ./output/12_an_HRforest_SENSE_covid_icu_ageband_0_W2.svg written in SVG f
 > ormat)
-(24 observations deleted)
-(12 observations deleted)
+(27 observations deleted)
+(15 observations deleted)
 (4 observations created)
 
 ->  replace hr = 1 if expanded==1
@@ -1505,6 +1662,7 @@ variable Name was str60 now str66
 (1 real change made)
 variable Name was str66 now str68
 (1 real change made)
+(0 real changes made)
 (0 real changes made)
 
 ->  replace hr = . if hr==1
@@ -1833,5 +1991,5 @@ variable Name was str66 now str68
       name:  <unnamed>
        log:  /workspace/12_an_tablecontent_HRtable_SENSE_covid_icu.log
   log type:  text
- closed on:  27 Jan 2021, 16:12:27
+ closed on:   1 Feb 2021, 12:33:09
 -------------------------------------------------------------------------------

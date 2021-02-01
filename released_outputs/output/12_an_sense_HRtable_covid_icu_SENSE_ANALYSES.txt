@@ -21,6 +21,9 @@ kids_cat4	2	1.05	0.88	1.25	9334392
 kids_cat4	3	1.00	0.81	1.24	9334392
 
 sense=time_int
+kids_cat4	1	0.90	0.76	1.07	9334392
+kids_cat4	2	1.05	0.88	1.24	9334392
+kids_cat4	3	1.00	0.81	1.23	9334392
 
 sense=SUS_censor
 datasetage1
@@ -46,6 +49,9 @@ kids_cat4	2	1.26	0.75	2.11	2684524
 kids_cat4	3	0.87	0.41	1.86	2684524
 
 sense=time_int
+kids_cat4	1	1.08	0.71	1.66	2684524
+kids_cat4	2	1.26	0.75	2.11	2684524
+kids_cat4	3	0.86	0.40	1.83	2684524
 
 sense=SUS_censor
 datasetage0

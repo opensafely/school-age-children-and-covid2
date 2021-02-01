@@ -3,7 +3,7 @@
        log:  /workspace/log/14_multiple_imputation_analysis_covidadmissionW2.lo
 > g
   log type:  text
- opened on:  27 Jan 2021, 18:30:32
+ opened on:  31 Jan 2021, 16:19:12
 
 . 
 . 
@@ -379,5 +379,5 @@ file ./output/an_sense_covidadmission_multiple_imputation_ageband_1W2.ster save
        log:  /workspace/log/14_multiple_imputation_analysis_covidadmissionW2.lo
 > g
   log type:  text
- closed on:  28 Jan 2021, 16:10:36
+ closed on:   1 Feb 2021, 13:48:26
 -------------------------------------------------------------------------------
