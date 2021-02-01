@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /workspace/12_an_tablecontent_HRtable_SENSE_covidadmission.log
   log type:  text
- opened on:  27 Jan 2021, 16:12:51
+ opened on:  31 Jan 2021, 17:30:59
 
 . 
 . *set trace on
@@ -231,28 +231,30 @@
 > N=`number_plus_eth_12mo')" if Name=="plus_eth_12mo"
  41. replace Name = "Non-proportional hazards fitted (N=`number_time_int')" if 
 > Name=="time_int"
- 42. 
-. for var hr lci uci: replace X = . if X==1
+ 42. replace Name = "Censor study at 1st November (N=`number_SUS_censor')" if N
+> ame=="SUS_censor"
  43. 
+. for var hr lci uci: replace X = . if X==1
+ 44. 
 . 
 . gen displayhrci = string(hr, "%3.2f") + " (" + string(lci, "%3.2f") + "-" + s
 > tring(uci, "%3.2f") + ")"
- 44. replace displayhrci="" if hr==.
- 45. list display
- 46. 
-. drop obsorder
+ 45. replace displayhrci="" if hr==.
+ 46. list display
  47. 
+. drop obsorder
+ 48. 
 . gen obsorder=_n
- 48. gsort -obsorder
- 49. gen graphorder = _n
- 50. sort graphorder
- 51. list graphorder Name leveldesc hr  lci uci
- 52. 
-. gen hrtitle="Hazard Ratio (95% CI)" if graphorder == 28
+ 49. gsort -obsorder
+ 50. gen graphorder = _n
+ 51. sort graphorder
+ 52. list graphorder Name leveldesc hr  lci uci
  53. 
+. gen hrtitle="Hazard Ratio (95% CI)" if graphorder == 28
+ 54. 
 . gen bf_hrtitle = "{bf:" + hrtitle + "}"
- 54. gen bf_Name = "{bf:" + Name + "}"
- 55. 
+ 55. gen bf_Name = "{bf:" + Name + "}"
+ 56. 
 . scatter graphorder hr, mcol(black)      msize(small)            ///          
 >                                                                    ///
 >         || rcap lci uci graphorder, hor mcol(black)     lcol(black)          
@@ -277,11 +279,11 @@
 > (e) size(vsmall)) ///
 >                 text(-2 1.5 "Higher risk in those living with children", plac
 > e(e) size(vsmall))
- 56. 
+ 57. 
 . graph export ./output/12_an_HRforest_SENSE_`outcome'_ageband_`x'_`dataset'.sv
 > g, as(svg) replace
- 57. }
  58. }
+ 59. }
 (27 observations deleted)
 (15 observations deleted)
 (4 observations created)
@@ -345,6 +347,7 @@ variable Name was str60 now str66
 (1 real change made)
 variable Name was str66 now str68
 (1 real change made)
+(0 real changes made)
 (0 real changes made)
 
 ->  replace hr = . if hr==1
@@ -733,6 +736,7 @@ variable Name was str60 now str66
 variable Name was str66 now str68
 (1 real change made)
 (0 real changes made)
+(0 real changes made)
 
 ->  replace hr = . if hr==1
 (4 real changes made, 4 to missing)
@@ -1120,6 +1124,7 @@ variable Name was str60 now str66
 variable Name was str66 now str68
 (1 real change made)
 (0 real changes made)
+(1 real change made)
 
 ->  replace hr = . if hr==1
 (5 real changes made, 5 to missing)
@@ -1352,7 +1357,7 @@ variable Name was str66 now str68
      |                                     14                               |
      |----------------------------------------------------------------------|
      |                                                                 Name |
-     |                                                           SUS_censor |
+     |                                    Censor study at 1st November (N=) |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
      |                                          |         .   |         .   |
@@ -1583,6 +1588,7 @@ variable Name was str60 now str66
 variable Name was str66 now str68
 (1 real change made)
 (0 real changes made)
+(1 real change made)
 
 ->  replace hr = . if hr==1
 (5 real changes made, 5 to missing)
@@ -1815,7 +1821,7 @@ variable Name was str66 now str68
      |                                     14                               |
      |----------------------------------------------------------------------|
      |                                                                 Name |
-     |                                                           SUS_censor |
+     |                                    Censor study at 1st November (N=) |
      |----------------------------------------------------------------------|
      |                               leveldesc  |        hr   |       lci   |
      |                                          |         .   |         .   |
@@ -1987,5 +1993,5 @@ variable Name was str66 now str68
       name:  <unnamed>
        log:  /workspace/12_an_tablecontent_HRtable_SENSE_covidadmission.log
   log type:  text
- closed on:  27 Jan 2021, 16:12:55
+ closed on:  31 Jan 2021, 17:31:02
 -------------------------------------------------------------------------------

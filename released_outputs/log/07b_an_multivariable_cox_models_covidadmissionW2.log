@@ -3,7 +3,7 @@
        log:  /workspace/log/07b_an_multivariable_cox_models_covidadmissionW2.lo
 > g
   log type:  text
- opened on:  24 Jan 2021, 11:19:15
+ opened on:  29 Jan 2021, 16:49:39
 
 . 
 . 
@@ -99,7 +99,7 @@
 > ome')"
  35. }       
  36. }
-   1:   4508.28 /        1 =    4508.2780
+   1:   4170.30 /        1 =    4170.2950
 
 -------------------------------------------------------------------------------
 active results
@@ -109,7 +109,7 @@ Stratified Cox regr. -- Breslow method for ties
 
 No. of subjects      =    9,266,918             Number of obs    =   9,266,918
 No. of failures      =        3,615
-Time at risk         =    994339534
+Time at risk         =    829390579
                                                 Wald chi2(47)    =     7395.51
 Log pseudolikelihood =   -44394.653             Prob > chi2      =      0.0000
 
@@ -276,8 +276,8 @@ file ./output/an_multivariate_cox_models_covidadmission_kids_cat4_MAINFULLYADJM
       ----------------------------------------------------------------
 
 note: robust variance-covariance matrix used.
-   1:   7545.23 /        1 =    7545.2260
-   1:   1778.20 /        1 =    1778.1970
+   1:   7090.88 /        1 =    7090.8770
+   1:   1706.47 /        1 =    1706.4740
 
 -------------------------------------------------------------------------------
 active results
@@ -287,7 +287,7 @@ Stratified Cox regr. -- Breslow method for ties
 
 No. of subjects      =    1,849,103             Number of obs    =   1,849,103
 No. of failures      =          553
-Time at risk         =    198710858
+Time at risk         =    165713293
                                                 Wald chi2(43)    =     1243.76
 Log pseudolikelihood =   -5915.1514             Prob > chi2      =      0.0000
 
@@ -373,7 +373,7 @@ Stage 4/5..  |   2.369034   1.314314     1.55   0.120     .7986085    7.027626
 file ./output/an_multivariate_cox_models_covidadmission_gp_number_kids_MAINFULL
 > YADJMODEL_ageband_0W2.ster saved
 (533,406 observations deleted)
-   1:   4372.15 /        1 =    4372.1500
+   1:   4073.70 /        1 =    4073.6980
 
 -------------------------------------------------------------------------------
 active results
@@ -383,7 +383,7 @@ Stratified Cox regr. -- Breslow method for ties
 
 No. of subjects      =    8,733,512             Number of obs    =   8,733,512
 No. of failures      =        3,473
-Time at risk         =    937455385
+Time at risk         =    781899655
                                                 Wald chi2(47)    =     7197.13
 Log pseudolikelihood =   -42436.816             Prob > chi2      =      0.0000
 
@@ -467,7 +467,7 @@ Stage 4/5..  |   2.239511   .4445167     4.06   0.000     1.517748    3.304507
 (note: file ./output/an_sense_covidadmission_plus_eth_12mo_ageband_0W2.ster not
 >  found)
 file ./output/an_sense_covidadmission_plus_eth_12mo_ageband_0W2.ster saved
-   1:   1237.89 /        1 =    1237.8910
+   1:   1257.37 /        1 =    1257.3740
 
 -------------------------------------------------------------------------------
 active results
@@ -477,7 +477,7 @@ Stratified Cox regr. -- Breslow method for ties
 
 No. of subjects      =    2,706,502             Number of obs    =   2,706,502
 No. of failures      =        4,277
-Time at risk         =    290147144
+Time at risk         =    242099919
                                                 Wald chi2(47)    =     5734.63
 Log pseudolikelihood =   -48106.346             Prob > chi2      =      0.0000
 
@@ -644,8 +644,8 @@ file ./output/an_multivariate_cox_models_covidadmission_kids_cat4_MAINFULLYADJM
       ----------------------------------------------------------------
 
 note: robust variance-covariance matrix used.
-   1:   2034.26 /        1 =    2034.2590
-   1:     67.86 /        1 =      67.8590
+   1:   2064.91 /        1 =    2064.9110
+   1:     65.94 /        1 =      65.9440
 
 -------------------------------------------------------------------------------
 active results
@@ -655,7 +655,7 @@ Stratified Cox regr. -- Breslow method for ties
 
 No. of subjects      =       44,335             Number of obs    =      44,335
 No. of failures      =           96
-Time at risk         =      4744057
+Time at risk         =      3959985
                                                 Wald chi2(47)    =    69304.70
 Log pseudolikelihood =   -691.38619             Prob > chi2      =      0.0000
 
@@ -741,7 +741,7 @@ Stage 4/5..  |    1.17638   .5903114     0.32   0.746     .4399585    3.145455
 file ./output/an_multivariate_cox_models_covidadmission_gp_number_kids_MAINFULL
 > YADJMODEL_ageband_1W2.ster saved
 (55,013 observations deleted)
-   1:   1225.69 /        1 =    1225.6950
+   1:   1166.14 /        1 =    1166.1370
 
 -------------------------------------------------------------------------------
 active results
@@ -751,7 +751,7 @@ Stratified Cox regr. -- Breslow method for ties
 
 No. of subjects      =    2,651,489             Number of obs    =   2,651,489
 No. of failures      =        4,186
-Time at risk         =    284276046
+Time at risk         =    237197845
                                                 Wald chi2(47)    =     5591.57
 Log pseudolikelihood =   -47000.239             Prob > chi2      =      0.0000
 
@@ -842,5 +842,5 @@ file ./output/an_sense_covidadmission_plus_eth_12mo_ageband_1W2.ster saved
        log:  /workspace/log/07b_an_multivariable_cox_models_covidadmissionW2.lo
 > g
   log type:  text
- closed on:  24 Jan 2021, 17:39:12
+ closed on:  29 Jan 2021, 22:50:02
 -------------------------------------------------------------------------------

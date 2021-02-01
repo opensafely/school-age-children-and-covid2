@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /workspace/log/02_an_data_checksW2.log
   log type:  text
- opened on:  23 Jan 2021, 02:28:49
+ opened on:  29 Jan 2021, 16:01:08
 
 . 
 . * Open Stata dataset
@@ -326,8 +326,8 @@ nscovid_par |
 > xlabel(21946 22006 22067 22128 22189 22250 ,labsize(tiny))  xtitle(, size(vsm
 > all)) ///
 > graphregion(color(white))  legend(off) freq  ///
-> yscale(range(0 3000)) ylab(0 (100) 300, labsize(vsmall)) ytitle("Number", siz
-> e(vsmall))  ///
+> yscale(range(0 3000)) ylab(0 (10000) 30000, labsize(vsmall)) ytitle("Number",
+>  size(vsmall))  ///
 > title("N=`total_`outcome''", size(vsmall)) 
   6. }
 
@@ -3131,5 +3131,5 @@ Partnershi | outcome: covid death
       name:  <unnamed>
        log:  /workspace/log/02_an_data_checksW2.log
   log type:  text
- closed on:  23 Jan 2021, 02:46:58
+ closed on:  29 Jan 2021, 16:17:28
 -------------------------------------------------------------------------------
