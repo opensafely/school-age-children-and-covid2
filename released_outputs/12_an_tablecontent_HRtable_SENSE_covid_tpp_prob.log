@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /workspace/12_an_tablecontent_HRtable_SENSE_covid_tpp_prob.log
   log type:  text
- opened on:   1 Feb 2021, 12:32:07
+ opened on:   2 Feb 2021, 09:10:24
 
 . 
 . *set trace on
@@ -1917,5 +1917,5 @@ variable Name was str66 now str68
       name:  <unnamed>
        log:  /workspace/12_an_tablecontent_HRtable_SENSE_covid_tpp_prob.log
   log type:  text
- closed on:   1 Feb 2021, 12:32:11
+ closed on:   2 Feb 2021, 09:10:28
 -------------------------------------------------------------------------------
