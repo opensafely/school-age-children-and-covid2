@@ -77,6 +77,27 @@ study = StudyDefinition(
         include_day=True,
         return_expectations={"date": {"earliest": "2020-02-01"}, "incidence" : 0.95},
     ), 
+
+   covid_tpp_codes_clinical=patients.with_these_clinical_events(
+        combine_codelists(covid_identification_in_primary_care_case_codes_clinical),
+        return_first_date_in_period=True,
+        include_day=True,
+        return_expectations={"date": {"earliest": "2020-02-01"}, "incidence" : 0.95},
+    ), 
+
+   covid_tpp_codes_test=patients.with_these_clinical_events(
+        combine_codelists(covid_identification_in_primary_care_case_codes_test),
+        return_first_date_in_period=True,
+        include_day=True,
+        return_expectations={"date": {"earliest": "2020-02-01"}, "incidence" : 0.95},
+    ), 
+
+   covid_tpp_codes_seq=patients.with_these_clinical_events(
+        combine_codelists(covid_identification_in_primary_care_case_codes_seq),
+        return_first_date_in_period=True,
+        include_day=True,
+        return_expectations={"date": {"earliest": "2020-02-01"}, "incidence" : 0.95},
+    ), 
    
     covid_admission_date=patients.admitted_to_hospital(
         returning= "date_admitted" ,  # defaults to "binary_flag"
