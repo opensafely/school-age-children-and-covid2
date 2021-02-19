@@ -98,7 +98,9 @@ foreach var of varlist 	chronic_respiratory_disease ///
 }
 
 * Recode to dates from the strings 
-foreach var of varlist covid_icu_date positive_covid_test	died_date_ons covid_admission_date covid_tpp_probable	{
+foreach var of varlist covid_icu_date positive_covid_test	///
+covid_tpp_codes_clinical covid_tpp_codes_test covid_tpp_codes_seq ///
+died_date_ons covid_admission_date covid_tpp_probable	{
 						
 	confirm string variable `var'
 	rename `var' `var'_dstr
@@ -755,6 +757,12 @@ replace date_covid_primary_care_codes = . if (date_covid_primary_care_codes > st
 replace date_positive_SGSS = . if (date_positive_SGSS > study_end_censor )
 
 
+gen reported_infection_source=1 if date_covid_tpp_prob==date_positive_SGSS 
+recode reported_infection_source .=2 if date_covid_tpp_prob== covid_tpp_codes_test 
+recode reported_infection_source .=3 if date_covid_tpp_prob==covid_tpp_codes_seq
+recode reported_infection_source .=4 if date_covid_tpp_prob==covid_tpp_codes_clinical
+lab define reported_infection_source 1 SGSS 2 test_code 3 sequalae_code 4 diagnosis_code
+lab val reported_infection_source reported_infection_source
 
 /* LABEL VARIABLES============================================================*/
 *  Label variables you are intending to keep, drop the rest 
@@ -840,6 +848,7 @@ lab var covidadmission 					"Failure/censoring indicator for outcome: covid SUS 
 lab var covid_death_part1				"Failure/censoring indicator for outcome: covid death part1"
 lab var  positive_SGSS		"Indicator positive covid test"
 lab var  covid_primary_care_codes		"Indicator positive primary care code COVID infection"
+lab var reported_infection_source 		"Reported Infection Source"
 
 rename died_date_onsnoncovid date_non_covid_death
 rename died_date_onscovid date_covid_death
