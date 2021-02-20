@@ -310,6 +310,9 @@ safetab positive_SGSS covid_primary_care_codes if date_positive_SGSS<=22267 & da
 gen diff=date_positive_SGSS-date_covid_primary_care_codes 
 sum diff, d
 
+tab reported if kids_cat4!=0
+tab reported if kids_cat4==0
+
 
 /* DEATHS by STP=======================================================*/
 tab  stp covid_death, col
