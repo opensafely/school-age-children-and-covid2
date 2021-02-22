@@ -757,10 +757,10 @@ replace date_covid_primary_care_codes = . if (date_covid_primary_care_codes > st
 replace date_positive_SGSS = . if (date_positive_SGSS > study_end_censor )
 
 
-gen reported_infection_source=1 if date_covid_tpp_prob==date_positive_SGSS 
-recode reported_infection_source .=2 if date_covid_tpp_prob== covid_tpp_codes_test 
-recode reported_infection_source .=3 if date_covid_tpp_prob==covid_tpp_codes_seq
-recode reported_infection_source .=4 if date_covid_tpp_prob==covid_tpp_codes_clinical
+gen reported_infection_source=1 if covid_tpp_prob==1
+recode reported_infection_source 1=2 if date_covid_tpp_prob== covid_tpp_codes_test 
+recode reported_infection_source 1=3 if date_covid_tpp_prob==covid_tpp_codes_seq 
+recode reported_infection_source 1=4 if date_covid_tpp_prob==covid_tpp_codes_clinical 
 lab define reported_infection_source 1 SGSS 2 test_code 3 sequalae_code 4 diagnosis_code
 lab val reported_infection_source reported_infection_source
 
