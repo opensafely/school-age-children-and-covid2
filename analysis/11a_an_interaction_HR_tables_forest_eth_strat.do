@@ -30,7 +30,7 @@ forvalues x=0/1 {
 forvalues i=`min'/`max'{
 foreach int_type in ethnicity {
 
-foreach int_level in 1 3 5 {
+foreach int_level in 1 2 3 4 5 {
 
 local endwith "_tab"
 
@@ -101,7 +101,7 @@ end
 
 *MAIN CODE TO PRODUCE TABLE CONTENTS
 cap file close tablecontents_int
-file open tablecontents_int using ./output/11_an_int_tab_contents_HRtable_`outcome'.txt, t w replace
+file open tablecontents_int using ./output/11_an_int_tab_contents_HRtable_`outcome'_ethnicity.txt, t w replace
 
 tempfile HRestimates_int
 cap postutil clear

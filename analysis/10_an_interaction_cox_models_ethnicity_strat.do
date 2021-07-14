@@ -67,7 +67,7 @@ stcox i.kids_cat3##i.ethnicity  								///
 			$comordidadjlist						///
 			, strata(stp) vce(cluster household_id)
 			estimates save ./output/an_interaction_cox_models_`outcome'_kids_cat3_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_`x', replace
-foreach ethcat in 1  3  5 {
+foreach ethcat in 1 2 3 4 5 {
 if _rc==0 {
 *testparm `ethcat'.ethnicity#i.kids_cat3
 *di _n "kids_cat3 " _n "****************"
