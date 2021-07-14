@@ -1,0 +1,18 @@
+2021-07-14T09:40:12.028219700Z 2021-07-14 09:40:12 [info     ] Generating cohort for study_definition_worms in output [cohortextractor.cohortextractor] 
+2021-07-14T09:40:14.989807600Z 2021-07-14 09:40:14 [info     ] Successfully created cohort and covariates at output/input_worms.csv [cohortextractor.cohortextractor] 
+
+
+state: succeeded
+commit: none
+docker_image_id: sha256:1f352c304dafebda5b05a7fe54f4890b832309503f562cfcb30fbcc617a6548f
+exit_code: 0
+job_id: 2dz2rft5u5wg4qtc
+run_by_user: qc18278
+created_at: 2021-07-14T09:39:44Z
+started_at: 2021-07-14T09:40:11Z
+completed_at: 2021-07-14T09:40:25Z
+
+Completed successfully
+
+outputs:
+  output/input_worms.csv  - highly_sensitive

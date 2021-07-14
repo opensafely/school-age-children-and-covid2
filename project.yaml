@@ -670,7 +670,7 @@ actions:
 
   11_an_interaction_HR_tables_ethnicity_covidadmission:
     needs:
-      - 10_an_interaction_cox_models_ethnicity_covidadmission:
+      - 10_an_interaction_cox_models_ethnicity_covidadmission
     run: stata-mp:latest analysis/11a_an_interaction_HR_tables_forest_eth_strat.do covidadmission
     outputs:
       moderately_sensitive:
@@ -679,7 +679,7 @@ actions:
 
   11_an_interaction_HR_tables_ethnicity_covid_icu:
     needs:
-      - 10_an_interaction_cox_models_ethnicity_covid_icu:
+      - 10_an_interaction_cox_models_ethnicity_covid_icu
     run: stata-mp:latest analysis/11a_an_interaction_HR_tables_forest_eth_strat.do covid_icu
     outputs:
       moderately_sensitive:
@@ -688,7 +688,7 @@ actions:
 
   11_an_interaction_HR_tables_ethnicity_covid_death:
     needs:
-      - 10_an_interaction_cox_models_ethnicity_covid_death:
+      - 10_an_interaction_cox_models_ethnicity_covid_death
     run: stata-mp:latest analysis/11a_an_interaction_HR_tables_forest_eth_strat.do covid_death
     outputs:
       moderately_sensitive:
@@ -697,7 +697,7 @@ actions:
 
   11_an_interaction_HR_tables_ethnicity_covid_tpp_prob:
     needs:
-      - 10_an_interaction_cox_models_ethnicity_covid_tpp_prob:
+      - 10_an_interaction_cox_models_ethnicity_covid_tpp_prob
     run: stata-mp:latest analysis/11a_an_interaction_HR_tables_forest_eth_strat.do covid_tpp_prob
     outputs:
       moderately_sensitive:
