@@ -25,7 +25,7 @@ global logdir     "log"
 global tempdir    "tempdata"
 
 
-*PARSE DO-FILE ARGUMENTS (first should be outcome, rest should be variables)
+/*PARSE DO-FILE ARGUMENTS (first should be outcome, rest should be variables)
 local arguments = wordcount("`0'") 
 local outcome `1'
 local varlist
@@ -33,7 +33,7 @@ forvalues i=2/`arguments'{
 	local varlist = "`varlist' " + word("`0'", `i')
 	}
 local firstvar = word("`0'", 2)
-local lastvar = word("`0'", `arguments')
+local lastvar = word("`0'", `arguments')*/
 	
 
 * Open a log file

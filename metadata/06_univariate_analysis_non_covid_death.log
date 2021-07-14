@@ -1,0 +1,149 @@
+2021-07-14T10:05:58.632385100Z 
+2021-07-14T10:05:58.632406300Z   ___  ____  ____  ____  ____ (R)
+2021-07-14T10:05:58.632410700Z  /__    /   ____/   /   ____/
+2021-07-14T10:05:58.632414400Z ___/   /   /___/   /   /___/   16.1   Copyright 1985-2019 StataCorp LLC
+2021-07-14T10:05:58.632417700Z   Statistics/Data Analysis            StataCorp
+2021-07-14T10:05:58.632420800Z                                       4905 Lakeway Drive
+2021-07-14T10:05:58.632424200Z                                       College Station, Texas 77845 USA
+2021-07-14T10:05:58.632427400Z                                       800-STATA-PC        http://www.stata.com
+2021-07-14T10:05:58.632430700Z                                       979-696-4600        stata@stata.com
+2021-07-14T10:05:58.632434000Z                                       979-696-4601 (fax)
+2021-07-14T10:05:58.632437300Z 
+2021-07-14T10:05:58.632440300Z 3-user Stata network license expires 11 May 2022:
+2021-07-14T10:05:58.632443500Z        Serial number:  501709312237
+2021-07-14T10:05:58.632446600Z          Licensed to:  The Bennett Institute
+2021-07-14T10:05:58.632449400Z                        Oxford University
+2021-07-14T10:05:58.633993600Z 
+2021-07-14T10:05:58.634008000Z Notes:
+2021-07-14T10:05:58.634012200Z       1.  Unicode is supported; see help unicode_advice.
+2021-07-14T10:05:58.634015200Z 
+2021-07-14T10:05:58.634017900Z . do "analysis/06_univariate_analysis.wrapper.do" non_covid_death kids_cat3 gp_
+2021-07-14T10:05:58.634021200Z > number_kids 
+2021-07-14T10:05:58.634024400Z 
+2021-07-14T10:05:58.634027400Z . . do "analysis/06_univariate_analysis.do" "non_covid_death kids_cat3 gp_numbe
+2021-07-14T10:05:58.634030800Z > r_kids"
+2021-07-14T10:05:58.634197600Z 
+2021-07-14T10:05:58.634209100Z . *****************************************************************************
+2021-07-14T10:05:58.634213900Z > ***
+2021-07-14T10:05:58.634217100Z . *
+2021-07-14T10:05:58.634220100Z . *       Do-file:                06_univariate_analysis.do
+2021-07-14T10:05:58.634223100Z . *
+2021-07-14T10:05:58.634226500Z . *       Project:                Exposure children and COVID risk
+2021-07-14T10:05:58.634229900Z . *
+2021-07-14T10:05:58.634233300Z . *       Programmed by:  Hforbes, based on files from Fizz & Krishnan
+2021-07-14T10:05:58.634236600Z . *
+2021-07-14T10:05:58.634383700Z . *       Data used:              analysis_dataset.dta
+2021-07-14T10:05:58.634435500Z . *
+2021-07-14T10:05:58.634442500Z . *       Data created:   None
+2021-07-14T10:05:58.634445900Z . *
+2021-07-14T10:05:58.634449100Z . *       Other output:   Log file: an_univariable_cox_models.log 
+2021-07-14T10:05:58.634452800Z . *
+2021-07-14T10:05:58.634466300Z . *****************************************************************************
+2021-07-14T10:05:58.634470900Z > ***
+2021-07-14T10:05:58.634474200Z . *
+2021-07-14T10:05:58.634584700Z . *       Purpose:                Fit age/sex adjusted Cox models, stratified b
+2021-07-14T10:05:58.634594100Z > y STP and 
+2021-07-14T10:05:58.634598200Z . *with hh size as random effect
+2021-07-14T10:05:58.634601700Z . *  
+2021-07-14T10:05:58.634604000Z . *****************************************************************************
+2021-07-14T10:05:58.634606000Z > ***
+2021-07-14T10:05:58.634703300Z . 
+2021-07-14T10:05:58.634711300Z . * Set globals that will print in programs and direct output
+2021-07-14T10:05:58.634714800Z . global outdir     "output" 
+2021-07-14T10:05:58.634746400Z 
+2021-07-14T10:05:58.634754800Z . global logdir     "log"
+2021-07-14T10:05:58.634758800Z 
+2021-07-14T10:05:58.634761800Z . global tempdir    "tempdata"
+2021-07-14T10:05:58.634765000Z 
+2021-07-14T10:05:58.634767900Z . 
+2021-07-14T10:05:58.634771000Z . 
+2021-07-14T10:05:58.634773900Z . *PARSE DO-FILE ARGUMENTS (first should be outcome, rest should be variables)
+2021-07-14T10:05:58.634777200Z . local arguments = wordcount("`0'") 
+2021-07-14T10:05:58.634870800Z 
+2021-07-14T10:05:58.634879000Z . local outcome `1'
+2021-07-14T10:05:58.634881500Z 
+2021-07-14T10:05:58.634883500Z . local varlist
+2021-07-14T10:05:58.634886100Z 
+2021-07-14T10:05:58.634888900Z . forvalues i=2/`arguments'{
+2021-07-14T10:05:58.634891900Z   2.         local varlist = "`varlist' " + word("`0'", `i')
+2021-07-14T10:05:58.634895100Z   3.         }
+2021-07-14T10:05:58.634897900Z 
+2021-07-14T10:05:58.634919600Z . local firstvar = word("`0'", 2)
+2021-07-14T10:05:58.635014900Z 
+2021-07-14T10:05:58.635022800Z . local lastvar = word("`0'", `arguments')
+2021-07-14T10:05:58.635025300Z 
+2021-07-14T10:05:58.635027200Z .         
+2021-07-14T10:05:58.635029000Z . 
+2021-07-14T10:05:58.635031000Z . * Open a log file
+2021-07-14T10:05:58.635033000Z . capture log close
+2021-07-14T10:05:58.635034800Z 
+2021-07-14T10:05:58.635036700Z . log using "$logdir/06_univariate_analysis_`outcome'", replace t
+2021-07-14T10:05:58.635157400Z (note: file /workspace/log/06_univariate_analysis_non_covid_death kids_cat3 gp_
+2021-07-14T10:05:58.635165800Z > number_kids.log not found)
+2021-07-14T10:05:58.635169200Z -------------------------------------------------------------------------------
+2021-07-14T10:05:58.635196300Z       name:  <unnamed>
+2021-07-14T10:05:58.635202100Z        log:  /workspace/log/06_univariate_analysis_non_covid_death kids_cat3 gp
+2021-07-14T10:05:58.635205600Z > _number_kids.log
+2021-07-14T10:05:58.635208500Z   log type:  text
+2021-07-14T10:05:58.635211500Z  opened on:  14 Jul 2021, 10:05:58
+2021-07-14T10:05:58.635214400Z 
+2021-07-14T10:05:58.635217300Z . 
+2021-07-14T10:05:58.635220400Z . * Open dataset and fit specified model(s)
+2021-07-14T10:05:58.635223400Z . forvalues x=0/1 {
+2021-07-14T10:05:58.635226500Z   2. 
+2021-07-14T10:05:58.635326500Z . use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'.dta", cl
+2021-07-14T10:05:58.635334200Z > ear
+2021-07-14T10:05:58.635337800Z   3. 
+2021-07-14T10:05:58.635341000Z . 
+2021-07-14T10:05:58.635344000Z . foreach var of any `varlist' {
+2021-07-14T10:05:58.635347000Z   4. 
+2021-07-14T10:05:58.635349900Z .         *Special cases
+2021-07-14T10:05:58.635352900Z .         if "`var'"=="agesplsex" local model "age1 age2 age3 i.male"
+2021-07-14T10:05:58.635368100Z   5.         else if "`var'"=="agegroupsex" local model "ib3.agegroup i.male"
+2021-07-14T10:05:58.635376400Z   6.         else if "`var'"=="bmicat" local model "age1 age2 age3 i.male ib2.b
+2021-07-14T10:05:58.635380400Z > micat"
+2021-07-14T10:05:58.635383600Z   7.         *General form of model
+2021-07-14T10:05:58.635386600Z .         else local model "age1 age2 age3 i.male i.`var'"
+2021-07-14T10:05:58.635390400Z   8. 
+2021-07-14T10:05:58.635393100Z .         *Fit and save model
+2021-07-14T10:05:58.635396000Z .         cap erase ./output/an_univariable_cox_models_`outcome'_AGESEX_`var'.s
+2021-07-14T10:05:58.635399000Z > ter
+2021-07-14T10:05:58.635582500Z   9.         capture stcox `model' , strata(stp) vce(cluster household_id)
+2021-07-14T10:05:58.635593100Z  10.         if _rc==0 {
+2021-07-14T10:05:58.635597200Z  11.                 estimates
+2021-07-14T10:05:58.635600700Z  12.                 estimates save ./output/an_univariable_cox_models_`outcome
+2021-07-14T10:05:58.635604100Z > '_AGESEX_`var'_ageband_`x'.ster, replace
+2021-07-14T10:05:58.635607200Z  13.                 }
+2021-07-14T10:05:58.635609900Z  14.         else di "WARNING - `var' vs `outcome' MODEL DID NOT SUCCESSFULLY F
+2021-07-14T10:05:58.635612900Z > IT"
+2021-07-14T10:05:58.635615600Z  15. 
+2021-07-14T10:05:58.635618400Z . }
+2021-07-14T10:05:58.635652000Z  16. }
+2021-07-14T10:05:58.635794100Z file tempdata/cr_create_analysis_dataset_STSET_non_covid_death kids_cat3
+2021-07-14T10:05:58.635802300Z     gp_number_kids_ageband_0.dta not found
+2021-07-14T10:05:58.635812100Z r(601);
+2021-07-14T10:05:58.635814900Z 
+2021-07-14T10:05:58.635817900Z end of do-file
+2021-07-14T10:05:58.635820700Z r(601);
+2021-07-14T10:05:58.635823600Z 
+2021-07-14T10:05:58.635826400Z end of do-file
+2021-07-14T10:05:58.635829300Z 
+2021-07-14T10:05:58.635832200Z r(601);
+2021-07-14T10:05:58.635835000Z 
+2021-07-14T10:05:58.635837600Z 
+2021-07-14T10:05:58.654171800Z . 
+
+state: failed
+commit: none
+docker_image_id: sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9
+exit_code: 1
+job_id: kdkzrx6hssnbc3k3
+run_by_user: qc18278
+created_at: 2021-07-14T10:05:02Z
+started_at: 2021-07-14T10:05:58Z
+completed_at: 2021-07-14T10:06:27Z
+
+Job exited with an error code
+
+outputs:
+  (no outputs)

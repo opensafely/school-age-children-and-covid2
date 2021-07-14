@@ -1,0 +1,319 @@
+{
+  "files": {
+    "04b_an_descriptive_table_2_covid_death.log": {
+      "created_by_action": "04b_an_descriptive_table_2_covid_death",
+      "privacy_level": "moderately_sensitive"
+    },
+    "04b_an_descriptive_table_2_covid_icu.log": {
+      "created_by_action": "04b_an_descriptive_table_2_covid_icu",
+      "privacy_level": "moderately_sensitive"
+    },
+    "04b_an_descriptive_table_2_covid_tpp_prob.log": {
+      "created_by_action": "04b_an_descriptive_table_2_covid_tpp_prob",
+      "privacy_level": "moderately_sensitive"
+    },
+    "04b_an_descriptive_table_2_covidadmission.log": {
+      "created_by_action": "04b_an_descriptive_table_2_covidadmission",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/01_cr_analysis_dataset.log": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/02_an_data_checks.log": {
+      "created_by_action": "02_an_data_checks",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/03a_an_descriptive_tables.log": {
+      "created_by_action": "03a_an_descriptive_tables",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/03b_an_descriptive_table_1.log": {
+      "created_by_action": "03b_an_descriptive_table_1",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/04a_an_descriptive_tables.log": {
+      "created_by_action": "04a_an_descriptive_tables",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/WORMS_01_cr_analysis_dataset.log": {
+      "created_by_action": "WORMS_01_cr_analysis_dataset",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/WORMS_02_an_data_checks.log": {
+      "created_by_action": "WORMS_02_an_data_checks",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/01_histogram_outcomes.svg": {
+      "created_by_action": "02_an_data_checks",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/03b_an_descriptive_table_1_kids_cat3_ageband0.txt": {
+      "created_by_action": "03b_an_descriptive_table_1",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/03b_an_descriptive_table_1_kids_cat3_ageband1.txt": {
+      "created_by_action": "03b_an_descriptive_table_1",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/04b_an_descriptive_table_2_covid_death_ageband0.txt": {
+      "created_by_action": "04b_an_descriptive_table_2_covid_death",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/04b_an_descriptive_table_2_covid_death_ageband1.txt": {
+      "created_by_action": "04b_an_descriptive_table_2_covid_death",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/04b_an_descriptive_table_2_covid_icu_ageband0.txt": {
+      "created_by_action": "04b_an_descriptive_table_2_covid_icu",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/04b_an_descriptive_table_2_covid_icu_ageband1.txt": {
+      "created_by_action": "04b_an_descriptive_table_2_covid_icu",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/04b_an_descriptive_table_2_covid_tpp_prob_ageband0.txt": {
+      "created_by_action": "04b_an_descriptive_table_2_covid_tpp_prob",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/04b_an_descriptive_table_2_covid_tpp_prob_ageband1.txt": {
+      "created_by_action": "04b_an_descriptive_table_2_covid_tpp_prob",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/04b_an_descriptive_table_2_covidadmission_ageband0.txt": {
+      "created_by_action": "04b_an_descriptive_table_2_covidadmission",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/04b_an_descriptive_table_2_covidadmission_ageband1.txt": {
+      "created_by_action": "04b_an_descriptive_table_2_covidadmission",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/04b_an_descriptive_table_2_non_covid_death_ageband0.txt": {
+      "created_by_action": "04b_an_descriptive_table_2_non_covid_death",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/04b_an_descriptive_table_2_non_covid_death_ageband1.txt": {
+      "created_by_action": "04b_an_descriptive_table_2_non_covid_death",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/input.csv": {
+      "created_by_action": "generate_cohort",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/input_worms.csv": {
+      "created_by_action": "worms_generate_cohort",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset_ageband_0.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset_ageband_1.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset_worms.dta": {
+      "created_by_action": "WORMS_01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset_worms_ageband_0.dta": {
+      "created_by_action": "WORMS_01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset_worms_ageband_1.dta": {
+      "created_by_action": "WORMS_01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_death_ageband_0.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_death_ageband_1.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_icu_ageband_0.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_icu_ageband_1.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_tpp_prob_ageband_0.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_tpp_prob_ageband_1.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covidadmission_ageband_0.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covidadmission_ageband_1.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_non_covid_death_ageband_0.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_non_covid_death_ageband_1.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_worms_ageband_0.dta": {
+      "created_by_action": "WORMS_01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_worms_ageband_1.dta": {
+      "created_by_action": "WORMS_01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    }
+  },
+  "actions": {
+    "generate_cohort": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:1f352c304dafebda5b05a7fe54f4890b832309503f562cfcb30fbcc617a6548f",
+      "job_id": "nl453jfd7zafx5o2",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T09:39:44Z",
+      "completed_at": "2021-07-14T09:40:13Z"
+    },
+    "worms_generate_cohort": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:1f352c304dafebda5b05a7fe54f4890b832309503f562cfcb30fbcc617a6548f",
+      "job_id": "2dz2rft5u5wg4qtc",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T09:39:44Z",
+      "completed_at": "2021-07-14T09:40:25Z"
+    },
+    "01_cr_analysis_dataset": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "zixw7plp5xdivmul",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T09:51:47Z",
+      "completed_at": "2021-07-14T09:52:04Z"
+    },
+    "WORMS_01_cr_analysis_dataset": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "wt3vz37zwfz565u6",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T09:51:47Z",
+      "completed_at": "2021-07-14T09:52:10Z"
+    },
+    "02_an_data_checks": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "w5dha53wqv3bun4v",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T09:51:47Z",
+      "completed_at": "2021-07-14T09:53:20Z"
+    },
+    "WORMS_02_an_data_checks": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "qu5nnw7gnbjzspjh",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T09:51:47Z",
+      "completed_at": "2021-07-14T09:53:23Z"
+    },
+    "03a_an_descriptive_tables": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "f5iwheuowrgac6y7",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T09:51:47Z",
+      "completed_at": "2021-07-14T09:53:26Z"
+    },
+    "04a_an_descriptive_tables": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "yqywbsdei6tk45de",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T09:51:47Z",
+      "completed_at": "2021-07-14T09:53:33Z"
+    },
+    "04b_an_descriptive_table_2_covid_tpp_prob": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "vj5xushcgae7hrh2",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T10:05:02Z",
+      "completed_at": "2021-07-14T10:06:13Z"
+    },
+    "04b_an_descriptive_table_2_covid_death": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "6cmtar2ok772uvpb",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T10:05:02Z",
+      "completed_at": "2021-07-14T10:06:16Z"
+    },
+    "04b_an_descriptive_table_2_covid_icu": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "r42js665npyg2yde",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T10:05:02Z",
+      "completed_at": "2021-07-14T10:06:20Z"
+    },
+    "04b_an_descriptive_table_2_covidadmission": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "u4otadpzs22xmy4q",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T10:05:02Z",
+      "completed_at": "2021-07-14T10:06:23Z"
+    },
+    "06_univariate_analysis_non_covid_death": {
+      "state": "failed",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "kdkzrx6hssnbc3k3",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T10:05:02Z",
+      "completed_at": "2021-07-14T10:06:27Z"
+    },
+    "03b_an_descriptive_table_1": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "vnwv34utkpp6zvqe",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T10:15:30Z",
+      "completed_at": "2021-07-14T10:16:43Z"
+    },
+    "04b_an_descriptive_table_2_non_covid_death": {
+      "state": "failed",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "yefvj3kj5hpucu6z",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T10:15:30Z",
+      "completed_at": "2021-07-14T10:16:47Z"
+    }
+  },
+  "workspace": "school-age-children-and-covid2",
+  "repo": "C:\\Users\\qc18278\\OneDrive - University of Bristol\\Documents\\GitHub\\school-age-children-and-covid2"
+}

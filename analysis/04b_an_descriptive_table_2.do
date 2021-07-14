@@ -25,7 +25,7 @@ local outcome `1'
 
 * Open a log file
 capture log close
-log using "04b_an_descriptive_table_2_`outcome'.log", text replace
+log using "$logdir/04b_an_descriptive_table_2_`outcome'.log", text replace
 
 
 *******************************************************************************
