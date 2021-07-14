@@ -1,0 +1,236 @@
+2021-07-14T14:40:55.961778000Z 
+2021-07-14T14:40:55.961803600Z   ___  ____  ____  ____  ____ (R)
+2021-07-14T14:40:55.961807900Z  /__    /   ____/   /   ____/
+2021-07-14T14:40:55.961810800Z ___/   /   /___/   /   /___/   16.1   Copyright 1985-2019 StataCorp LLC
+2021-07-14T14:40:55.961813300Z   Statistics/Data Analysis            StataCorp
+2021-07-14T14:40:55.961815700Z                                       4905 Lakeway Drive
+2021-07-14T14:40:55.961818100Z                                       College Station, Texas 77845 USA
+2021-07-14T14:40:55.961820600Z                                       800-STATA-PC        http://www.stata.com
+2021-07-14T14:40:55.961823100Z                                       979-696-4600        stata@stata.com
+2021-07-14T14:40:55.961825500Z                                       979-696-4601 (fax)
+2021-07-14T14:40:55.961827800Z 
+2021-07-14T14:40:55.961829900Z 3-user Stata network license expires 11 May 2022:
+2021-07-14T14:40:55.961832300Z        Serial number:  501709312237
+2021-07-14T14:40:55.961834700Z          Licensed to:  The Bennett Institute
+2021-07-14T14:40:55.961836800Z                        Oxford University
+2021-07-14T14:40:55.962624300Z 
+2021-07-14T14:40:55.962638800Z Notes:
+2021-07-14T14:40:55.962642200Z       1.  Unicode is supported; see help unicode_advice.
+2021-07-14T14:40:55.962644600Z 
+2021-07-14T14:40:55.962646900Z . do "analysis/07b_an_multivariable_cox_models_FULL.wrapper.do" non_covid_death
+2021-07-14T14:40:55.962649700Z >  MAIN 
+2021-07-14T14:40:55.962652100Z 
+2021-07-14T14:40:55.962654400Z . . do "analysis/07b_an_multivariable_cox_models_FULL.do" "non_covid_death MAIN
+2021-07-14T14:40:55.962657100Z > "
+2021-07-14T14:40:55.962659700Z 
+2021-07-14T14:40:55.962662300Z . *****************************************************************************
+2021-07-14T14:40:55.962664800Z > ***
+2021-07-14T14:40:55.962667100Z . *
+2021-07-14T14:40:55.962669400Z . *       Do-file:                07b_an_multivariable_cox_models.do
+2021-07-14T14:40:55.962671900Z . *
+2021-07-14T14:40:55.962674000Z . *       Project:                Exposure children and COVID risk
+2021-07-14T14:40:55.962676000Z . *
+2021-07-14T14:40:55.962678000Z . *       Programmed by:  Hforbes, based on files from Fizz & Krishnan
+2021-07-14T14:40:55.962680200Z . *
+2021-07-14T14:40:55.962682100Z . *       Data used:              analysis_dataset.dta
+2021-07-14T14:40:55.962684300Z . *
+2021-07-14T14:40:55.962686200Z . *       Data created:   None
+2021-07-14T14:40:55.962688300Z . *
+2021-07-14T14:40:55.962690400Z . *       Other output:   Log file:  an_multivariable_cox_models.log
+2021-07-14T14:40:55.962692800Z . *
+2021-07-14T14:40:55.962704000Z . *****************************************************************************
+2021-07-14T14:40:55.962706700Z > ***
+2021-07-14T14:40:55.962709000Z . *
+2021-07-14T14:40:55.962711100Z . *       Purpose:                This do-file performs multivariable (fully ad
+2021-07-14T14:40:55.962713400Z > justed) 
+2021-07-14T14:40:55.962715700Z . *                                       Cox models. 
+2021-07-14T14:40:55.962718200Z . *  
+2021-07-14T14:40:55.962720600Z . *****************************************************************************
+2021-07-14T14:40:55.962723100Z > ***
+2021-07-14T14:40:55.962725400Z . *       
+2021-07-14T14:40:55.962727400Z . *       Stata routines needed:  stbrier   
+2021-07-14T14:40:55.962729500Z . *
+2021-07-14T14:40:55.962731300Z . *****************************************************************************
+2021-07-14T14:40:55.962733500Z > ***
+2021-07-14T14:40:55.962736000Z . 
+2021-07-14T14:40:55.962738500Z . * Set globals that will print in programs and direct output
+2021-07-14T14:40:55.962740900Z . global outdir     "output" 
+2021-07-14T14:40:55.962743200Z 
+2021-07-14T14:40:55.962745400Z . global logdir     "log"
+2021-07-14T14:40:55.962747900Z 
+2021-07-14T14:40:55.962750000Z . global tempdir    "tempdata"
+2021-07-14T14:40:55.962752400Z 
+2021-07-14T14:40:55.962754600Z . global demogadjlist  age1 age2 age3 i.male i.obese4cat i.smoke_nomiss i.imd i
+2021-07-14T14:40:55.962756800Z > .tot_adults_hh i.ethnicity
+2021-07-14T14:40:55.962763500Z 
+2021-07-14T14:40:55.962766500Z . global comordidadjlist  i.htdiag_or_highbp                              ///
+2021-07-14T14:40:55.962769000Z >                         i.chronic_respiratory_disease   ///
+2021-07-14T14:40:55.962771100Z >                         i.asthma                                             
+2021-07-14T14:40:55.962773300Z >    ///
+2021-07-14T14:40:55.962775200Z >                         i.chronic_cardiac_disease               ///
+2021-07-14T14:40:55.962777500Z >                         i.diabcat                                            
+2021-07-14T14:40:55.962780200Z >    ///
+2021-07-14T14:40:55.962782500Z >                         i.cancer_exhaem_cat                             ///
+2021-07-14T14:40:55.962803200Z >                         i.cancer_haem_cat                               ///
+2021-07-14T14:40:55.962807900Z >                         i.chronic_liver_disease                 ///
+2021-07-14T14:40:55.962810600Z >                         i.stroke_dementia                               ///
+2021-07-14T14:40:55.962813000Z >                         i.other_neuro                                   ///
+2021-07-14T14:40:55.962819700Z >                         i.reduced_kidney_function_cat   ///
+2021-07-14T14:40:55.962822400Z >                         i.esrd                                               
+2021-07-14T14:40:55.962824800Z >    ///
+2021-07-14T14:40:55.962827100Z >                         i.other_transplant                              ///
+2021-07-14T14:40:55.962829400Z >                         i.asplenia                                           
+2021-07-14T14:40:55.962831800Z >    ///
+2021-07-14T14:40:55.962833800Z >                         i.ra_sle_psoriasis                      ///
+2021-07-14T14:40:55.962835900Z >                         i.other_immuno          
+2021-07-14T14:40:55.962838300Z 
+2021-07-14T14:40:55.962840700Z . 
+2021-07-14T14:40:55.962843000Z . local outcome `1' 
+2021-07-14T14:40:55.962845400Z 
+2021-07-14T14:40:55.962847900Z . local dataset `2'
+2021-07-14T14:40:55.962850100Z 
+2021-07-14T14:40:55.962852300Z . 
+2021-07-14T14:40:55.962854500Z . *****************************************************************************
+2021-07-14T14:40:55.962856800Z > *******
+2021-07-14T14:40:55.962859100Z . *First clean up all old saved estimates for this outcome
+2021-07-14T14:40:55.962861500Z . *This is to guard against accidentally displaying left-behind results from ol
+2021-07-14T14:40:55.962864100Z > d runs
+2021-07-14T14:40:55.962866500Z . *****************************************************************************
+2021-07-14T14:40:55.962869000Z > *******
+2021-07-14T14:40:55.962871300Z . 
+2021-07-14T14:40:55.962873500Z . * Open a log file
+2021-07-14T14:40:55.962875700Z . capture log close
+2021-07-14T14:40:55.962877800Z 
+2021-07-14T14:40:55.962879900Z . log using "$logdir/07b_an_multivariable_cox_models_`outcome'_`dataset'", text
+2021-07-14T14:40:55.962883000Z >  replace
+2021-07-14T14:40:55.962978200Z (note: file /workspace/log/07b_an_multivariable_cox_models_non_covid_death MAIN
+2021-07-14T14:40:55.962998000Z > _.log not found)
+2021-07-14T14:40:55.963002500Z -------------------------------------------------------------------------------
+2021-07-14T14:40:55.963005600Z       name:  <unnamed>
+2021-07-14T14:40:55.963008200Z        log:  /workspace/log/07b_an_multivariable_cox_models_non_covid_death MAI
+2021-07-14T14:40:55.963010800Z > N_.log
+2021-07-14T14:40:55.963013200Z   log type:  text
+2021-07-14T14:40:55.963015600Z  opened on:  14 Jul 2021, 14:40:55
+2021-07-14T14:40:55.963018000Z 
+2021-07-14T14:40:55.963020300Z . 
+2021-07-14T14:40:55.963022700Z . 
+2021-07-14T14:40:55.963029500Z . *****************************************************************************
+2021-07-14T14:40:55.963032300Z > ********
+2021-07-14T14:40:55.963034700Z . *PROG TO DEFINE THE BASIC COX MODEL WITH OPTIONS FOR HANDLING OF AGE, BMI, ET
+2021-07-14T14:40:55.963037000Z > HNICITY:
+2021-07-14T14:40:55.963111500Z . cap prog drop basecoxmodel
+2021-07-14T14:40:55.963120500Z 
+2021-07-14T14:40:55.963123700Z . prog define basecoxmodel
+2021-07-14T14:40:55.963125900Z   1.         syntax , exposure(string) age(string) 
+2021-07-14T14:40:55.963127900Z   2. 
+2021-07-14T14:40:55.963130000Z . timer clear
+2021-07-14T14:40:55.963132200Z   3. timer on 1
+2021-07-14T14:40:55.963139900Z   4.         capture stcox   `exposure'                              ///
+2021-07-14T14:40:55.963147900Z >                         $demogadjlist                                   ///
+2021-07-14T14:40:55.963151300Z >                         $comordidadjlist                                ///
+2021-07-14T14:40:55.963154000Z >                         `if'                                                 
+2021-07-14T14:40:55.963156600Z >    ///
+2021-07-14T14:40:55.963158900Z >                         , strata(stp) vce(cluster household_id)
+2021-07-14T14:40:55.963161700Z   5. timer off 1
+2021-07-14T14:40:55.963164400Z   6. timer list
+2021-07-14T14:40:55.963167200Z   7. end
+2021-07-14T14:40:55.963229800Z 
+2021-07-14T14:40:55.963236100Z . *****************************************************************************
+2021-07-14T14:40:55.963239400Z > ********
+2021-07-14T14:40:55.963242100Z . 
+2021-07-14T14:40:55.963244400Z . 
+2021-07-14T14:40:55.963246700Z . * Open dataset and fit specified model(s)
+2021-07-14T14:40:55.963249100Z . forvalues x=0/1 {
+2021-07-14T14:40:55.963251400Z   2. 
+2021-07-14T14:40:55.963253800Z . use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'`dataset'
+2021-07-14T14:40:55.963256200Z > .dta", clear
+2021-07-14T14:40:55.963258500Z   3. 
+2021-07-14T14:40:55.963260900Z . ******************************
+2021-07-14T14:40:55.963263200Z . *  Multivariable Cox models  *
+2021-07-14T14:40:55.963287700Z . ******************************
+2021-07-14T14:40:55.963294600Z . 
+2021-07-14T14:40:55.963297600Z . 
+2021-07-14T14:40:55.963300200Z . 
+2021-07-14T14:40:55.963302400Z . foreach exposure_type in kids_cat4  {
+2021-07-14T14:40:55.963304900Z   4. 
+2021-07-14T14:40:55.963307600Z . *Age spline model (not adj ethnicity)
+2021-07-14T14:40:55.963315300Z . cap erase "./output/an_multivariate_cox_models_`outcome'_`exposure_type'_MAIN
+2021-07-14T14:40:55.963324300Z > FULLYADJMODEL_ageband_`x'`dataset'"
+2021-07-14T14:40:55.963327500Z   5. basecoxmodel, exposure("i.`exposure_type'") age("age1 age2 age3") 
+2021-07-14T14:40:55.963351200Z   6. if _rc==0{
+2021-07-14T14:40:55.963357100Z   7. estimates
+2021-07-14T14:40:55.963360000Z   8. estimates save "./output/an_multivariate_cox_models_`outcome'_`exposure_ty
+2021-07-14T14:40:55.963362400Z > pe'_MAINFULLYADJMODEL_ageband_`x'`dataset'", replace
+2021-07-14T14:40:55.963364900Z   9.         *  Proportional Hazards test 
+2021-07-14T14:40:55.963442200Z .         * Based on Schoenfeld residuals
+2021-07-14T14:40:55.963448800Z .         timer clear 
+2021-07-14T14:40:55.963451800Z  10.         timer on 1
+2021-07-14T14:40:55.963454100Z  11.         if e(N_fail)>0 estat phtest, d
+2021-07-14T14:40:55.963456600Z  12.         timer off 1
+2021-07-14T14:40:55.963459000Z  13.         timer list 
+2021-07-14T14:40:55.963479700Z  14.         
+2021-07-14T14:40:55.963485300Z . }
+2021-07-14T14:40:55.963490600Z  15. else di "WARNING AGE SPLINE MODEL DID NOT FIT (OUTCOME `outcome')"
+2021-07-14T14:40:55.963493600Z  16. 
+2021-07-14T14:40:55.963506700Z . }
+2021-07-14T14:40:55.963510200Z  17. 
+2021-07-14T14:40:55.963512900Z . foreach exposure_type in  gp_number_kids {
+2021-07-14T14:40:55.963515300Z  18. *Age spline model (not adj ethnicity)
+2021-07-14T14:40:55.963517700Z . cap erase "./output/an_multivariate_cox_models_`outcome'_`exposure_type'_MAIN
+2021-07-14T14:40:55.963520000Z > FULLYADJMODEL_ageband_`x'`dataset'"
+2021-07-14T14:40:55.963605200Z  19. basecoxmodel, exposure("i.`exposure_type'") age("age1 age2 age3") 
+2021-07-14T14:40:55.963613000Z  20. if _rc==0{
+2021-07-14T14:40:55.963615900Z  21. estimates
+2021-07-14T14:40:55.963618300Z  22. estimates save "./output/an_multivariate_cox_models_`outcome'_`exposure_ty
+2021-07-14T14:40:55.963634700Z > pe'_MAINFULLYADJMODEL_ageband_`x'`dataset'", replace
+2021-07-14T14:40:55.963640300Z  23. }
+2021-07-14T14:40:55.963660000Z  24. else di "WARNING AGE SPLINE MODEL DID NOT FIT (OUTCOME `outcome')"
+2021-07-14T14:40:55.963664400Z  25. 
+2021-07-14T14:40:55.963667400Z . }
+2021-07-14T14:40:55.963669600Z  26. 
+2021-07-14T14:40:55.963671800Z . 
+2021-07-14T14:40:55.963674000Z . *SENSITIVITY ANALYSIS: 12 months FUP
+2021-07-14T14:40:55.963676500Z . keep if has_12_m_follow_up == 1
+2021-07-14T14:40:55.963678800Z  27. foreach exposure_type in kids_cat4   {
+2021-07-14T14:40:55.963681100Z  28. 
+2021-07-14T14:40:55.963683100Z . *Age spline model (not adj ethnicity)
+2021-07-14T14:40:55.963725500Z . cap erase ./output/an_sense_`outcome'_plus_eth_12mo_ageband_`x'`dataset'
+2021-07-14T14:40:55.963736800Z  29. basecoxmodel, exposure("i.`exposure_type'") age("age1 age2 age3")  
+2021-07-14T14:40:55.963740300Z  30. if _rc==0{
+2021-07-14T14:40:55.963742400Z  31. estimates
+2021-07-14T14:40:55.963744500Z  32. estimates save ./output/an_sense_`outcome'_plus_eth_12mo_ageband_`x'`datas
+2021-07-14T14:40:55.963746700Z > et', replace
+2021-07-14T14:40:55.963748700Z  33. *estat concordance /*c-statistic*/
+2021-07-14T14:40:55.963750900Z . }
+2021-07-14T14:40:55.963798400Z  34. else di "WARNING 12 MO FUP MODEL W/ AGE SPLINE  DID NOT FIT (OUTCOME `outc
+2021-07-14T14:40:55.963804700Z > ome')"
+2021-07-14T14:40:55.963808000Z  35. }       
+2021-07-14T14:40:55.963810600Z  36. }
+2021-07-14T14:40:55.963950500Z file tempdata/cr_create_analysis_dataset_STSET_non_covid_death
+2021-07-14T14:40:55.963971900Z     MAIN_ageband_0.dta not found
+2021-07-14T14:40:55.963975400Z r(601);
+2021-07-14T14:40:55.963978500Z 
+2021-07-14T14:40:55.963981400Z end of do-file
+2021-07-14T14:40:55.963984200Z r(601);
+2021-07-14T14:40:55.963987100Z 
+2021-07-14T14:40:55.963989700Z end of do-file
+2021-07-14T14:40:55.963992700Z 
+2021-07-14T14:40:55.963995100Z r(601);
+2021-07-14T14:40:55.963997400Z 
+2021-07-14T14:40:55.964010800Z 
+2021-07-14T14:40:55.978880100Z . 
+
+state: failed
+commit: none
+docker_image_id: sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9
+exit_code: 1
+job_id: r2un2u5x5jew73s3
+run_by_user: qc18278
+created_at: 2021-07-14T14:40:45Z
+started_at: 2021-07-14T14:40:55Z
+completed_at: 2021-07-14T14:41:56Z
+
+Job exited with an error code
+
+outputs:
+  (no outputs)

@@ -25,8 +25,9 @@ global logdir     "log"
 global tempdir    "tempdata"
 
 local dataset `1'
+pwd
 
-/*PARSE DO-FILE ARGUMENTS (first should be outcome, rest should be variables)
+*PARSE DO-FILE ARGUMENTS (first should be outcome, rest should be variables)
 local arguments = wordcount("`0'") 
 local outcome `1'
 local varlist
@@ -35,7 +36,7 @@ forvalues i=2/`arguments'{
 	}
 local firstvar = word("`0'", 2)
 local lastvar = word("`0'", `arguments')
-*/
+
 	
 
 * Open a log file
@@ -66,3 +67,4 @@ foreach exposure_type in kids_cat4  ///
 * Close log file
 log close
 
+exit, clear STATA

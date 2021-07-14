@@ -55,7 +55,7 @@ local dataset `2'
 
 * Open a log file
 capture log close
-log using "$logdir/07b_an_multivariable_cox_models_`outcome'`dataset'", text replace
+log using "$logdir/07b_an_multivariable_cox_models_`outcome'_`dataset'", text replace
 
 
 *************************************************************************************
@@ -140,6 +140,4 @@ else di "WARNING 12 MO FUP MODEL W/ AGE SPLINE  DID NOT FIT (OUTCOME `outcome')"
 
 log close
 
-
 exit, clear STATA
-

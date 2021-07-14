@@ -1,0 +1,790 @@
+{
+  "files": {
+    "log/01_cr_analysis_dataset.log": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/01_cr_analysis_dataset_W2.log": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/02_an_data_checks.log": {
+      "created_by_action": "02_an_data_checks",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/02_an_data_checksW2.log": {
+      "created_by_action": "02_an_data_checks_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/03a_an_descriptive_tablesMAIN.log": {
+      "created_by_action": "03a_an_descriptive_tables",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/03a_an_descriptive_tablesW2.log": {
+      "created_by_action": "03a_an_descriptive_tables_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/03b_an_descriptive_table_1MAIN.log": {
+      "created_by_action": "03b_an_descriptive_table_1",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/03b_an_descriptive_table_1W2.log": {
+      "created_by_action": "03b_an_descriptive_table_1_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/04a_an_descriptive_tablesMAIN.log": {
+      "created_by_action": "04a_an_descriptive_tables",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/04a_an_descriptive_tablesW2.log": {
+      "created_by_action": "04a_an_descriptive_tables_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/04b_an_descriptive_table_2_MAIN.log": {
+      "created_by_action": "04b_an_descriptive_table_2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/04b_an_descriptive_table_2_W2.log": {
+      "created_by_action": "04b_an_descriptive_table_2_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/06_univariate_analysis_MAIN.log": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/06_univariate_analysis_W2.log": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/07a_an_multivariable_cox_models_MAIN.log": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/07a_an_multivariable_cox_models_W2.log": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/WORMS_01_cr_analysis_dataset.log": {
+      "created_by_action": "WORMS_01_cr_analysis_dataset",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/WORMS_02_an_data_checks.log": {
+      "created_by_action": "WORMS_02_an_data_checks",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/01_histogram_infection_outcomes_MAIN.svg": {
+      "created_by_action": "02_an_data_checks",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/01_histogram_infection_outcomes_W2.svg": {
+      "created_by_action": "02_an_data_checks_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/01_histogram_outcomes_MAIN.svg": {
+      "created_by_action": "02_an_data_checks",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/01_histogram_outcomes_W2.svg": {
+      "created_by_action": "02_an_data_checks_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/03b_an_descriptive_table_1_kids_cat4_ageband0MAIN.txt": {
+      "created_by_action": "03b_an_descriptive_table_1",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/03b_an_descriptive_table_1_kids_cat4_ageband0W2.txt": {
+      "created_by_action": "03b_an_descriptive_table_1_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/03b_an_descriptive_table_1_kids_cat4_ageband1MAIN.txt": {
+      "created_by_action": "03b_an_descriptive_table_1",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/03b_an_descriptive_table_1_kids_cat4_ageband1W2.txt": {
+      "created_by_action": "03b_an_descriptive_table_1_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/04b_an_descriptive_table_2_MAIN_ageband0.txt": {
+      "created_by_action": "04b_an_descriptive_table_2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/04b_an_descriptive_table_2_MAIN_ageband1.txt": {
+      "created_by_action": "04b_an_descriptive_table_2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/04b_an_descriptive_table_2_W2_ageband0.txt": {
+      "created_by_action": "04b_an_descriptive_table_2_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/04b_an_descriptive_table_2_W2_ageband1.txt": {
+      "created_by_action": "04b_an_descriptive_table_2_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_death_gp_number_kids_DEMOGADJ_ageband_0MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_death_gp_number_kids_DEMOGADJ_ageband_0W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_death_gp_number_kids_DEMOGADJ_ageband_1MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_death_gp_number_kids_DEMOGADJ_ageband_1W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_death_kids_cat4_DEMOGADJ_ageband_0MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_death_kids_cat4_DEMOGADJ_ageband_0W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_death_kids_cat4_DEMOGADJ_ageband_1MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_death_kids_cat4_DEMOGADJ_ageband_1W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_icu_gp_number_kids_DEMOGADJ_ageband_0MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_icu_gp_number_kids_DEMOGADJ_ageband_0W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_icu_gp_number_kids_DEMOGADJ_ageband_1MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_icu_gp_number_kids_DEMOGADJ_ageband_1W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_icu_kids_cat4_DEMOGADJ_ageband_0MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_icu_kids_cat4_DEMOGADJ_ageband_0W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_icu_kids_cat4_DEMOGADJ_ageband_1MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_icu_kids_cat4_DEMOGADJ_ageband_1W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_tpp_prob_gp_number_kids_DEMOGADJ_ageband_0MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_tpp_prob_gp_number_kids_DEMOGADJ_ageband_0W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_tpp_prob_gp_number_kids_DEMOGADJ_ageband_1MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_tpp_prob_gp_number_kids_DEMOGADJ_ageband_1W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_tpp_prob_kids_cat4_DEMOGADJ_ageband_0MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_tpp_prob_kids_cat4_DEMOGADJ_ageband_0W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_tpp_prob_kids_cat4_DEMOGADJ_ageband_1MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covid_tpp_prob_kids_cat4_DEMOGADJ_ageband_1W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covidadmission_gp_number_kids_DEMOGADJ_ageband_0MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covidadmission_gp_number_kids_DEMOGADJ_ageband_0W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covidadmission_gp_number_kids_DEMOGADJ_ageband_1MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covidadmission_gp_number_kids_DEMOGADJ_ageband_1W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covidadmission_kids_cat4_DEMOGADJ_ageband_0MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covidadmission_kids_cat4_DEMOGADJ_ageband_0W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covidadmission_kids_cat4_DEMOGADJ_ageband_1MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_covidadmission_kids_cat4_DEMOGADJ_ageband_1W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_non_covid_death_gp_number_kids_DEMOGADJ_ageband_0MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_non_covid_death_gp_number_kids_DEMOGADJ_ageband_0W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_non_covid_death_gp_number_kids_DEMOGADJ_ageband_1MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_non_covid_death_gp_number_kids_DEMOGADJ_ageband_1W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_non_covid_death_kids_cat4_DEMOGADJ_ageband_0MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_non_covid_death_kids_cat4_DEMOGADJ_ageband_0W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_non_covid_death_kids_cat4_DEMOGADJ_ageband_1MAIN.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_multivariate_cox_models_non_covid_death_kids_cat4_DEMOGADJ_ageband_1W2.ster": {
+      "created_by_action": "07a_an_multivariable_cox_models_demogADJ_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covid_death_AGESEX_ageband_0MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covid_death_AGESEX_ageband_0W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covid_death_AGESEX_ageband_1MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covid_death_AGESEX_ageband_1W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covid_icu_AGESEX_ageband_0MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covid_icu_AGESEX_ageband_0W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covid_icu_AGESEX_ageband_1MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covid_icu_AGESEX_ageband_1W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covid_tpp_prob_AGESEX_ageband_0MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covid_tpp_prob_AGESEX_ageband_0W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covid_tpp_prob_AGESEX_ageband_1MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covid_tpp_prob_AGESEX_ageband_1W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covidadmission_AGESEX_ageband_0MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covidadmission_AGESEX_ageband_0W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covidadmission_AGESEX_ageband_1MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_covidadmission_AGESEX_ageband_1W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_non_covid_death_AGESEX_ageband_0MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_non_covid_death_AGESEX_ageband_0W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_non_covid_death_AGESEX_ageband_1MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_gp_number_kids_non_covid_death_AGESEX_ageband_1W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covid_death_AGESEX_ageband_0MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covid_death_AGESEX_ageband_0W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covid_death_AGESEX_ageband_1MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covid_death_AGESEX_ageband_1W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covid_icu_AGESEX_ageband_0MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covid_icu_AGESEX_ageband_0W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covid_icu_AGESEX_ageband_1MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covid_icu_AGESEX_ageband_1W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covid_tpp_prob_AGESEX_ageband_0MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covid_tpp_prob_AGESEX_ageband_0W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covid_tpp_prob_AGESEX_ageband_1MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covid_tpp_prob_AGESEX_ageband_1W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covidadmission_AGESEX_ageband_0MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covidadmission_AGESEX_ageband_0W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covidadmission_AGESEX_ageband_1MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_covidadmission_AGESEX_ageband_1W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_non_covid_death_AGESEX_ageband_0MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_non_covid_death_AGESEX_ageband_0W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_non_covid_death_AGESEX_ageband_1MAIN.ster": {
+      "created_by_action": "06_univariate_analysis",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_univariable_cox_models_kids_cat4_non_covid_death_AGESEX_ageband_1W2.ster": {
+      "created_by_action": "06_univariate_analysis_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/input.csv": {
+      "created_by_action": "generate_cohort",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/input_W2.csv": {
+      "created_by_action": "W2_generate_cohort",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/input_worms.csv": {
+      "created_by_action": "worms_generate_cohort",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_datasetMAIN.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_datasetW2.dta": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset_ageband_0MAIN.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset_ageband_0W2.dta": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset_ageband_1MAIN.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset_ageband_1W2.dta": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset_with_missing_ethnicityMAIN.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset_with_missing_ethnicityW2.dta": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset_worms.dta": {
+      "created_by_action": "WORMS_01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset_worms_ageband_0.dta": {
+      "created_by_action": "WORMS_01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/analysis_dataset_worms_ageband_1.dta": {
+      "created_by_action": "WORMS_01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_death_ageband_0MAIN.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_death_ageband_0W2.dta": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_death_ageband_1MAIN.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_death_ageband_1W2.dta": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_icu_ageband_0MAIN.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_icu_ageband_0W2.dta": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_icu_ageband_1MAIN.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_icu_ageband_1W2.dta": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_tpp_prob_ageband_0MAIN.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_tpp_prob_ageband_0W2.dta": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_tpp_prob_ageband_1MAIN.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covid_tpp_prob_ageband_1W2.dta": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covidadmission_ageband_0MAIN.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covidadmission_ageband_0W2.dta": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covidadmission_ageband_1MAIN.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_covidadmission_ageband_1W2.dta": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_non_covid_death_ageband_0MAIN.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_non_covid_death_ageband_0W2.dta": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_non_covid_death_ageband_1MAIN.dta": {
+      "created_by_action": "01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_non_covid_death_ageband_1W2.dta": {
+      "created_by_action": "01_cr_analysis_dataset_W2",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_worms_ageband_0.dta": {
+      "created_by_action": "WORMS_01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    },
+    "tempdata/cr_create_analysis_dataset_STSET_worms_ageband_1.dta": {
+      "created_by_action": "WORMS_01_cr_analysis_dataset",
+      "privacy_level": "highly_sensitive"
+    }
+  },
+  "actions": {
+    "generate_cohort": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:1f352c304dafebda5b05a7fe54f4890b832309503f562cfcb30fbcc617a6548f",
+      "job_id": "nl453jfd7zafx5o2",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:03:19Z"
+    },
+    "W2_generate_cohort": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:1f352c304dafebda5b05a7fe54f4890b832309503f562cfcb30fbcc617a6548f",
+      "job_id": "rgxlxlbv7qtvnviy",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:03:22Z"
+    },
+    "worms_generate_cohort": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:1f352c304dafebda5b05a7fe54f4890b832309503f562cfcb30fbcc617a6548f",
+      "job_id": "2dz2rft5u5wg4qtc",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:03:26Z"
+    },
+    "01_cr_analysis_dataset": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "zixw7plp5xdivmul",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:03:57Z"
+    },
+    "01_cr_analysis_dataset_W2": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "dmvpxhdqd3jl5a2m",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:04:06Z"
+    },
+    "WORMS_01_cr_analysis_dataset": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "wt3vz37zwfz565u6",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:04:15Z"
+    },
+    "02_an_data_checks": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "w5dha53wqv3bun4v",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:05:51Z"
+    },
+    "02_an_data_checks_W2": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "w63gomuc5p6gdpmi",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:05:56Z"
+    },
+    "WORMS_02_an_data_checks": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "qu5nnw7gnbjzspjh",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:06:00Z"
+    },
+    "03a_an_descriptive_tables": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "f5iwheuowrgac6y7",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:06:04Z"
+    },
+    "03a_an_descriptive_tables_W2": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "hnkuxgjvxqlu7hzj",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:06:08Z"
+    },
+    "03b_an_descriptive_table_1": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "vnwv34utkpp6zvqe",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:06:12Z"
+    },
+    "03b_an_descriptive_table_1_W2": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "z3o7lrg43vn2fidx",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:06:16Z"
+    },
+    "04a_an_descriptive_tables": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "yqywbsdei6tk45de",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:07:59Z"
+    },
+    "04a_an_descriptive_tables_W2": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "raw3yzafkeiwf3q3",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:08:03Z"
+    },
+    "04b_an_descriptive_table_2": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "cmkabkq4ajylwbts",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:08:06Z"
+    },
+    "04b_an_descriptive_table_2_W2": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "rnoeowsj4yy3orrv",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:08:11Z"
+    },
+    "06_univariate_analysis": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "oxiju7bg6urfqrte",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:08:15Z"
+    },
+    "06_univariate_analysis_W2": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "bickhfws77dxhlkq",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:02:51Z",
+      "completed_at": "2021-07-14T12:08:24Z"
+    },
+    "07a_an_multivariable_cox_models_demogADJ": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "72glwls52nkn5z5k",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:13:58Z",
+      "completed_at": "2021-07-14T12:15:47Z"
+    },
+    "07a_an_multivariable_cox_models_demogADJ_W2": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "ccvvtfrvg5iqghkd",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T12:13:58Z",
+      "completed_at": "2021-07-14T12:15:58Z"
+    },
+    "07b_an_multivariable_cox_models_FULL_non_covid_death": {
+      "state": "failed",
+      "commit": "none",
+      "docker_image_id": "sha256:2cfae55f0ae53b85c43f26639279eb9d1deb03aff879163255761854461f4ca9",
+      "job_id": "r2un2u5x5jew73s3",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-14T14:40:45Z",
+      "completed_at": "2021-07-14T14:41:56Z"
+    }
+  },
+  "workspace": "school-age-children-and-covid2-os",
+  "repo": "C:\\Users\\qc18278\\OneDrive - University of Bristol\\Documents\\GitHub\\school-age-children-and-covid2-os"
+}

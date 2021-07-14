@@ -1,0 +1,18 @@
+2021-07-14T12:03:11.538190500Z 2021-07-14 12:03:11 [info     ] Generating cohort for study_definition_W2 in output [cohortextractor.cohortextractor] 
+2021-07-14T12:03:18.510562400Z 2021-07-14 12:03:18 [info     ] Successfully created cohort and covariates at output/input_W2.csv [cohortextractor.cohortextractor] 
+
+
+state: succeeded
+commit: none
+docker_image_id: sha256:1f352c304dafebda5b05a7fe54f4890b832309503f562cfcb30fbcc617a6548f
+exit_code: 0
+job_id: rgxlxlbv7qtvnviy
+run_by_user: qc18278
+created_at: 2021-07-14T12:02:51Z
+started_at: 2021-07-14T12:03:10Z
+completed_at: 2021-07-14T12:03:22Z
+
+Completed successfully
+
+outputs:
+  output/input_W2.csv  - highly_sensitive
