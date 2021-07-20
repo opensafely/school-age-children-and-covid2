@@ -45,7 +45,7 @@ global comordidadjlist  i.htdiag_or_highbp				///
 			i.ra_sle_psoriasis  			///
 			i.other_immuno		
 
-local outcome `1' 
+local outcome `1'
 local dataset `2'
 
 ************************************************************************************
@@ -139,5 +139,4 @@ else di "WARNING 12 MO FUP MODEL W/ AGE SPLINE  DID NOT FIT (OUTCOME `outcome')"
 }
 
 log close
-
-exit, clear STATA
+exit, clear

@@ -413,5 +413,5 @@ estimates save "./output/an_sense_covid_death_time_int_ageband_`x'`dataset'", re
 }
 }
 cap log close
-exit, clear STATA
+exit, clear
 

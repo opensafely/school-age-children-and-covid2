@@ -119,5 +119,5 @@ else di "WARNING GROUP MODEL DID NOT FIT (OUTCOME `outcome')"
 
 log close
 
-exit, clear STATA
+exit, clear 
 

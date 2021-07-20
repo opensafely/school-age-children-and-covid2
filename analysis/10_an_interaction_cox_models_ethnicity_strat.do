@@ -61,27 +61,32 @@ forvalues x=0/1 {
 
 use "$tempdir/cr_create_analysis_dataset_STSET_`outcome'_ageband_`x'`dataset'.dta", clear
 
+safetab ethnicity `outcome'
+levelsof ethnicity, local(levels)
+
+
 
 *Age spline model (not adj ethnicity, interaction)
-stcox i.kids_cat3##i.ethnicity  								///
+stcox i.kids_cat4##i.ethnicity  								///
 			$demogadjlist							///
 			$comordidadjlist						///
 			, strata(stp) vce(cluster household_id)
-			estimates save ./output/an_interaction_cox_models_`outcome'_kids_cat3_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_`x'`dataset', replace
-foreach ethcat in 1 2 3 4 5 {
+			estimates save ./output/an_interaction_cox_models_`outcome'_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_`x'`dataset', replace
+foreach l of local levels {
 if _rc==0 {
-*testparm `ethcat'.ethnicity#i.kids_cat3
-*di _n "kids_cat3 " _n "****************"
-lincom 1.kids_cat3 + `ethcat'.ethnicity#1.kids_cat3, eform
-di "kids_cat3" _n "****************"
-lincom 2.kids_cat3 + `ethcat'.ethnicity#2.kids_cat3, eform
+*testparm `ethcat'.ethnicity#i.kids_cat4
+*di _n "kids_cat4 " _n "****************"
+lincom 1.kids_cat4 + `l'.ethnicity#1.kids_cat4, eform
+di "kids_cat4" _n "****************"
+lincom 2.kids_cat4 + `l'.ethnicity#2.kids_cat4, eform
+lincom 3.kids_cat4 + `l'.ethnicity#3.kids_cat4, eform
 
 }
-else di "WARNING GROUP MODEL DID NOT FIT (OUTCOME `outcome')"
+*else di "WARNING GROUP MODEL DID NOT FIT (OUTCOME `outcome')"
 }
 }
 log close
 
-exit, clear STATA
+exit, clear 
 
 

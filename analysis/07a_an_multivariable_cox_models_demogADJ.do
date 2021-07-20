@@ -103,4 +103,4 @@ else di "WARNING AGE SPLINE MODEL DID NOT FIT (OUTCOME `outcome')"
 }
 }	
 log close
-exit, clear STATA
+exit, clear

@@ -9,15 +9,17 @@
 *
 *Date drafted: 30th June 2020
 *************************************************************************
+global outdir  	  "output"
+global logdir     "log"
+global tempdir    "tempdata"
 
 local outcome `1' 
-local dataset `2'
 
 
 
 * Open a log file
 capture log close
-log using "11_an_interaction_HR_tables_forest_`outcome'_ethnicity`dataset'.log", text replace
+log using "$logdir/11_an_interaction_HR_tables_forest_`outcome'_ethnicityW2", text replace
 
 ***********************************************************************************************************************
 *Generic code to ouput the HRs across outcomes for all levels of a particular variables, in the right shape for table
@@ -49,7 +51,7 @@ local endwith "_tab"
 		*1) GET THE RIGHT ESTIMATES INTO MEMORY
 
 		if "`modeltype'"=="fulladj" {
-				cap estimates use ./output/an_interaction_cox_models_`outcome'_kids_cat3_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_`x'`dataset'
+				estimates use ./output/an_interaction_cox_models_`outcome'_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_`x'W2
 				if _rc!=0 local noestimatesflag 1
 				}
 		***********************
@@ -62,7 +64,12 @@ local endwith "_tab"
 			if _rc==0 file write tablecontents_int %4.2f (r(estimate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
 				else file write tablecontents_int %4.2f ("ERR IN MODEL") `endwith'
 				}
-			
+
+										if `int_level'==2 {
+			cap lincom `i'.`variable'+ 2.`int_type'#`i'.`variable', eform
+			if _rc==0 file write tablecontents_int %4.2f (r(estimate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
+				else file write tablecontents_int %4.2f ("ERR IN MODEL") `endwith'
+				}
 			
 						if `int_level'==3 {
 			cap lincom `i'.`variable'+ 3.`int_type'#`i'.`variable', eform
@@ -70,7 +77,11 @@ local endwith "_tab"
 				else file write tablecontents_int %4.2f ("ERR IN MODEL") `endwith'
 				}
 			
-			
+									if `int_level'==4 {
+			cap lincom `i'.`variable'+ 4.`int_type'#`i'.`variable', eform
+			if _rc==0 file write tablecontents_int %4.2f (r(estimate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
+				else file write tablecontents_int %4.2f ("ERR IN MODEL") `endwith'
+				}
 									if `int_level'==5 {
 			cap lincom `i'.`variable'+ 5.`int_type'#`i'.`variable', eform
 			if _rc==0 file write tablecontents_int %4.2f (r(estimate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
@@ -79,7 +90,7 @@ local endwith "_tab"
 			
 
 		*3) Save the estimates for plotting
-		if `noestimatesflag'==0{
+		if _rc==0{
 			if "`modeltype'"=="fulladj" {
 				local hr = r(estimate)
 				local lb = r(lb)
@@ -102,14 +113,14 @@ end
 
 *MAIN CODE TO PRODUCE TABLE CONTENTS
 cap file close tablecontents_int
-file open tablecontents_int using ./output/11_an_int_tab_contents_HRtable_`outcome'_ethnicity`dataset'.txt, t w replace
+file open tablecontents_int using ./output/11_an_int_tab_contents_HRtable_`outcome'_ethnicityW2.txt, t w replace
 
 tempfile HRestimates_int
 cap postutil clear
 postfile HRestimates_int str10 x str10 outcome str27 variable str27 int_type level int_level hr lci uci pval using `HRestimates_int'
 
 *Primary exposure
-outputHRsforvar, variable("kids_cat3") min(1) max(2) outcome(`outcome')
+outputHRsforvar, variable("kids_cat4") min(1) max(3) outcome(`outcome')
 file write tablecontents_int _n
 
 file close tablecontents_int

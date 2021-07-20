@@ -67,4 +67,4 @@ foreach exposure_type in kids_cat4  ///
 * Close log file
 log close
 
-exit, clear STATA
+exit, clear 

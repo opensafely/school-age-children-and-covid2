@@ -212,7 +212,7 @@ actions:
     run: stata-mp:latest analysis/07b_an_multivariable_cox_models_FULL.do covid_tpp_prob MAIN
     outputs:
       moderately_sensitive:
-        log: log/07b_an_multivariable_cox_models_covid_tpp_probMAIN.log
+        log: log/07b_an_multivariable_cox_models_covid_tpp_prob_MAIN.log
         data: "output/an_multivariate_cox_models_covid_tpp_prob_*_MAINFULLYADJMODEL_ageband_*MAIN.ster"
         other_data: "output/an_sense_covid_tpp_prob_plus_eth_12mo_ageband_*MAIN.ster"
 
@@ -230,7 +230,7 @@ actions:
     run: stata-mp:latest analysis/07b_an_multivariable_cox_models_FULL.do covid_icu MAIN
     outputs:
       moderately_sensitive:
-        log: log/07b_an_multivariable_cox_models_covid_icuMAIN.log
+        log: log/07b_an_multivariable_cox_models_covid_icu_MAIN.log
         data: "output/an_multivariate_cox_models_covid_icu_*_MAINFULLYADJMODEL_ageband_*MAIN.ster"
         other_data: "output/an_sense_covid_icu_plus_eth_12mo_ageband_*MAIN.ster"
 
@@ -660,7 +660,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_ethcat_covid_tpp_probW2.log
-        data: "output/an_interaction_cox_models_covid_tpp_prob_kids_cat3_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_*W2.ster"
+        data: "output/an_interaction_cox_models_covid_tpp_prob_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_*W2.ster"
 
   10_an_interaction_cox_models_ethnicity_strat_covidadmission_W2:
     needs: [01_cr_analysis_dataset_W2]
@@ -668,7 +668,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_ethcat_covidadmissionW2.log
-        data: "output/an_interaction_cox_models_covidadmission_kids_cat3_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_*W2.ster"
+        data: "output/an_interaction_cox_models_covidadmission_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_*W2.ster"
 
   10_an_interaction_cox_models_ethnicity_strat_covid_icu_W2:
     needs: [01_cr_analysis_dataset_W2]
@@ -676,7 +676,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_ethcat_covid_icuW2.log
-        data: "output/an_interaction_cox_models_covid_icu_kids_cat3_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_*W2.ster"
+        data: "output/an_interaction_cox_models_covid_icu_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_*W2.ster"
 
   10_an_interaction_cox_models_ethnicity_strat_covid_death_W2:
     needs: [01_cr_analysis_dataset_W2]
@@ -684,7 +684,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: log/10_an_interaction_cox_models_ethcat_covid_deathW2.log
-        data: "output/an_interaction_cox_models_covid_death_kids_cat3_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_*W2.ster"
+        data: "output/an_interaction_cox_models_covid_death_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_*W2.ster"
 
   14_multiple_imputation_analysis_covidadmission:
     needs: [13_multiple_imputation_dataset_covidadmission]
@@ -1014,37 +1014,37 @@ actions:
   11_an_interaction_HR_tables_forest_covid_tpp_prob_ethnicity:
     needs:
       - 10_an_interaction_cox_models_ethnicity_strat_covid_tpp_prob_W2
-    run: stata-mp:latest analysis/11a_an_interaction_HR_tables_forest_eth_strat.do covid_tpp_prob W2
+    run: stata-mp:latest analysis/11a_an_interaction_HR_tables_forest_eth_strat.do covid_tpp_prob 
     outputs:
       moderately_sensitive:
-        log: 11_an_interaction_HR_tables_forest_covid_tpp_prob_ethnicityW2.log
+        log: log/11_an_interaction_HR_tables_forest_covid_tpp_prob_ethnicityW2.log
         data: "output/11_an_int_tab_contents_HRtable_covid_tpp_prob_ethnicityW2.txt"
 
   11_an_interaction_HR_tables_forest_covidadmission_ethnicity:
     needs:
       - 10_an_interaction_cox_models_ethnicity_strat_covidadmission_W2
-    run: stata-mp:latest analysis/11a_an_interaction_HR_tables_forest_eth_strat.do covidadmission W2
+    run: stata-mp:latest analysis/11a_an_interaction_HR_tables_forest_eth_strat.do covidadmission 
     outputs:
       moderately_sensitive:
-        log: 11_an_interaction_HR_tables_forest_covidadmission_ethnicityW2.log
+        log: log/11_an_interaction_HR_tables_forest_covidadmission_ethnicityW2.log
         data: "output/11_an_int_tab_contents_HRtable_covidadmission_ethnicityW2.txt"
 
   11_an_interaction_HR_tables_forest_covid_icu_ethnicity:
     needs:
       - 10_an_interaction_cox_models_ethnicity_strat_covid_icu_W2
-    run: stata-mp:latest analysis/11a_an_interaction_HR_tables_forest_eth_strat.do covid_icu W2
+    run: stata-mp:latest analysis/11a_an_interaction_HR_tables_forest_eth_strat.do covid_icu 
     outputs:
       moderately_sensitive:
-        log: 11_an_interaction_HR_tables_forest_covid_icu_ethnicityW2.log
+        log: log/11_an_interaction_HR_tables_forest_covid_icu_ethnicityW2.log
         data: "output/11_an_int_tab_contents_HRtable_covid_icu_ethnicityW2.txt"
 
   11_an_interaction_HR_tables_forest_covid_death_ethnicity:
     needs:
       - 10_an_interaction_cox_models_ethnicity_strat_covid_death_W2
-    run: stata-mp:latest analysis/11a_an_interaction_HR_tables_forest_eth_strat.do covid_death W2
+    run: stata-mp:latest analysis/11a_an_interaction_HR_tables_forest_eth_strat.do covid_death 
     outputs:
       moderately_sensitive:
-        log: 11_an_interaction_HR_tables_forest_covid_death_ethnicityW2.log
+        log: log/11_an_interaction_HR_tables_forest_covid_death_ethnicityW2.log
         data: "output/11_an_int_tab_contents_HRtable_covid_death_ethnicityW2.txt"
 
   12_an_tablecontent_HRtable_SENSE_covid_tpp_prob:

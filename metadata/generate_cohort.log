@@ -1,16 +1,16 @@
-2021-07-14T12:03:04.737219600Z 2021-07-14 12:03:04 [info     ] Generating cohort for study_definition in output [cohortextractor.cohortextractor] 
-2021-07-14T12:03:11.958552700Z 2021-07-14 12:03:11 [info     ] Successfully created cohort and covariates at output/input.csv [cohortextractor.cohortextractor] 
+2021-07-20T15:39:00.107795700Z 2021-07-20 15:39:00 [info     ] Generating cohort for study_definition in output [cohortextractor.cohortextractor] 
+2021-07-20T15:39:05.898254100Z 2021-07-20 15:39:05 [info     ] Successfully created cohort and covariates at output/input.csv [cohortextractor.cohortextractor] 
 
 
 state: succeeded
 commit: none
-docker_image_id: sha256:1f352c304dafebda5b05a7fe54f4890b832309503f562cfcb30fbcc617a6548f
+docker_image_id: sha256:8caac49a0487df7aee7b6df29ebf7f5c8c8981f360f4f21b07662f95ef1b747e
 exit_code: 0
 job_id: nl453jfd7zafx5o2
 run_by_user: qc18278
-created_at: 2021-07-14T12:02:51Z
-started_at: 2021-07-14T12:03:03Z
-completed_at: 2021-07-14T12:03:19Z
+created_at: 2021-07-20T15:38:48Z
+started_at: 2021-07-20T15:38:59Z
+completed_at: 2021-07-20T15:39:16Z
 
 Completed successfully
 
