@@ -97,7 +97,4 @@ estimates save ./output/an_sense_`outcome'_CCeth_bmi_smok_ageband_`x'`dataset', 
 log close
 
 
-
-
-exit, clear STATA
-
+exit, clear

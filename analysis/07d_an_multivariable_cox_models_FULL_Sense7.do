@@ -118,5 +118,5 @@ log close
 
 
 
-exit, clear STATA
+exit, clear 
 

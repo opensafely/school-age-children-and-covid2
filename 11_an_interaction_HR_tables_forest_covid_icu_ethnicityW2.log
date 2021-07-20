@@ -1,0 +1,165 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /workspace/11_an_interaction_HR_tables_forest_covid_icu_ethnicityW
+> 2.log
+  log type:  text
+ opened on:  20 Jul 2021, 14:38:58
+
+. 
+. *****************************************************************************
+> ******************************************
+. *Generic code to ouput the HRs across outcomes for all levels of a particular
+>  variables, in the right shape for table
+. cap prog drop outputHRsforvar
+
+. prog define outputHRsforvar
+  1. syntax, variable(string) min(real) max(real) outcome(string)
+  2. file write tablecontents_int ("age") _tab ("exposure") _tab ("exposure lev
+> el") ///
+> _tab ("outcome") _tab ("int_type") _tab ("int_level") ///
+> _tab ("HR")  _tab ("lci")  _tab ("uci") _tab ("pval") _n
+  3. forvalues x=0/1 {
+  4. forvalues i=`min'/`max'{
+  5. foreach int_type in ethnicity {
+  6. 
+. foreach int_level in 1 2 3 4 5 {
+  7. 
+. local endwith "_tab"
+  8. 
+.         *put the varname and condition to left so that alignment can be check
+> ed vs shell
+.         file write tablecontents_int ("`x'") _tab ("`variable'") _tab ("`i'")
+>  _tab ("`outcome'") _tab ("`int_type'") _tab ("`int_level'") _tab
+  9. 
+.         foreach modeltype of any fulladj {
+ 10. 
+.                 local noestimatesflag 0 /*reset*/
+ 11. 
+. *CHANGE THE OUTCOME BELOW TO LAST IF BRINGING IN MORE COLS
+.                 if "`modeltype'"=="fulladj" local endwith "_n"
+ 12. 
+.                 ***********************
+.                 *1) GET THE RIGHT ESTIMATES INTO MEMORY
+. 
+.                 if "`modeltype'"=="fulladj" {
+ 13.                                 cap estimates use ./output/an_interaction_
+> cox_models_`outcome'_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_n
+> oeth_ageband_`x'`dataset'
+ 14.                                 if _rc!=0 local noestimatesflag 1
+ 15.                                 }
+ 16.                 ***********************
+.                 *2) WRITE THE HRs TO THE OUTPUT FILE
+. 
+.                 if `noestimatesflag'==0{
+ 17. 
+.                         if `int_level'==1 {
+ 18.                         cap lincom `i'.`variable'+ 1.`int_type'#`i'.`varia
+> ble', eform
+ 19.                         if _rc==0 file write tablecontents_int %4.2f (r(es
+> timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
+ 20.                                 else file write tablecontents_int %4.2f ("
+> ERR IN MODEL") `endwith'
+ 21.                                 }
+ 22. 
+.                                                                              
+>    if `int_level'==2 {
+ 23.                         cap lincom `i'.`variable'+ 2.`int_type'#`i'.`varia
+> ble', eform
+ 24.                         if _rc==0 file write tablecontents_int %4.2f (r(es
+> timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
+ 25.                                 else file write tablecontents_int %4.2f ("
+> ERR IN MODEL") `endwith'
+ 26.                                 }
+ 27.                         
+.                                                 if `int_level'==3 {
+ 28.                         cap lincom `i'.`variable'+ 3.`int_type'#`i'.`varia
+> ble', eform
+ 29.                         if _rc==0 file write tablecontents_int %4.2f (r(es
+> timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
+ 30.                                 else file write tablecontents_int %4.2f ("
+> ERR IN MODEL") `endwith'
+ 31.                                 }
+ 32.                         
+.                                                                         if `i
+> nt_level'==4 {
+ 33.                         cap lincom `i'.`variable'+ 4.`int_type'#`i'.`varia
+> ble', eform
+ 34.                         if _rc==0 file write tablecontents_int %4.2f (r(es
+> timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
+ 35.                                 else file write tablecontents_int %4.2f ("
+> ERR IN MODEL") `endwith'
+ 36.                                 }
+ 37.                                                                         if
+>  `int_level'==5 {
+ 38.                         cap lincom `i'.`variable'+ 5.`int_type'#`i'.`varia
+> ble', eform
+ 39.                         if _rc==0 file write tablecontents_int %4.2f (r(es
+> timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
+ 40.                                 else file write tablecontents_int %4.2f ("
+> ERR IN MODEL") `endwith'
+ 41.                                 }
+ 42.                         
+. 
+.                 *3) Save the estimates for plotting
+.                 if `noestimatesflag'==0{
+ 43.                         if "`modeltype'"=="fulladj" {
+ 44.                                 local hr = r(estimate)
+ 45.                                 local lb = r(lb)
+ 46.                                 local ub = r(ub)
+ 47.                                 cap gen `variable'=.
+ 48.                                 test `int_level'.`int_type'#2.`variable' `
+> int_level'.`int_type'#1.`variable'
+ 49.                                 local pval=r(p)
+ 50.                                 post HRestimates_int ("`x'") ("`outcome'")
+>  ("`variable'") ("`int_type'") (`i') (`int_level') (`hr') (`lb') (`ub') (`pva
+> l')
+ 51.                                 drop `variable'
+ 52.                                 }
+ 53.                 }
+ 54.                 }
+ 55.                 } /*int_level*/
+ 56.                 } /*full adj*/
+ 57. } /*variable levels*/
+ 58. }
+ 59. }
+ 60. end
+
+. *****************************************************************************
+> ******************************************
+. 
+. *MAIN CODE TO PRODUCE TABLE CONTENTS
+. cap file close tablecontents_int
+
+. file open tablecontents_int using ./output/11_an_int_tab_contents_HRtable_`ou
+> tcome'_ethnicity`dataset'.txt, t w replace
+(note: file ./output/11_an_int_tab_contents_HRtable_covid_icu_ethnicityW2.txt n
+> ot found)
+
+. 
+. tempfile HRestimates_int
+
+. cap postutil clear
+
+. postfile HRestimates_int str10 x str10 outcome str27 variable str27 int_type 
+> level int_level hr lci uci pval using `HRestimates_int'
+
+. 
+. *Primary exposure
+. outputHRsforvar, variable("kids_cat4") min(1) max(3) outcome(`outcome')
+
+. file write tablecontents_int _n
+
+. 
+. file close tablecontents_int
+
+. 
+. postclose HRestimates_int
+
+. 
+. log close
+      name:  <unnamed>
+       log:  /workspace/11_an_interaction_HR_tables_forest_covid_icu_ethnicityW
+> 2.log
+  log type:  text
+ closed on:  20 Jul 2021, 14:38:58
+-------------------------------------------------------------------------------

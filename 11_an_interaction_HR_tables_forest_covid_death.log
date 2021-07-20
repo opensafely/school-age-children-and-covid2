@@ -1,0 +1,548 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /workspace/11_an_interaction_HR_tables_forest_covid_death.log
+  log type:  text
+ opened on:  20 Jul 2021, 16:16:02
+
+. 
+. *****************************************************************************
+> ******************************************
+. *Generic code to ouput the HRs across outcomes for all levels of a particular
+>  variables, in the right shape for table
+. cap prog drop outputHRsforvar
+
+. prog define outputHRsforvar
+  1. syntax, variable(string) min(real) max(real) outcome(string)
+  2. file write tablecontents_int ("dataset") _tab ("age") _tab ("exposure") _t
+> ab ("exposure level") ///
+> _tab ("outcome") _tab ("int_type") _tab ("int_level") ///
+> _tab ("HR")  _tab ("lci")  _tab ("uci") _tab ("pval") _n
+  3. foreach dataset in MAIN W2 {
+  4. forvalues x=0/1 {
+  5. forvalues i=`min'/`max'{
+  6. foreach int_type in male cat_time shield {
+  7. 
+. forvalues int_level=0/1 {
+  8. 
+. local endwith "_tab"
+  9. 
+.         *put the varname and condition to left so that alignment can be check
+> ed vs shell
+.         file write tablecontents_int ("`dataset'") _tab ("`x'") _tab ("`varia
+> ble'") _tab ("`i'") _tab ("`outcome'") _tab ("`int_type'") _tab ("`int_level'
+> ") _tab
+ 10. 
+.         foreach modeltype of any fulladj {
+ 11. 
+.                 local noestimatesflag 0 /*reset*/
+ 12. 
+. *CHANGE THE OUTCOME BELOW TO LAST IF BRINGING IN MORE COLS
+.                 if "`modeltype'"=="fulladj" local endwith "_n"
+ 13. 
+.                 ***********************
+.                 *1) GET THE RIGHT ESTIMATES INTO MEMORY
+. 
+.                 if "`modeltype'"=="fulladj" {
+ 14.                                 cap estimates use ./output/an_interaction_
+> cox_models_`outcome'_`variable'_`int_type'_MAINFULLYADJMODEL_agespline_bmicat
+> _noeth_ageband_`x'`dataset'
+ 15.                                 if _rc!=0 local noestimatesflag 1
+ 16.                                 }
+ 17.                 ***********************
+.                 *2) WRITE THE HRs TO THE OUTPUT FILE
+. 
+.                 if `noestimatesflag'==0{
+ 18.                         if `int_level'==0 {
+ 19.                         test 1.`int_type'#`i'.`variable'
+ 20.                         *overall p-value for interaction: test 1.`int_type
+> '#1.`variable' test 1.`int_type'#2.`variable'
+.                         local pval=r(p)
+ 21.                         cap lincom `i'.`variable', eform
+ 22.                         if _rc==0 file write tablecontents_int %4.2f (r(es
+> timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab %4.2f (`pval') `endwith'
+ 23. 
+.                                 else file write tablecontents_int %4.2f ("ERR
+>  IN MODEL") `endwith'
+ 24.                                 }
+ 25.                         if `int_level'==1 {
+ 26.                         cap lincom `i'.`variable'+ 1.`int_type'#`i'.`varia
+> ble', eform
+ 27.                         if _rc==0 file write tablecontents_int %4.2f (r(es
+> timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
+ 28.                                 else file write tablecontents_int %4.2f ("
+> ERR IN MODEL") `endwith'
+ 29.                                 }
+ 30.                         }
+ 31.                         else file write tablecontents_int %4.2f ("DID NOT 
+> FIT") `endwith'
+ 32. 
+.                 *3) Save the estimates for plotting
+.                 if `noestimatesflag'==0{
+ 33.                         if "`modeltype'"=="fulladj" {
+ 34.                                 local hr = r(estimate)
+ 35.                                 local lb = r(lb)
+ 36.                                 local ub = r(ub)
+ 37.                                 cap gen `variable'=.
+ 38.                                 test 1.`int_type'#2.`variable' 1.`int_type
+> '#1.`variable'
+ 39.                                 local pval=r(p)
+ 40.                                 post HRestimates_int ("`dataset'") ("`x'")
+>  ("`outcome'") ("`variable'") ("`int_type'") (`i') (`int_level') (`hr') (`lb'
+> ) (`ub') (`pval')
+ 41.                                 drop `variable'
+ 42.                                 }
+ 43.                 }
+ 44.                 }
+ 45.                 } /*int_level*/
+ 46.                 } /*full adj*/
+ 47. 
+. } /*variable levels*/
+ 48. } /*agebands*/
+ 49. } /*datsets*/
+ 50. end
+
+. *****************************************************************************
+> ******************************************
+. 
+. *MAIN CODE TO PRODUCE TABLE CONTENTS
+. cap file close tablecontents_int
+
+. file open tablecontents_int using ./output/11_an_int_tab_contents_HRtable_`ou
+> tcome'.txt, t w replace
+(note: file ./output/11_an_int_tab_contents_HRtable_covid_death.txt not found)
+
+. 
+. tempfile HRestimates_int
+
+. cap postutil clear
+
+. postfile HRestimates_int str10 dataset str10 x str10 outcome str27 variable s
+> tr27 int_type level int_level hr lci uci pval using `HRestimates_int'
+
+. 
+. *Primary exposure
+. outputHRsforvar, variable("kids_cat4") min(1) max(3) outcome(`outcome')
+
+ ( 1)  1.male#1.kids_cat4 = 0
+
+           chi2(  1) =    0.08
+         Prob > chi2 =    0.7835
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.11
+         Prob > chi2 =    0.9472
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.11
+         Prob > chi2 =    0.9472
+
+ ( 1)  1.shield#1.kids_cat4 = 0
+
+           chi2(  1) =    0.19
+         Prob > chi2 =    0.6596
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    1.19
+         Prob > chi2 =    0.5506
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    1.19
+         Prob > chi2 =    0.5506
+
+ ( 1)  1.male#2.kids_cat4 = 0
+
+           chi2(  1) =    0.00
+         Prob > chi2 =    0.9863
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.11
+         Prob > chi2 =    0.9472
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.11
+         Prob > chi2 =    0.9472
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+
+           chi2(  1) =    0.97
+         Prob > chi2 =    0.3252
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    1.19
+         Prob > chi2 =    0.5506
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    1.19
+         Prob > chi2 =    0.5506
+
+ ( 1)  1.male#3.kids_cat4 = 0
+
+           chi2(  1) =    0.72
+         Prob > chi2 =    0.3978
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.11
+         Prob > chi2 =    0.9472
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.11
+         Prob > chi2 =    0.9472
+
+ ( 1)  1.shield#3.kids_cat4 = 0
+
+           chi2(  1) =    0.01
+         Prob > chi2 =    0.9229
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    1.19
+         Prob > chi2 =    0.5506
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    1.19
+         Prob > chi2 =    0.5506
+
+ ( 1)  1.male#1.kids_cat4 = 0
+
+           chi2(  1) =    2.95
+         Prob > chi2 =    0.0856
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    5.34
+         Prob > chi2 =    0.0694
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    5.34
+         Prob > chi2 =    0.0694
+
+ ( 1)  1.shield#1.kids_cat4 = 0
+
+           chi2(  1) =    1.74
+         Prob > chi2 =    0.1877
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    1.80
+         Prob > chi2 =    0.4057
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    1.80
+         Prob > chi2 =    0.4057
+
+ ( 1)  1.male#2.kids_cat4 = 0
+
+           chi2(  1) =    4.83
+         Prob > chi2 =    0.0280
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    5.34
+         Prob > chi2 =    0.0694
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    5.34
+         Prob > chi2 =    0.0694
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+
+           chi2(  1) =    0.08
+         Prob > chi2 =    0.7780
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    1.80
+         Prob > chi2 =    0.4057
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    1.80
+         Prob > chi2 =    0.4057
+
+ ( 1)  1.male#3.kids_cat4 = 0
+
+           chi2(  1) =    1.51
+         Prob > chi2 =    0.2192
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    5.34
+         Prob > chi2 =    0.0694
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    5.34
+         Prob > chi2 =    0.0694
+
+ ( 1)  1.shield#3.kids_cat4 = 0
+
+           chi2(  1) =    0.00
+         Prob > chi2 =    0.9640
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    1.80
+         Prob > chi2 =    0.4057
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    1.80
+         Prob > chi2 =    0.4057
+
+ ( 1)  1.male#1.kids_cat4 = 0
+
+           chi2(  1) =    0.15
+         Prob > chi2 =    0.6950
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.18
+         Prob > chi2 =    0.9149
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.18
+         Prob > chi2 =    0.9149
+
+ ( 1)  1.shield#1.kids_cat4 = 0
+
+           chi2(  1) =    3.88
+         Prob > chi2 =    0.0490
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    5.84
+         Prob > chi2 =    0.0539
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    5.84
+         Prob > chi2 =    0.0539
+
+ ( 1)  1.male#2.kids_cat4 = 0
+
+           chi2(  1) =    0.13
+         Prob > chi2 =    0.7168
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.18
+         Prob > chi2 =    0.9149
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.18
+         Prob > chi2 =    0.9149
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+
+           chi2(  1) =    2.09
+         Prob > chi2 =    0.1482
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    5.84
+         Prob > chi2 =    0.0539
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    5.84
+         Prob > chi2 =    0.0539
+
+ ( 1)  1.male#3.kids_cat4 = 0
+
+           chi2(  1) =    0.31
+         Prob > chi2 =    0.5769
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.18
+         Prob > chi2 =    0.9149
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.18
+         Prob > chi2 =    0.9149
+
+ ( 1)  1.shield#3.kids_cat4 = 0
+
+           chi2(  1) =    0.19
+         Prob > chi2 =    0.6598
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    5.84
+         Prob > chi2 =    0.0539
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    5.84
+         Prob > chi2 =    0.0539
+
+ ( 1)  1.male#1.kids_cat4 = 0
+
+           chi2(  1) =    0.09
+         Prob > chi2 =    0.7626
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.97
+         Prob > chi2 =    0.6171
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.97
+         Prob > chi2 =    0.6171
+
+ ( 1)  1.shield#1.kids_cat4 = 0
+
+           chi2(  1) =    0.08
+         Prob > chi2 =    0.7781
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    0.08
+         Prob > chi2 =    0.9602
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    0.08
+         Prob > chi2 =    0.9602
+
+ ( 1)  1.male#2.kids_cat4 = 0
+
+           chi2(  1) =    0.49
+         Prob > chi2 =    0.4852
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.97
+         Prob > chi2 =    0.6171
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.97
+         Prob > chi2 =    0.6171
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+
+           chi2(  1) =    0.00
+         Prob > chi2 =    0.9683
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    0.08
+         Prob > chi2 =    0.9602
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    0.08
+         Prob > chi2 =    0.9602
+
+ ( 1)  1.male#3.kids_cat4 = 0
+
+           chi2(  1) =    0.28
+         Prob > chi2 =    0.5954
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.97
+         Prob > chi2 =    0.6171
+
+ ( 1)  1.male#2.kids_cat4 = 0
+ ( 2)  1.male#1.kids_cat4 = 0
+
+           chi2(  2) =    0.97
+         Prob > chi2 =    0.6171
+
+ ( 1)  1.shield#3.kids_cat4 = 0
+
+           chi2(  1) =    0.00
+         Prob > chi2 =    0.9602
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    0.08
+         Prob > chi2 =    0.9602
+
+ ( 1)  1.shield#2.kids_cat4 = 0
+ ( 2)  1.shield#1.kids_cat4 = 0
+
+           chi2(  2) =    0.08
+         Prob > chi2 =    0.9602
+
+. file write tablecontents_int _n
+
+. 
+. file close tablecontents_int
+
+. 
+. postclose HRestimates_int
+
+. 
+. log close
+      name:  <unnamed>
+       log:  /workspace/11_an_interaction_HR_tables_forest_covid_death.log
+  log type:  text
+ closed on:  20 Jul 2021, 16:16:02
+-------------------------------------------------------------------------------

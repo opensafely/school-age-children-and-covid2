@@ -1,0 +1,300 @@
+2021-07-20T16:03:09.745990000Z 
+2021-07-20T16:03:09.746034400Z   ___  ____  ____  ____  ____ (R)
+2021-07-20T16:03:09.746040300Z  /__    /   ____/   /   ____/
+2021-07-20T16:03:09.746042800Z ___/   /   /___/   /   /___/   16.1   Copyright 1985-2019 StataCorp LLC
+2021-07-20T16:03:09.746045100Z   Statistics/Data Analysis            StataCorp
+2021-07-20T16:03:09.746047300Z                                       4905 Lakeway Drive
+2021-07-20T16:03:09.746049800Z                                       College Station, Texas 77845 USA
+2021-07-20T16:03:09.746052100Z                                       800-STATA-PC        http://www.stata.com
+2021-07-20T16:03:09.746054400Z                                       979-696-4600        stata@stata.com
+2021-07-20T16:03:09.746056700Z                                       979-696-4601 (fax)
+2021-07-20T16:03:09.746058900Z 
+2021-07-20T16:03:09.746061000Z 3-user Stata network license expires 11 May 2022:
+2021-07-20T16:03:09.746063200Z        Serial number:  501709312237
+2021-07-20T16:03:09.746065300Z          Licensed to:  The Bennett Institute
+2021-07-20T16:03:09.746067400Z                        Oxford University
+2021-07-20T16:03:09.747021100Z 
+2021-07-20T16:03:09.747036900Z Notes:
+2021-07-20T16:03:09.747041100Z       1.  Unicode is supported; see help unicode_advice.
+2021-07-20T16:03:09.747044800Z 
+2021-07-20T16:03:09.747048300Z . do "analysis/13_multiple_imputation_dataset.wrapper.do" covidadmission MAIN 
+2021-07-20T16:03:09.747052100Z 
+2021-07-20T16:03:09.747055600Z . . do "analysis/13_multiple_imputation_dataset.do" covidadmission MAIN
+2021-07-20T16:03:09.747059700Z 
+2021-07-20T16:03:09.747087200Z . *************************************************************************
+2021-07-20T16:03:09.747093900Z . 
+2021-07-20T16:03:09.747097300Z . *Exposure children and COVID risk
+2021-07-20T16:03:09.747100900Z .   
+2021-07-20T16:03:09.747104100Z . *DO file name:  13_multiple_imputation_dataset
+2021-07-20T16:03:09.747107700Z . 
+2021-07-20T16:03:09.747111000Z . *Purpose: Impute ethnicity
+2021-07-20T16:03:09.747114700Z . *
+2021-07-20T16:03:09.747118400Z . *Requires: final analysis dataset (analysis_dataset.dta)
+2021-07-20T16:03:09.747122500Z . *
+2021-07-20T16:03:09.747142200Z . *Coding: HFORBES, based on Krishnan Bhaskaran
+2021-07-20T16:03:09.747148500Z . *
+2021-07-20T16:03:09.747151000Z . *Date drafted: 18th August 2020
+2021-07-20T16:03:09.747153200Z . *************************************************************************
+2021-07-20T16:03:09.747155500Z . 
+2021-07-20T16:03:09.747158300Z . 
+2021-07-20T16:03:09.747160400Z . * Set globals that will print in programs and direct output
+2021-07-20T16:03:09.747174300Z . global outdir     "output" 
+2021-07-20T16:03:09.747177000Z 
+2021-07-20T16:03:09.747179200Z . global logdir     "log"
+2021-07-20T16:03:09.747181500Z 
+2021-07-20T16:03:09.747183700Z . global tempdir    "tempdata"
+2021-07-20T16:03:09.747185900Z 
+2021-07-20T16:03:09.747187900Z . 
+2021-07-20T16:03:09.747190300Z . 
+2021-07-20T16:03:09.747193900Z . local outcome `1' 
+2021-07-20T16:03:09.747197600Z 
+2021-07-20T16:03:09.747201100Z . local dataset `2'
+2021-07-20T16:03:09.747205300Z 
+2021-07-20T16:03:09.747208600Z . 
+2021-07-20T16:03:09.747212000Z . * Open a log file
+2021-07-20T16:03:09.747215200Z . capture log close
+2021-07-20T16:03:09.747218600Z 
+2021-07-20T16:03:09.747222300Z . log using "$logdir/13_multiple_imputation_dataset_`outcome'`dataset'", text r
+2021-07-20T16:03:09.747226500Z > eplace
+2021-07-20T16:03:09.747313000Z (note: file /workspace/log/13_multiple_imputation_dataset_covidadmissionMAIN.lo
+2021-07-20T16:03:09.747326700Z > g not found)
+2021-07-20T16:03:09.747332000Z -------------------------------------------------------------------------------
+2021-07-20T16:03:09.747336200Z       name:  <unnamed>
+2021-07-20T16:03:09.747339900Z        log:  /workspace/log/13_multiple_imputation_dataset_covidadmissionMAIN.l
+2021-07-20T16:03:09.747343700Z > og
+2021-07-20T16:03:09.747347300Z   log type:  text
+2021-07-20T16:03:09.747350700Z  opened on:  20 Jul 2021, 16:03:09
+2021-07-20T16:03:09.747354300Z 
+2021-07-20T16:03:09.747361600Z . 
+2021-07-20T16:03:09.747365700Z . 
+2021-07-20T16:03:09.747369000Z . use  "$tempdir/analysis_dataset_with_missing_ethnicity`dataset'", clear
+2021-07-20T16:03:09.753147000Z 
+2021-07-20T16:03:09.753241800Z . keep if age<=65
+2021-07-20T16:03:09.759196700Z (5,024 observations deleted)
+2021-07-20T16:03:09.759218800Z 
+2021-07-20T16:03:09.759223100Z . * Create restricted cubic splines for age
+2021-07-20T16:03:09.759226700Z . mkspline age = age, cubic nknots(4)
+2021-07-20T16:03:09.834389200Z 
+2021-07-20T16:03:09.834413900Z . save "$tempdir/analysis_dataset_with_missing_ethnicity_ageband_0`dataset'", r
+2021-07-20T16:03:09.834418900Z > eplace
+2021-07-20T16:03:09.840588000Z (note: file tempdata/analysis_dataset_with_missing_ethnicity_ageband_0MAIN.dta 
+2021-07-20T16:03:09.840610700Z > not found)
+2021-07-20T16:03:09.840614100Z file tempdata/analysis_dataset_with_missing_ethnicity_ageband_0MAIN.dta saved
+2021-07-20T16:03:09.840616800Z 
+2021-07-20T16:03:09.840618900Z . 
+2021-07-20T16:03:09.840633800Z . 
+2021-07-20T16:03:09.840636300Z . use  "$tempdir/analysis_dataset_with_missing_ethnicity`dataset'", clear
+2021-07-20T16:03:09.844024400Z 
+2021-07-20T16:03:09.844057000Z . keep if age>65
+2021-07-20T16:03:09.848754100Z (17,952 observations deleted)
+2021-07-20T16:03:09.848776400Z 
+2021-07-20T16:03:09.848781500Z . * Create restricted cubic splines for age
+2021-07-20T16:03:09.848784000Z . mkspline age = age, cubic nknots(4)
+2021-07-20T16:03:09.862603600Z 
+2021-07-20T16:03:09.862624300Z . save "$tempdir/analysis_dataset_with_missing_ethnicity_ageband_1`dataset'", r
+2021-07-20T16:03:09.862629900Z > eplace
+2021-07-20T16:03:09.864174100Z (note: file tempdata/analysis_dataset_with_missing_ethnicity_ageband_1MAIN.dta 
+2021-07-20T16:03:09.864189500Z > not found)
+2021-07-20T16:03:09.864194200Z file tempdata/analysis_dataset_with_missing_ethnicity_ageband_1MAIN.dta saved
+2021-07-20T16:03:09.864197900Z 
+2021-07-20T16:03:09.864201300Z . 
+2021-07-20T16:03:09.864204700Z . *****************************************************************************
+2021-07-20T16:03:09.864208600Z > **
+2021-07-20T16:03:09.864212000Z . forvalues x=0/1 {
+2021-07-20T16:03:09.864215700Z   2. 
+2021-07-20T16:03:09.864219100Z . use "$tempdir/analysis_dataset_with_missing_ethnicity_ageband_`x'`dataset'", 
+2021-07-20T16:03:09.864222800Z > clear
+2021-07-20T16:03:09.864226200Z   3. replace ethnicity=. if ethnicity==.u 
+2021-07-20T16:03:09.864229700Z   4. count
+2021-07-20T16:03:09.864233100Z   5. * Save a version set on NON ONS covid death outcome
+2021-07-20T16:03:09.864236900Z . stset stime_`outcome', fail(`outcome')                          ///
+2021-07-20T16:03:09.864240700Z >         id(patient_id) enter(enter_date) origin(enter_date)
+2021-07-20T16:03:09.864244400Z   6.         
+2021-07-20T16:03:09.864247800Z . drop if _st==0  
+2021-07-20T16:03:09.864251000Z   7. mi set wide
+2021-07-20T16:03:09.864254400Z   8. mi register imputed ethnicity
+2021-07-20T16:03:09.864257800Z   9. 
+2021-07-20T16:03:09.864261200Z . *Gen NA Cum Haz
+2021-07-20T16:03:09.864264700Z . sts generate cumh = na
+2021-07-20T16:03:09.864268900Z  10. egen cumhgp = cut(cumh), group(5)
+2021-07-20T16:03:09.864272600Z  11. replace cumhgp = cumhgp + 1
+2021-07-20T16:03:09.864276200Z  12. 
+2021-07-20T16:03:09.864279700Z . *HIV code: mi impute mlogit ethnicity i.hiv i.stp $adjustmentlist i.cumhgp _d
+2021-07-20T16:03:09.864283400Z > , add(10) rseed(3040985)
+2021-07-20T16:03:09.864286700Z . 
+2021-07-20T16:03:09.864290000Z . *What's the cumulative hazard for?
+2021-07-20T16:03:09.864302900Z . *Do we need to include household id in some way?
+2021-07-20T16:03:09.864307000Z . recode diabcat .=0
+2021-07-20T16:03:09.864310500Z  13. mi impute mlogit ethnicity ///
+2021-07-20T16:03:09.864314100Z >                         i.kids_cat4 age1 age2 age3              ///
+2021-07-20T16:03:09.864317800Z >                         i.male                                               
+2021-07-20T16:03:09.864321500Z >    ///
+2021-07-20T16:03:09.864324900Z >                         i.obese4cat                                     ///
+2021-07-20T16:03:09.864328500Z >                         i.smoke_nomiss                                  ///
+2021-07-20T16:03:09.864332500Z >                         i.imd                                                
+2021-07-20T16:03:09.864336300Z >    ///
+2021-07-20T16:03:09.864342900Z >                         i.htdiag_or_highbp                              ///
+2021-07-20T16:03:09.864347100Z >                         i.chronic_respiratory_disease   ///
+2021-07-20T16:03:09.864350800Z >                         i.asthma                                             
+2021-07-20T16:03:09.864354300Z >    ///
+2021-07-20T16:03:09.864357800Z >                         i.chronic_cardiac_disease               ///
+2021-07-20T16:03:09.864361400Z >                         i.diabcat                                            
+2021-07-20T16:03:09.864365400Z >    ///
+2021-07-20T16:03:09.864368800Z >                         i.cancer_exhaem_cat                             ///
+2021-07-20T16:03:09.864372600Z >                         i.chronic_liver_disease                 ///
+2021-07-20T16:03:09.864376400Z >                         i.stroke_dementia                               ///
+2021-07-20T16:03:09.864380000Z >                         i.other_transplant                                   
+2021-07-20T16:03:09.864383600Z >    ///
+2021-07-20T16:03:09.864386900Z >                         i.asplenia                                           
+2021-07-20T16:03:09.864390500Z >    ///
+2021-07-20T16:03:09.864394000Z >                         i.stp                                                
+2021-07-20T16:03:09.864397700Z >    ///
+2021-07-20T16:03:09.864401100Z >                         i.cumhgp                                             
+2021-07-20T16:03:09.864404800Z >    ///
+2021-07-20T16:03:09.864408100Z >                         i.cancer_haem_cat                               ///
+2021-07-20T16:03:09.864411700Z >                         i.other_neuro                                   ///
+2021-07-20T16:03:09.864415200Z >                         i.reduced_kidney_function_cat   ///
+2021-07-20T16:03:09.864418700Z >                         i.esrd                                               
+2021-07-20T16:03:09.864426200Z >    ///
+2021-07-20T16:03:09.864430000Z >                         i.tot_adults_hh                                 ///
+2021-07-20T16:03:09.864433700Z >                         i.ra_sle_psoriasis                      ///
+2021-07-20T16:03:09.864438500Z >                         i.other_immuno                                  ///
+2021-07-20T16:03:09.864442000Z >                         , add(10) rseed(894726318) augment
+2021-07-20T16:03:09.864445500Z  14. 
+2021-07-20T16:03:09.864448600Z . 
+2021-07-20T16:03:09.864451900Z . save "$tempdir/cr_imputed_analysis_dataset_STSET_`outcome'_ageband_`x'`datase
+2021-07-20T16:03:09.864455900Z > t'.dta", replace
+2021-07-20T16:03:09.864460000Z  15.         
+2021-07-20T16:03:09.864463600Z . }       
+2021-07-20T16:03:09.868429600Z (1,746 real changes made, 1,746 to missing)
+2021-07-20T16:03:09.868460000Z   17,952
+2021-07-20T16:03:10.190373300Z 
+2021-07-20T16:03:10.190399900Z                 id:  patient_id
+2021-07-20T16:03:10.190404700Z      failure event:  covidadmission != 0 & covidadmission < .
+2021-07-20T16:03:10.190408500Z obs. time interval:  (stime_covidadmission[_n-1], stime_covidadmission]
+2021-07-20T16:03:10.190411900Z  enter on or after:  time enter_date
+2021-07-20T16:03:10.190415300Z  exit on or before:  failure
+2021-07-20T16:03:10.190418500Z     t for analysis:  (time-origin)
+2021-07-20T16:03:10.190550700Z             origin:  time enter_date
+2021-07-20T16:03:10.190848600Z 
+2021-07-20T16:03:10.190882600Z ------------------------------------------------------------------------------
+2021-07-20T16:03:10.191198600Z      17,952  total observations
+2021-07-20T16:03:10.193856200Z           0  exclusions
+2021-07-20T16:03:10.193879300Z ------------------------------------------------------------------------------
+2021-07-20T16:03:10.194212200Z      17,952  observations remaining, representing
+2021-07-20T16:03:10.230477300Z      17,952  subjects
+2021-07-20T16:03:10.262997600Z       4,806  failures in single-failure-per-subject data
+2021-07-20T16:03:10.334328000Z   2,797,276  total analysis time at risk and under observation
+2021-07-20T16:03:10.334353200Z                                                 at risk from t =         0
+2021-07-20T16:03:10.335408600Z                                      earliest observed entry t =         0
+2021-07-20T16:03:10.336303900Z                                           last observed exit t =       212
+2021-07-20T16:03:10.339228100Z (0 observations deleted)
+2021-07-20T16:03:10.511591500Z (17,952 real changes made)
+2021-07-20T16:03:10.520562100Z (diabcat: 0 changes made)
+2021-07-20T16:03:18.690321000Z 
+2021-07-20T16:03:18.690384900Z Univariate imputation                       Imputations =       10
+2021-07-20T16:03:18.690392200Z Multinomial logistic regression                   added =       10
+2021-07-20T16:03:18.690397000Z Imputed: m=1 through m=10                       updated =        0
+2021-07-20T16:03:18.690401600Z 
+2021-07-20T16:03:18.690405600Z ------------------------------------------------------------------
+2021-07-20T16:03:18.690508300Z                    |               Observations per m             
+2021-07-20T16:03:18.690516700Z                    |----------------------------------------------
+2021-07-20T16:03:18.690521700Z           Variable |   Complete   Incomplete   Imputed |     Total
+2021-07-20T16:03:18.699324500Z -------------------+-----------------------------------+----------
+2021-07-20T16:03:18.699359600Z          ethnicity |      16206         1746      1746 |     17952
+2021-07-20T16:03:18.699366800Z ------------------------------------------------------------------
+2021-07-20T16:03:18.699371500Z (complete + incomplete = total; imputed is the minimum across m
+2021-07-20T16:03:18.699375900Z  of the number of filled-in observations.)
+2021-07-20T16:03:18.699380100Z 
+2021-07-20T16:03:18.699383800Z Note: Perfect prediction was not detected.
+2021-07-20T16:03:18.921389400Z (note: file tempdata/cr_imputed_analysis_dataset_STSET_covidadmission_ageband_0
+2021-07-20T16:03:18.921499200Z > MAIN.dta not found)
+2021-07-20T16:03:18.921505500Z file tempdata/cr_imputed_analysis_dataset_STSET_covidadmission_ageband_0MAIN.dt
+2021-07-20T16:03:18.921510700Z > a saved
+2021-07-20T16:03:18.921515500Z (530 real changes made, 530 to missing)
+2021-07-20T16:03:18.921519900Z   5,024
+2021-07-20T16:03:18.921524300Z 
+2021-07-20T16:03:18.921529000Z                 id:  patient_id
+2021-07-20T16:03:18.921533900Z      failure event:  covidadmission != 0 & covidadmission < .
+2021-07-20T16:03:18.921538900Z obs. time interval:  (stime_covidadmission[_n-1], stime_covidadmission]
+2021-07-20T16:03:18.921543800Z  enter on or after:  time enter_date
+2021-07-20T16:03:18.921548400Z  exit on or before:  failure
+2021-07-20T16:03:18.921553000Z     t for analysis:  (time-origin)
+2021-07-20T16:03:18.921558300Z             origin:  time enter_date
+2021-07-20T16:03:18.921599700Z 
+2021-07-20T16:03:18.921611700Z ------------------------------------------------------------------------------
+2021-07-20T16:03:18.921615400Z       5,024  total observations
+2021-07-20T16:03:18.922090200Z           0  exclusions
+2021-07-20T16:03:18.922099200Z ------------------------------------------------------------------------------
+2021-07-20T16:03:18.922102800Z       5,024  observations remaining, representing
+2021-07-20T16:03:18.931695500Z       5,024  subjects
+2021-07-20T16:03:18.941471900Z       1,319  failures in single-failure-per-subject data
+2021-07-20T16:03:18.960484000Z     776,699  total analysis time at risk and under observation
+2021-07-20T16:03:18.960539800Z                                                 at risk from t =         0
+2021-07-20T16:03:18.960780000Z                                      earliest observed entry t =         0
+2021-07-20T16:03:18.961080600Z                                           last observed exit t =       212
+2021-07-20T16:03:18.962905100Z (0 observations deleted)
+2021-07-20T16:03:19.012857900Z (5,024 real changes made)
+2021-07-20T16:03:19.012881400Z (diabcat: 0 changes made)
+2021-07-20T16:03:22.460384800Z 
+2021-07-20T16:03:22.460402500Z Univariate imputation                       Imputations =       10
+2021-07-20T16:03:22.460406000Z Augmented multinomial logit regression            added =       10
+2021-07-20T16:03:22.460408700Z Imputed: m=1 through m=10                       updated =        0
+2021-07-20T16:03:22.460411100Z 
+2021-07-20T16:03:22.460413400Z ------------------------------------------------------------------
+2021-07-20T16:03:22.460415900Z                    |               Observations per m             
+2021-07-20T16:03:22.460418300Z                    |----------------------------------------------
+2021-07-20T16:03:22.460420600Z           Variable |   Complete   Incomplete   Imputed |     Total
+2021-07-20T16:03:22.460423000Z -------------------+-----------------------------------+----------
+2021-07-20T16:03:22.460425300Z          ethnicity |       4494          530       530 |      5024
+2021-07-20T16:03:22.460427600Z ------------------------------------------------------------------
+2021-07-20T16:03:22.460429900Z (complete + incomplete = total; imputed is the minimum across m
+2021-07-20T16:03:22.460432300Z  of the number of filled-in observations.)
+2021-07-20T16:03:22.476120300Z (note: file tempdata/cr_imputed_analysis_dataset_STSET_covidadmission_ageband_1
+2021-07-20T16:03:22.476140800Z > MAIN.dta not found)
+2021-07-20T16:03:22.476146400Z file tempdata/cr_imputed_analysis_dataset_STSET_covidadmission_ageband_1MAIN.dt
+2021-07-20T16:03:22.476150900Z > a saved
+2021-07-20T16:03:22.476154600Z 
+2021-07-20T16:03:22.476158600Z . 
+2021-07-20T16:03:22.476162800Z . 
+2021-07-20T16:03:22.476167000Z . log close
+2021-07-20T16:03:22.476170700Z       name:  <unnamed>
+2021-07-20T16:03:22.476174700Z        log:  /workspace/log/13_multiple_imputation_dataset_covidadmissionMAIN.l
+2021-07-20T16:03:22.476178700Z > og
+2021-07-20T16:03:22.476182600Z   log type:  text
+2021-07-20T16:03:22.476186700Z  closed on:  20 Jul 2021, 16:03:22
+2021-07-20T16:03:22.476191000Z -------------------------------------------------------------------------------
+2021-07-20T16:03:22.476205500Z 
+2021-07-20T16:03:22.476209900Z . 
+2021-07-20T16:03:22.476213400Z . 
+2021-07-20T16:03:22.476216900Z . 
+2021-07-20T16:03:22.476220400Z end of do-file
+2021-07-20T16:03:22.476223900Z 
+2021-07-20T16:03:22.476227400Z . . file open output using "/tmp/tmp.0lyJOC8p2i", write text replace
+2021-07-20T16:03:22.476376900Z 
+2021-07-20T16:03:22.476390100Z . . file write output "success" 
+2021-07-20T16:03:22.476396800Z 
+2021-07-20T16:03:22.476400600Z . . file close output
+2021-07-20T16:03:22.476403600Z 
+2021-07-20T16:03:22.476406800Z . 
+2021-07-20T16:03:22.476410200Z end of do-file
+2021-07-20T16:03:22.476413400Z 
+2021-07-20T16:03:22.476416800Z 
+2021-07-20T16:03:22.500924700Z . 
+
+state: succeeded
+commit: none
+docker_image_id: sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60
+exit_code: 0
+job_id: ovao5ulwuxm2pica
+run_by_user: qc18278
+created_at: 2021-07-20T15:38:48Z
+started_at: 2021-07-20T16:03:09Z
+completed_at: 2021-07-20T16:03:49Z
+
+Completed successfully
+
+outputs:
+  log/13_multiple_imputation_dataset_covidadmissionMAIN.log                    - moderately_sensitive
+  tempdata/cr_imputed_analysis_dataset_STSET_covidadmission_ageband_0MAIN.dta  - highly_sensitive    
+  tempdata/cr_imputed_analysis_dataset_STSET_covidadmission_ageband_1MAIN.dta  - highly_sensitive    

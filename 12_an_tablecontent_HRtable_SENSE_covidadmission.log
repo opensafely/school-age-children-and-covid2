@@ -1,0 +1,2301 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /workspace/12_an_tablecontent_HRtable_SENSE_covidadmission.log
+  log type:  text
+ opened on:  20 Jul 2021, 14:40:24
+
+. 
+. *set trace on
+. *****************************************************************************
+> ******************************************
+. *Generic code to ouput the HRs across outcomes for all levels of a particular
+>  variables, in the right shape for table
+. cap prog drop outputHRsforvar
+
+. prog define outputHRsforvar
+  1. syntax, variable(string) min(real) max(real) outcome(string)
+  2. foreach dataset in MAIN W2 {
+  3. forvalues x=0/1 {
+  4. file write tablecontents_sense ("dataset") ("age") ("`x'") _n
+  5. foreach sense in AAmain CCeth_bmi_smok plus_eth_12mo age_underlying_timesc
+> ale time_int SUS_censor {
+  6. file write tablecontents_sense _n ("sense=") ("`sense'") _n
+  7. forvalues i=1/3 {
+  8. local endwith "_tab"
+  9. 
+.         foreach modeltype of any fulladj {
+ 10. 
+.                 local noestimatesflag 0 /*reset*/
+ 11. 
+. *CHANGE THE OUTCOME BELOW TO LAST IF BRINGING IN MORE COLS
+.                 if "`modeltype'"=="fulladj" local endwith "_n"
+ 12. 
+.                 ***********************
+.                 *1) GET THE RIGHT ESTIMATES INTO MEMORY
+. 
+.                 if "`modeltype'"=="fulladj" {
+ 13.             cap estimates use  ./output/an_sense_`outcome'_`sense'_ageband
+> _`x'`dataset'
+ 14.                                 if _rc!=0 local noestimatesflag 1
+ 15.                                 }
+ 16. 
+.                 ***********************
+.                 *2) WRITE THE HRs TO THE OUTPUT FILE
+. 
+.                 if `noestimatesflag'==0 & "`modeltype'"=="fulladj" & "`sense'
+> "!="AAmain" {
+ 17.                         cap lincom `i'.`variable', eform
+ 18.                         if _rc==0 file write tablecontents_sense ("`variab
+> le'") _tab ("`i'") _tab %4.2f (r(estimate)) _tab %4.2f (r(lb)) _tab %4.2f (r(
+> ub)) _tab (e(N_sub))  `endwith'
+ 19.                                 else file write tablecontents_sense %4.2f 
+> ("ERR IN MODEL") `endwith'
+ 20.                         }
+ 21. 
+.                 *3) Save the estimates for plotting
+.                 if `noestimatesflag'==0{
+ 22.                         if "`modeltype'"=="fulladj" & "`sense'"!="AAmain" 
+>  {
+ 23.                                 local hr = r(estimate)
+ 24.                                 local lb = r(lb)
+ 25.                                 local ub = r(ub)
+ 26.                                 local N=e(N_sub)
+ 27.                                 post HRestimates_sense ("`dataset'") ("`x'
+> ") ("`outcome'") ("`variable'") ("`sense'") (`i') (`hr') (`lb') (`ub') (`N')
+ 28.                                 }
+ 29.                 }
+ 30.                 } /*min adj, full adj*/
+ 31. 
+. } /*variable levels*/
+ 32. 
+. forvalues i=1/3 {
+ 33. local endwith "_tab"
+ 34. 
+.         foreach modeltype of any fulladj {
+ 35. 
+.                 local noestimatesflag 0 /*reset*/
+ 36. 
+. *CHANGE THE OUTCOME BELOW TO LAST IF BRINGING IN MORE COLS
+.                 if "`modeltype'"=="fulladj" local endwith "_n"
+ 37. 
+.                 ***********************
+.                 *1) GET THE RIGHT ESTIMATES INTO MEMORY
+. 
+.                 /*if "`modeltype'"=="minadj" & "`variable'"!="agegroup" & "`v
+> ariable'"!="male" {
+>                         cap estimates use ./output/an_univariable_cox_models_
+> `outcome'_AGESEX_`variable'_ageband_`x'
+>                         if _rc!=0 local noestimatesflag 1
+>                         }
+>                 if "`modeltype'"=="demogadj" {
+>                         cap estimates use ./output/an_multivariate_cox_models
+> _`outcome'_`variable'_DEMOGADJ_`sense'_ageband_`x'
+>                         if _rc!=0 local noestimatesflag 1
+>                         }*/
+.                 if "`modeltype'"=="fulladj" & "`sense'"=="AAmain"  {
+ 38.                 cap estimates use  ./output/an_multivariate_cox_models_`ou
+> tcome'_`variable'_MAINFULLYADJMODEL_ageband_`x'`dataset'
+ 39.                                 if _rc!=0 local noestimatesflag 1
+ 40.                                 }
+ 41. 
+.                 ***********************
+.                 *2) WRITE THE HRs TO THE OUTPUT FILE
+. 
+. 
+.                 if `noestimatesflag'==0 & "`modeltype'"=="fulladj" & "`sense'
+> "=="AAmain" {
+ 42.                         cap lincom `i'.`variable', eform
+ 43.                         if _rc==0 file write tablecontents_sense ("`variab
+> le'") _tab ("`i'") _tab %4.2f (r(estimate)) _tab %4.2f (r(lb)) _tab %4.2f (r(
+> ub)) _tab (e(N_sub))  `endwith'
+ 44.                                 else file write tablecontents_sense %4.2f 
+> ("ERR IN MODEL") `endwith'
+ 45.                         }
+ 46. 
+.                 *3) Save the estimates for plotting
+.                         if "`modeltype'"=="fulladj" & "`sense'"=="AAmain"  {
+ 47.                                 local hr = r(estimate)
+ 48.                                 local lb = r(lb)
+ 49.                                 local ub = r(ub)
+ 50.                                 local N=e(N_sub)
+ 51.                                 post HRestimates_sense ("`dataset'") ("`x'
+> ") ("`outcome'") ("`variable'") ("`sense'") (`i') (`hr') (`lb') (`ub') (`N')
+ 52.                                 }
+ 53. 
+.                 } /*min adj, full adj*/
+ 54. 
+. } /*variable levels*/
+ 55. } /*age levels*/
+ 56. } /*sense levels*/
+ 57. } /*datsets*/
+ 58. 
+. end
+
+. 
+. *MAIN CODE TO PRODUCE TABLE CONTENTS
+. 
+. 
+. cap file close tablecontents_sense
+
+. file open tablecontents_sense using ./output/12_an_sense_HRtable_`outcome'_SE
+> NSE_ANALYSES.txt, t w replace
+(note: file ./output/12_an_sense_HRtable_covidadmission_SENSE_ANALYSES.txt not 
+> found)
+
+. 
+. tempfile HRestimates_sense
+
+. cap postutil clear
+
+. postfile HRestimates_sense str10 dataset str10 x str10 outcome str27 variable
+>  str27 sense i hr lci uci N using `HRestimates_sense'
+
+. 
+. 
+. *Primary exposure
+. outputHRsforvar, variable("kids_cat4") min(1) max(3) outcome(`outcome')
+
+. file write tablecontents_sense _n
+
+. 
+. file close tablecontents_sense
+
+. 
+. postclose HRestimates_sense
+
+. 
+. *use `HRestimates_sense', clear
+. *save HRestimates_sense, replace
+. *stop
+. 
+. foreach dataset in MAIN W2 {
+  2. forvalues x=0/1 {
+  3. 
+. use `HRestimates_sense', clear
+  4. keep if x=="`x'"
+  5.  
+. keep if dataset=="`dataset'"
+  6. drop outcome variable
+  7. sort sense i
+  8. gen varorder = 1
+  9. 
+. 
+. sort varorder sense i
+ 10. drop varorder
+ 11. 
+. gen obsorder=_n
+ 12. expand 2 if sense!=sense[_n-1], gen(expanded)
+ 13. gsort obsorder -expanded
+ 14. 
+. for var hr lci uci: replace X = 1 if expanded==1
+ 15. 
+. drop obsorder
+ 16. gen obsorder=_n
+ 17. 
+. 
+. expand 2 if expanded==1, gen(expanded2)
+ 18. drop obsorder
+ 19. gsort sense i -expanded -expanded2
+ 20. gen obsorder=_n
+ 21. 
+. for var hr lci uci : replace X=. if expanded==1 & expanded2==1
+ 22. 
+. gen varx = 0.03
+ 23. gen levelx = 0.033
+ 24. gen intx=0.08
+ 25. gen lowerlimit = 0.15
+ 26. gen disx=2.5
+ 27. 
+. *Levels
+. gen leveldesc = ""
+ 28. replace leveldesc = "Only children aged 0-11 years" if i==1 & hr!=1 & hr!=
+> .
+ 29. replace leveldesc = "Only children aged ≥12 years" if i==2
+ 30. replace leveldesc = "Children aged 0-11 years and ≥12 years" if i==3
+ 31. 
+. gen Name = sense if hr==1
+ 32. 
+. foreach type in AAmain CCeth_bmi_smok plus_eth_12mo age_underlying_timescale 
+> time_int  {
+ 33. sum N if sense=="`type'"
+ 34. local number_`type'=r(mean)
+ 35. di `number_`type''
+ 36. }
+ 37. 
+. replace Name = "Fully adjusted result  (N=`number_AAmain')" if Name=="AAmain"
+ 38. replace Name = "Participants with complete BMI and smoking data  (N=`numbe
+> r_CCeth_bmi_smok')" if Name=="CCeth_bmi_smok"
+ 39. replace Name = "Underlying timescale in the cox model revised to age   (N=
+> `number_age_underlying_timescale')" if Name=="age_underlying_timescale"
+ 40. replace Name = "Participants with at least 12 months registration at GP  (
+> N=`number_plus_eth_12mo')" if Name=="plus_eth_12mo"
+ 41. replace Name = "Non-proportional hazards fitted (N=`number_time_int')" if 
+> Name=="time_int"
+ 42. replace Name = "Censor study at 1st November (N=`number_SUS_censor')" if N
+> ame=="SUS_censor"
+ 43. 
+. for var hr lci uci: replace X = . if X==1
+ 44. 
+. 
+. gen displayhrci = string(hr, "%3.2f") + " (" + string(lci, "%3.2f") + "-" + s
+> tring(uci, "%3.2f") + ")"
+ 45. replace displayhrci="" if hr==.
+ 46. list display
+ 47. 
+. drop obsorder
+ 48. 
+. gen obsorder=_n
+ 49. gsort -obsorder
+ 50. gen graphorder = _n
+ 51. sort graphorder
+ 52. list graphorder Name leveldesc hr  lci uci
+ 53. 
+. gen hrtitle="Hazard Ratio (95% CI)" if graphorder == 28
+ 54. 
+. gen bf_hrtitle = "{bf:" + hrtitle + "}"
+ 55. gen bf_Name = "{bf:" + Name + "}"
+ 56. 
+. scatter graphorder hr, mcol(black)      msize(small)            ///          
+>                                                                    ///
+>         || rcap lci uci graphorder, hor mcol(black)     lcol(black)          
+>            ///
+>         || scatter graphorder varx , m(i) mlab(bf_Name) mlabsize(vsmall) mlab
+> col(black)         ///
+>         || scatter graphorder levelx, m(i) mlab(leveldesc) mlabsize(vsmall) m
+> labcol(black)      ///
+>         || scatter graphorder disx, m(i) mlab(displayhrci) mlabsize(vsmall) m
+> labcol(black) ///
+>         || scatter graphorder disx, m(i) mlab(bf_hrtitle) mlabsize(vsmall) ml
+> abcol(black) ///
+>                 xline(1,lp(solid))                                           
+>                                                                            //
+> /
+>                 xscale(log range(0.1 6)) xlab(0.5 1 2, labsize(vsmall)) xtitl
+> e("")  ///
+>                 ylab(none) ytitle("")           yscale( lcolor(white))       
+>                            ///
+>                 graphregion(color(white))  legend(off)  ysize(4) ///
+>                 text(-2 0.2 "Lower risk in those living with children", place
+> (e) size(vsmall)) ///
+>                 text(-2 1.5 "Higher risk in those living with children", plac
+> e(e) size(vsmall))
+ 57. 
+. graph export ./output/12_an_HRforest_SENSE_`outcome'_ageband_`x'_`dataset'.sv
+> g, as(svg) replace
+ 58. }
+ 59. }
+(33 observations deleted)
+(18 observations deleted)
+(5 observations created)
+
+->  replace hr = 1 if expanded==1
+(5 real changes made)
+
+->  replace lci = 1 if expanded==1
+(5 real changes made)
+
+->  replace uci = 1 if expanded==1
+(5 real changes made)
+(5 observations created)
+
+->  replace hr=. if expanded==1 & expanded2==1
+(5 real changes made, 5 to missing)
+
+->  replace lci=. if expanded==1 & expanded2==1
+(5 real changes made, 5 to missing)
+
+->  replace uci=. if expanded==1 & expanded2==1
+(5 real changes made, 5 to missing)
+(25 missing values generated)
+variable leveldesc was str1 now str29
+(5 real changes made)
+variable leveldesc was str29 now str30
+(5 real changes made)
+variable leveldesc was str30 now str40
+(5 real changes made)
+(20 missing values generated)
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5       16252           0      16252      16252
+16252
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5        2319           0       2319       2319
+2319
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5       15442           0      15442      15442
+15442
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5       16252           0      16252      16252
+16252
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5       16252           0      16252      16252
+16252
+variable Name was str24 now str32
+(1 real change made)
+variable Name was str32 now str57
+(1 real change made)
+variable Name was str57 now str64
+(1 real change made)
+variable Name was str64 now str66
+(1 real change made)
+(1 real change made)
+(0 real changes made)
+
+->  replace hr = . if hr==1
+(5 real changes made, 5 to missing)
+
+->  replace lci = . if lci==1
+(5 real changes made, 5 to missing)
+
+->  replace uci = . if uci==1
+(5 real changes made, 5 to missing)
+(10 real changes made)
+
+     +------------------+
+     |      displayhrci |
+     |------------------|
+  1. |                  |
+  2. |                  |
+  3. | 1.03 (0.84-1.26) |
+  4. | 1.14 (0.84-1.55) |
+  5. | 1.00 (0.82-1.20) |
+     |------------------|
+  6. |                  |
+  7. |                  |
+  8. | 1.49 (0.84-2.65) |
+  9. | 1.53 (0.68-3.45) |
+ 10. | 1.39 (0.82-2.38) |
+     |------------------|
+ 11. |                  |
+ 12. |                  |
+ 13. | 1.02 (0.84-1.25) |
+ 14. | 1.08 (0.81-1.45) |
+ 15. | 0.99 (0.83-1.19) |
+     |------------------|
+ 16. |                  |
+ 17. |                  |
+ 18. | 1.05 (0.86-1.29) |
+ 19. | 1.15 (0.84-1.58) |
+ 20. | 1.01 (0.83-1.22) |
+     |------------------|
+ 21. |                  |
+ 22. |                  |
+ 23. | 1.03 (0.84-1.26) |
+ 24. | 1.14 (0.84-1.55) |
+ 25. | 1.00 (0.82-1.20) |
+     +------------------+
+
+     +--------------------------------------------------------------------+
+  1. |                              grapho~r                              |
+     |                                     1                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |  Children aged 0-11 years and ≥12 years  |  .9956945  |  .8243355  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.202675                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  2. |                              grapho~r                              |
+     |                                     2                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |            Only children aged ≥12 years  |  1.138895  |  .8371719  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.549362                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  3. |                              grapho~r                              |
+     |                                     3                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |           Only children aged 0-11 years  |  1.030759  |  .8410604  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.263243                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  4. |                              grapho~r                              |
+     |                                     4                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                          Non-proportional hazards fitted (N=16252) |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  5. |                              grapho~r                              |
+     |                                     5                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  6. |                              grapho~r                              |
+     |                                     6                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |  Children aged 0-11 years and ≥12 years  |  1.006342  |  .8306103  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.219253                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  7. |                              grapho~r                              |
+     |                                     7                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |            Only children aged ≥12 years  |  1.149294  |   .838007  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                               1.57621                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  8. |                              grapho~r                              |
+     |                                     8                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |           Only children aged 0-11 years  |  1.052805  |  .8567989  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.293651                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  9. |                              grapho~r                              |
+     |                                     9                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     | Participants with at least 12 months registration at GP  (N=15442) |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 10. |                              grapho~r                              |
+     |                                    10                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 11. |                              grapho~r                              |
+     |                                    11                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |  Children aged 0-11 years and ≥12 years  |  .9942891  |  .8302492  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                               1.19074                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 12. |                              grapho~r                              |
+     |                                    12                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |            Only children aged ≥12 years  |  1.082084  |  .8051232  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.454319                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 13. |                              grapho~r                              |
+     |                                    13                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |           Only children aged 0-11 years  |  1.024496  |  .8418524  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.246765                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 14. |                              grapho~r                              |
+     |                                    14                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |   Underlying timescale in the cox model revised to age   (N=16252) |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 15. |                              grapho~r                              |
+     |                                    15                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 16. |                              grapho~r                              |
+     |                                    16                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |  Children aged 0-11 years and ≥12 years  |  1.392446  |  .8159543  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              2.376245                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 17. |                              grapho~r                              |
+     |                                    17                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |            Only children aged ≥12 years  |  1.525997  |  .6755837  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              3.446897                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 18. |                              grapho~r                              |
+     |                                    18                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |           Only children aged 0-11 years  |  1.490626  |   .838391  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              2.650273                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 19. |                              grapho~r                              |
+     |                                    19                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |          Participants with complete BMI and smoking data  (N=2319) |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 20. |                              grapho~r                              |
+     |                                    20                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 21. |                              grapho~r                              |
+     |                                    21                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |  Children aged 0-11 years and ≥12 years  |  .9957653  |  .8243037  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.202892                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 22. |                              grapho~r                              |
+     |                                    22                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |            Only children aged ≥12 years  |  1.138598  |   .836877  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                1.5491                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 23. |                              grapho~r                              |
+     |                                    23                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |           Only children aged 0-11 years  |  1.031146  |  .8412936  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.263841                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 24. |                              grapho~r                              |
+     |                                    24                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                   Fully adjusted result  (N=16252) |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 25. |                              grapho~r                              |
+     |                                    25                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+(25 missing values generated)
+(note: file ./output/12_an_HRforest_SENSE_covidadmission_ageband_0_MAIN.svg not
+>  found)
+(file ./output/12_an_HRforest_SENSE_covidadmission_ageband_0_MAIN.svg written i
+> n SVG format)
+(33 observations deleted)
+(18 observations deleted)
+(5 observations created)
+
+->  replace hr = 1 if expanded==1
+(5 real changes made)
+
+->  replace lci = 1 if expanded==1
+(5 real changes made)
+
+->  replace uci = 1 if expanded==1
+(5 real changes made)
+(5 observations created)
+
+->  replace hr=. if expanded==1 & expanded2==1
+(5 real changes made, 5 to missing)
+
+->  replace lci=. if expanded==1 & expanded2==1
+(5 real changes made, 5 to missing)
+
+->  replace uci=. if expanded==1 & expanded2==1
+(5 real changes made, 5 to missing)
+(25 missing values generated)
+variable leveldesc was str1 now str29
+(5 real changes made)
+variable leveldesc was str29 now str30
+(5 real changes made)
+variable leveldesc was str30 now str40
+(5 real changes made)
+(20 missing values generated)
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5        4436           0       4436       4436
+4436
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5         623           0        623        623
+623
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5        4212           0       4212       4212
+4212
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5        4436           0       4436       4436
+4436
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5        4436           0       4436       4436
+4436
+variable Name was str24 now str31
+(1 real change made)
+variable Name was str31 now str56
+(1 real change made)
+variable Name was str56 now str63
+(1 real change made)
+variable Name was str63 now str65
+(1 real change made)
+(1 real change made)
+(0 real changes made)
+
+->  replace hr = . if hr==1
+(5 real changes made, 5 to missing)
+
+->  replace lci = . if lci==1
+(5 real changes made, 5 to missing)
+
+->  replace uci = . if uci==1
+(5 real changes made, 5 to missing)
+(10 real changes made)
+
+     +------------------+
+     |      displayhrci |
+     |------------------|
+  1. |                  |
+  2. |                  |
+  3. | 1.23 (0.81-1.88) |
+  4. | 1.06 (0.56-1.99) |
+  5. | 1.27 (0.85-1.89) |
+     |------------------|
+  6. |                  |
+  7. |                  |
+  8. | 0.80 (0.20-3.26) |
+  9. | 0.99 (0.22-4.48) |
+ 10. | 0.79 (0.21-3.02) |
+     |------------------|
+ 11. |                  |
+ 12. |                  |
+ 13. | 1.30 (0.86-1.98) |
+ 14. | 1.17 (0.64-2.14) |
+ 15. | 1.31 (0.89-1.92) |
+     |------------------|
+ 16. |                  |
+ 17. |                  |
+ 18. | 1.14 (0.76-1.72) |
+ 19. | 0.94 (0.49-1.81) |
+ 20. | 1.19 (0.82-1.74) |
+     |------------------|
+ 21. |                  |
+ 22. |                  |
+ 23. | 1.24 (0.81-1.89) |
+ 24. | 1.06 (0.56-1.99) |
+ 25. | 1.27 (0.86-1.89) |
+     +------------------+
+
+     +-------------------------------------------------------------------+
+  1. |                             grapho~r                              |
+     |                                    1                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     | Children aged 0-11 years and ≥12 years  |  1.271953  |  .8550603  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.892105                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  2. |                             grapho~r                              |
+     |                                    2                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |           Only children aged ≥12 years  |  1.060272  |  .5637348  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.994157                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  3. |                             grapho~r                              |
+     |                                    3                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |          Only children aged 0-11 years  |  1.237121  |  .8108155  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.887568                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  4. |                             grapho~r                              |
+     |                                    4                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                          Non-proportional hazards fitted (N=4436) |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  5. |                             grapho~r                              |
+     |                                    5                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  6. |                             grapho~r                              |
+     |                                    6                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     | Children aged 0-11 years and ≥12 years  |  1.190277  |  .8154477  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.737401                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  7. |                             grapho~r                              |
+     |                                    7                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |           Only children aged ≥12 years  |  .9398754  |  .4878195  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.810845                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  8. |                             grapho~r                              |
+     |                                    8                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |          Only children aged 0-11 years  |  1.144137  |  .7602008  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                              1.72198                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  9. |                             grapho~r                              |
+     |                                    9                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     | Participants with at least 12 months registration at GP  (N=4212) |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 10. |                             grapho~r                              |
+     |                                   10                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 11. |                             grapho~r                              |
+     |                                   11                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     | Children aged 0-11 years and ≥12 years  |  1.305506  |  .8880401  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.919223                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 12. |                             grapho~r                              |
+     |                                   12                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |           Only children aged ≥12 years  |  1.171381  |  .6401638  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             2.143412                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 13. |                             grapho~r                              |
+     |                                   13                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |          Only children aged 0-11 years  |  1.303793  |  .8589307  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.979062                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 14. |                             grapho~r                              |
+     |                                   14                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |   Underlying timescale in the cox model revised to age   (N=4436) |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 15. |                             grapho~r                              |
+     |                                   15                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 16. |                             grapho~r                              |
+     |                                   16                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     | Children aged 0-11 years and ≥12 years  |   .791076  |   .207477  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             3.016244                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 17. |                             grapho~r                              |
+     |                                   17                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |           Only children aged ≥12 years  |  .9872158  |  .2174846  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             4.481213                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 18. |                             grapho~r                              |
+     |                                   18                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |          Only children aged 0-11 years  |  .8032853  |  .1980224  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             3.258558                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 19. |                             grapho~r                              |
+     |                                   19                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |          Participants with complete BMI and smoking data  (N=623) |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 20. |                             grapho~r                              |
+     |                                   20                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 21. |                             grapho~r                              |
+     |                                   21                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     | Children aged 0-11 years and ≥12 years  |  1.268036  |  .8521329  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.886931                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 22. |                             grapho~r                              |
+     |                                   22                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |           Only children aged ≥12 years  |  1.055921  |  .5616495  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.985168                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 23. |                             grapho~r                              |
+     |                                   23                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |          Only children aged 0-11 years  |  1.233765  |    .80819  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.883438                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 24. |                             grapho~r                              |
+     |                                   24                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                   Fully adjusted result  (N=4436) |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 25. |                             grapho~r                              |
+     |                                   25                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+(25 missing values generated)
+(note: file ./output/12_an_HRforest_SENSE_covidadmission_ageband_1_MAIN.svg not
+>  found)
+(file ./output/12_an_HRforest_SENSE_covidadmission_ageband_1_MAIN.svg written i
+> n SVG format)
+(33 observations deleted)
+(15 observations deleted)
+(6 observations created)
+
+->  replace hr = 1 if expanded==1
+(6 real changes made)
+
+->  replace lci = 1 if expanded==1
+(6 real changes made)
+
+->  replace uci = 1 if expanded==1
+(6 real changes made)
+(6 observations created)
+
+->  replace hr=. if expanded==1 & expanded2==1
+(6 real changes made, 6 to missing)
+
+->  replace lci=. if expanded==1 & expanded2==1
+(6 real changes made, 6 to missing)
+
+->  replace uci=. if expanded==1 & expanded2==1
+(6 real changes made, 6 to missing)
+(30 missing values generated)
+variable leveldesc was str1 now str29
+(6 real changes made)
+variable leveldesc was str29 now str30
+(6 real changes made)
+variable leveldesc was str30 now str40
+(6 real changes made)
+(24 missing values generated)
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5       16026           0      16026      16026
+16026
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5        2223           0       2223       2223
+2223
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5       15237           0      15237      15237
+15237
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5       16026           0      16026      16026
+16026
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5       16026           0      16026      16026
+16026
+variable Name was str24 now str32
+(1 real change made)
+variable Name was str32 now str57
+(1 real change made)
+variable Name was str57 now str64
+(1 real change made)
+variable Name was str64 now str66
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+->  replace hr = . if hr==1
+(6 real changes made, 6 to missing)
+
+->  replace lci = . if lci==1
+(6 real changes made, 6 to missing)
+
+->  replace uci = . if uci==1
+(6 real changes made, 6 to missing)
+(12 real changes made)
+
+     +------------------+
+     |      displayhrci |
+     |------------------|
+  1. |                  |
+  2. |                  |
+  3. | 0.89 (0.63-1.25) |
+  4. | 0.89 (0.57-1.39) |
+  5. | 0.80 (0.58-1.11) |
+     |------------------|
+  6. |                  |
+  7. |                  |
+  8. | 0.71 (0.28-1.84) |
+  9. | 0.50 (0.10-2.48) |
+ 10. | 0.80 (0.33-1.92) |
+     |------------------|
+ 11. |                  |
+ 12. |                  |
+ 13. | 0.93 (0.62-1.42) |
+ 14. | 1.00 (0.59-1.71) |
+ 15. | 0.83 (0.56-1.23) |
+     |------------------|
+ 16. |                  |
+ 17. |                  |
+ 18. | 0.89 (0.63-1.26) |
+ 19. | 0.90 (0.57-1.42) |
+ 20. | 0.79 (0.57-1.10) |
+     |------------------|
+ 21. |                  |
+ 22. |                  |
+ 23. | 0.85 (0.61-1.19) |
+ 24. | 0.87 (0.55-1.36) |
+ 25. | 0.75 (0.54-1.03) |
+     |------------------|
+ 26. |                  |
+ 27. |                  |
+ 28. | 0.89 (0.63-1.25) |
+ 29. | 0.89 (0.57-1.39) |
+ 30. | 0.80 (0.58-1.10) |
+     +------------------+
+
+     +--------------------------------------------------------------------+
+  1. |                              grapho~r                              |
+     |                                     1                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |  Children aged 0-11 years and ≥12 years  |   .801632  |  .5815519  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.104998                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  2. |                              grapho~r                              |
+     |                                     2                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |            Only children aged ≥12 years  |  .8928559  |  .5730016  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.391256                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  3. |                              grapho~r                              |
+     |                                     3                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |           Only children aged 0-11 years  |  .8900278  |  .6344176  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.248625                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  4. |                              grapho~r                              |
+     |                                     4                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                          Non-proportional hazards fitted (N=16026) |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  5. |                              grapho~r                              |
+     |                                     5                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  6. |                              grapho~r                              |
+     |                                     6                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |  Children aged 0-11 years and ≥12 years  |  .7488259  |  .5433279  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.032048                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  7. |                              grapho~r                              |
+     |                                     7                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |            Only children aged ≥12 years  |  .8667668  |  .5506012  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                               1.36448                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  8. |                              grapho~r                              |
+     |                                     8                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |           Only children aged 0-11 years  |  .8500383  |  .6050523  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.194219                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+  9. |                              grapho~r                              |
+     |                                     9                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     | Participants with at least 12 months registration at GP  (N=15237) |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 10. |                              grapho~r                              |
+     |                                    10                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 11. |                              grapho~r                              |
+     |                                    11                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |  Children aged 0-11 years and ≥12 years  |  .7902108  |  .5682116  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.098945                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 12. |                              grapho~r                              |
+     |                                    12                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |            Only children aged ≥12 years  |   .896917  |  .5682591  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.415657                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 13. |                              grapho~r                              |
+     |                                    13                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |           Only children aged 0-11 years  |  .8916771  |  .6292624  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.263524                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 14. |                              grapho~r                              |
+     |                                    14                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |   Underlying timescale in the cox model revised to age   (N=16026) |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 15. |                              grapho~r                              |
+     |                                    15                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 16. |                              grapho~r                              |
+     |                                    16                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |  Children aged 0-11 years and ≥12 years  |  .8267776  |  .5553391  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                               1.23089                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 17. |                              grapho~r                              |
+     |                                    17                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |            Only children aged ≥12 years  |  1.002361  |  .5888839  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.706156                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 18. |                              grapho~r                              |
+     |                                    18                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |           Only children aged 0-11 years  |  .9342775  |  .6157211  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.417646                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 19. |                              grapho~r                              |
+     |                                    19                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                  Censor study at 1st November (N=) |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 20. |                              grapho~r                              |
+     |                                    20                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 21. |                              grapho~r                              |
+     |                                    21                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |  Children aged 0-11 years and ≥12 years  |  .7956313  |   .329447  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.921491                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 22. |                              grapho~r                              |
+     |                                    22                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |            Only children aged ≥12 years  |  .4970459  |  .0995149  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                               2.48259                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 23. |                              grapho~r                              |
+     |                                    23                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |           Only children aged 0-11 years  |  .7139239  |  .2770677  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.839577                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 24. |                              grapho~r                              |
+     |                                    24                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |          Participants with complete BMI and smoking data  (N=2223) |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 25. |                              grapho~r                              |
+     |                                    25                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 26. |                              grapho~r                              |
+     |                                    26                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |  Children aged 0-11 years and ≥12 years  |  .8016245  |  .5814645  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.105144                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 27. |                              grapho~r                              |
+     |                                    27                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |            Only children aged ≥12 years  |  .8936914  |  .5735469  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.392535                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 28. |                              grapho~r                              |
+     |                                    28                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |           Only children aged 0-11 years  |  .8903528  |  .6345868  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                              1.249204                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 29. |                              grapho~r                              |
+     |                                    29                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                   Fully adjusted result  (N=16026) |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+
+     +--------------------------------------------------------------------+
+ 30. |                              grapho~r                              |
+     |                                    30                              |
+     |--------------------------------------------------------------------|
+     |                                                               Name |
+     |                                                                    |
+     |--------------------------------------------------------------------|
+     |                               leveldesc  |        hr  |       lci  |
+     |                                          |         .  |         .  |
+     |--------------------------------------------------------------------|
+     |                                   uci                              |
+     |                                     .                              |
+     +--------------------------------------------------------------------+
+(29 missing values generated)
+(note: file ./output/12_an_HRforest_SENSE_covidadmission_ageband_0_W2.svg not f
+> ound)
+(file ./output/12_an_HRforest_SENSE_covidadmission_ageband_0_W2.svg written in 
+> SVG format)
+(33 observations deleted)
+(15 observations deleted)
+(6 observations created)
+
+->  replace hr = 1 if expanded==1
+(6 real changes made)
+
+->  replace lci = 1 if expanded==1
+(6 real changes made)
+
+->  replace uci = 1 if expanded==1
+(6 real changes made)
+(6 observations created)
+
+->  replace hr=. if expanded==1 & expanded2==1
+(6 real changes made, 6 to missing)
+
+->  replace lci=. if expanded==1 & expanded2==1
+(6 real changes made, 6 to missing)
+
+->  replace uci=. if expanded==1 & expanded2==1
+(6 real changes made, 6 to missing)
+(30 missing values generated)
+variable leveldesc was str1 now str29
+(6 real changes made)
+variable leveldesc was str29 now str30
+(6 real changes made)
+variable leveldesc was str30 now str40
+(6 real changes made)
+(24 missing values generated)
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5        4514           0       4514       4514
+4514
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5         646           0        646        646
+646
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5        4275           0       4275       4275
+4275
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5        4514           0       4514       4514
+4514
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+           N |          5        4514           0       4514       4514
+4514
+variable Name was str24 now str31
+(1 real change made)
+variable Name was str31 now str56
+(1 real change made)
+variable Name was str56 now str63
+(1 real change made)
+variable Name was str63 now str65
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+->  replace hr = . if hr==1
+(6 real changes made, 6 to missing)
+
+->  replace lci = . if lci==1
+(6 real changes made, 6 to missing)
+
+->  replace uci = . if uci==1
+(6 real changes made, 6 to missing)
+(12 real changes made)
+
+     +------------------+
+     |      displayhrci |
+     |------------------|
+  1. |                  |
+  2. |                  |
+  3. | 0.83 (0.48-1.42) |
+  4. | 0.77 (0.36-1.66) |
+  5. | 0.92 (0.55-1.53) |
+     |------------------|
+  6. |                  |
+  7. |                  |
+  8. | 0.57 (0.18-1.79) |
+  9. | 0.26 (0.03-1.99) |
+ 10. | 0.57 (0.21-1.51) |
+     |------------------|
+ 11. |                  |
+ 12. |                  |
+ 13. | 1.32 (0.61-2.86) |
+ 14. | 1.05 (0.37-3.02) |
+ 15. | 1.45 (0.69-3.03) |
+     |------------------|
+ 16. |                  |
+ 17. |                  |
+ 18. | 0.80 (0.47-1.37) |
+ 19. | 0.81 (0.36-1.81) |
+ 20. | 0.89 (0.53-1.48) |
+     |------------------|
+ 21. |                  |
+ 22. |                  |
+ 23. | 0.86 (0.49-1.51) |
+ 24. | 0.81 (0.37-1.77) |
+ 25. | 0.97 (0.57-1.65) |
+     |------------------|
+ 26. |                  |
+ 27. |                  |
+ 28. | 0.83 (0.48-1.42) |
+ 29. | 0.77 (0.36-1.66) |
+ 30. | 0.92 (0.55-1.53) |
+     +------------------+
+
+     +-------------------------------------------------------------------+
+  1. |                             grapho~r                              |
+     |                                    1                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     | Children aged 0-11 years and ≥12 years  |  .9199992  |  .5535391  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.529068                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  2. |                             grapho~r                              |
+     |                                    2                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |           Only children aged ≥12 years  |  .7744788  |  .3623791  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.655221                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  3. |                             grapho~r                              |
+     |                                    3                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |          Only children aged 0-11 years  |  .8269598  |   .481479  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.420337                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  4. |                             grapho~r                              |
+     |                                    4                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                          Non-proportional hazards fitted (N=4514) |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  5. |                             grapho~r                              |
+     |                                    5                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  6. |                             grapho~r                              |
+     |                                    6                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     | Children aged 0-11 years and ≥12 years  |  .9673573  |  .5677376  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.648262                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  7. |                             grapho~r                              |
+     |                                    7                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |           Only children aged ≥12 years  |  .8139665  |  .3737386  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                              1.77274                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  8. |                             grapho~r                              |
+     |                                    8                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |          Only children aged 0-11 years  |  .8567771  |   .485533  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.511879                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  9. |                             grapho~r                              |
+     |                                    9                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     | Participants with at least 12 months registration at GP  (N=4275) |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 10. |                             grapho~r                              |
+     |                                   10                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 11. |                             grapho~r                              |
+     |                                   11                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     | Children aged 0-11 years and ≥12 years  |  .8892674  |  .5342278  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.480261                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 12. |                             grapho~r                              |
+     |                                   12                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |           Only children aged ≥12 years  |   .808435  |  .3612022  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.809422                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 13. |                             grapho~r                              |
+     |                                   13                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |          Only children aged 0-11 years  |  .7984183  |  .4666692  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.366004                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 14. |                             grapho~r                              |
+     |                                   14                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |   Underlying timescale in the cox model revised to age   (N=4514) |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 15. |                             grapho~r                              |
+     |                                   15                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 16. |                             grapho~r                              |
+     |                                   16                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     | Children aged 0-11 years and ≥12 years  |  1.445308  |  .6895089  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             3.029568                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 17. |                             grapho~r                              |
+     |                                   17                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |           Only children aged ≥12 years  |  1.052827  |  .3674168  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             3.016861                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 18. |                             grapho~r                              |
+     |                                   18                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |          Only children aged 0-11 years  |  1.319761  |  .6085222  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             2.862293                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 19. |                             grapho~r                              |
+     |                                   19                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                 Censor study at 1st November (N=) |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 20. |                             grapho~r                              |
+     |                                   20                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 21. |                             grapho~r                              |
+     |                                   21                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     | Children aged 0-11 years and ≥12 years  |  .5683005  |  .2133656  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.513671                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 22. |                             grapho~r                              |
+     |                                   22                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |           Only children aged ≥12 years  |  .2607384  |  .0340952  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                              1.99396                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 23. |                             grapho~r                              |
+     |                                   23                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |          Only children aged 0-11 years  |  .5658269  |  .1791186  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.787419                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 24. |                             grapho~r                              |
+     |                                   24                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |          Participants with complete BMI and smoking data  (N=646) |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 25. |                             grapho~r                              |
+     |                                   25                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 26. |                             grapho~r                              |
+     |                                   26                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     | Children aged 0-11 years and ≥12 years  |  .9200423  |   .553394  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.529611                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 27. |                             grapho~r                              |
+     |                                   27                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |           Only children aged ≥12 years  |  .7745228  |  .3622964  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.655787                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 28. |                             grapho~r                              |
+     |                                   28                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |          Only children aged 0-11 years  |  .8272386  |  .4814967  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                             1.421243                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 29. |                             grapho~r                              |
+     |                                   29                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                   Fully adjusted result  (N=4514) |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+ 30. |                             grapho~r                              |
+     |                                   30                              |
+     |-------------------------------------------------------------------|
+     |                                                              Name |
+     |                                                                   |
+     |-------------------------------------------------------------------|
+     |                              leveldesc  |        hr  |       lci  |
+     |                                         |         .  |         .  |
+     |-------------------------------------------------------------------|
+     |                                  uci                              |
+     |                                    .                              |
+     +-------------------------------------------------------------------+
+(29 missing values generated)
+(note: file ./output/12_an_HRforest_SENSE_covidadmission_ageband_1_W2.svg not f
+> ound)
+(file ./output/12_an_HRforest_SENSE_covidadmission_ageband_1_W2.svg written in 
+> SVG format)
+
+. log close
+      name:  <unnamed>
+       log:  /workspace/12_an_tablecontent_HRtable_SENSE_covidadmission.log
+  log type:  text
+ closed on:  20 Jul 2021, 14:40:26
+-------------------------------------------------------------------------------
