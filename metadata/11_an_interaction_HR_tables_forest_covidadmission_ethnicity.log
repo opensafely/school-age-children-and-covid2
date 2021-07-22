@@ -1,234 +1,358 @@
-2021-07-20T14:38:49.584261900Z 
-2021-07-20T14:38:49.584304700Z   ___  ____  ____  ____  ____ (R)
-2021-07-20T14:38:49.584309000Z  /__    /   ____/   /   ____/
-2021-07-20T14:38:49.584311700Z ___/   /   /___/   /   /___/   16.1   Copyright 1985-2019 StataCorp LLC
-2021-07-20T14:38:49.584314000Z   Statistics/Data Analysis            StataCorp
-2021-07-20T14:38:49.584316400Z                                       4905 Lakeway Drive
-2021-07-20T14:38:49.584318800Z                                       College Station, Texas 77845 USA
-2021-07-20T14:38:49.584321500Z                                       800-STATA-PC        http://www.stata.com
-2021-07-20T14:38:49.584324000Z                                       979-696-4600        stata@stata.com
-2021-07-20T14:38:49.584326600Z                                       979-696-4601 (fax)
-2021-07-20T14:38:49.584329200Z 
-2021-07-20T14:38:49.584331500Z 3-user Stata network license expires 11 May 2022:
-2021-07-20T14:38:49.584334200Z        Serial number:  501709312237
-2021-07-20T14:38:49.584336700Z          Licensed to:  The Bennett Institute
-2021-07-20T14:38:49.584339400Z                        Oxford University
-2021-07-20T14:38:49.585038400Z 
-2021-07-20T14:38:49.585055000Z Notes:
-2021-07-20T14:38:49.585058800Z       1.  Unicode is supported; see help unicode_advice.
-2021-07-20T14:38:49.585061700Z 
-2021-07-20T14:38:49.585064100Z . do "analysis/11a_an_interaction_HR_tables_forest_eth_strat.wrapper.do" covida
-2021-07-20T14:38:49.585067100Z > dmission W2 
-2021-07-20T14:38:49.585070200Z 
-2021-07-20T14:38:49.585072700Z . . do "analysis/11a_an_interaction_HR_tables_forest_eth_strat.do" covidadmissi
-2021-07-20T14:38:49.585075400Z > on W2
-2021-07-20T14:38:49.585077900Z 
-2021-07-20T14:38:49.585080200Z . *************************************************************************
-2021-07-20T14:38:49.585096000Z . *Purpose: Create content that is ready to paste into a pre-formatted Word
-2021-07-20T14:38:49.585098500Z . * shell table containing HRs for interaction analyses.  Also output forest
-2021-07-20T14:38:49.585101200Z . *plot of results as SVG file.
-2021-07-20T14:38:49.585103700Z . *
-2021-07-20T14:38:49.585106600Z . *Requires: final analysis dataset (analysis_dataset.dta)
-2021-07-20T14:38:49.585109400Z . *
-2021-07-20T14:38:49.585111600Z . *Coding: HFORBES, based on file from Krishnan Bhaskaran
-2021-07-20T14:38:49.585113800Z . *
-2021-07-20T14:38:49.585116200Z . *Date drafted: 30th June 2020
-2021-07-20T14:38:49.585118600Z . *************************************************************************
-2021-07-20T14:38:49.585121300Z . 
-2021-07-20T14:38:49.585123600Z . local outcome `1' 
-2021-07-20T14:38:49.585125900Z 
-2021-07-20T14:38:49.585140500Z . local dataset `2'
-2021-07-20T14:38:49.585143400Z 
-2021-07-20T14:38:49.585145700Z . 
-2021-07-20T14:38:49.585148000Z . 
-2021-07-20T14:38:49.585150300Z . 
-2021-07-20T14:38:49.585153000Z . * Open a log file
-2021-07-20T14:38:49.585155600Z . capture log close
-2021-07-20T14:38:49.585158200Z 
-2021-07-20T14:38:49.585160700Z . log using "11_an_interaction_HR_tables_forest_`outcome'_ethnicity`dataset'.lo
-2021-07-20T14:38:49.585163700Z > g", text replace
-2021-07-20T14:38:49.585176700Z (note: file /workspace/11_an_interaction_HR_tables_forest_covidadmission_ethnic
-2021-07-20T14:38:49.585181200Z > ityW2.log not found)
-2021-07-20T14:38:49.585231200Z -------------------------------------------------------------------------------
-2021-07-20T14:38:49.585241900Z       name:  <unnamed>
-2021-07-20T14:38:49.585245900Z        log:  /workspace/11_an_interaction_HR_tables_forest_covidadmission_ethni
-2021-07-20T14:38:49.585249200Z > cityW2.log
-2021-07-20T14:38:49.585251700Z   log type:  text
-2021-07-20T14:38:49.585254400Z  opened on:  20 Jul 2021, 14:38:49
-2021-07-20T14:38:49.585257200Z 
-2021-07-20T14:38:49.585259800Z . 
-2021-07-20T14:38:49.585262500Z . *****************************************************************************
-2021-07-20T14:38:49.585265400Z > ******************************************
-2021-07-20T14:38:49.585282300Z . *Generic code to ouput the HRs across outcomes for all levels of a particular
-2021-07-20T14:38:49.585286700Z >  variables, in the right shape for table
-2021-07-20T14:38:49.585290000Z . cap prog drop outputHRsforvar
-2021-07-20T14:38:49.585329500Z 
-2021-07-20T14:38:49.585336500Z . prog define outputHRsforvar
-2021-07-20T14:38:49.585486400Z   1. syntax, variable(string) min(real) max(real) outcome(string)
-2021-07-20T14:38:49.585496000Z   2. file write tablecontents_int ("age") _tab ("exposure") _tab ("exposure lev
-2021-07-20T14:38:49.585500200Z > el") ///
-2021-07-20T14:38:49.585503300Z > _tab ("outcome") _tab ("int_type") _tab ("int_level") ///
-2021-07-20T14:38:49.585506400Z > _tab ("HR")  _tab ("lci")  _tab ("uci") _tab ("pval") _n
-2021-07-20T14:38:49.585509800Z   3. forvalues x=0/1 {
-2021-07-20T14:38:49.585512400Z   4. forvalues i=`min'/`max'{
-2021-07-20T14:38:49.585515100Z   5. foreach int_type in ethnicity {
-2021-07-20T14:38:49.585518100Z   6. 
-2021-07-20T14:38:49.585520700Z . foreach int_level in 1 2 3 4 5 {
-2021-07-20T14:38:49.585523400Z   7. 
-2021-07-20T14:38:49.585526000Z . local endwith "_tab"
-2021-07-20T14:38:49.585537200Z   8. 
-2021-07-20T14:38:49.585551100Z .         *put the varname and condition to left so that alignment can be check
-2021-07-20T14:38:49.585555100Z > ed vs shell
-2021-07-20T14:38:49.585558100Z .         file write tablecontents_int ("`x'") _tab ("`variable'") _tab ("`i'")
-2021-07-20T14:38:49.585561500Z >  _tab ("`outcome'") _tab ("`int_type'") _tab ("`int_level'") _tab
-2021-07-20T14:38:49.585564500Z   9. 
-2021-07-20T14:38:49.585567000Z .         foreach modeltype of any fulladj {
-2021-07-20T14:38:49.585569700Z  10. 
-2021-07-20T14:38:49.585572400Z .                 local noestimatesflag 0 /*reset*/
-2021-07-20T14:38:49.585575200Z  11. 
-2021-07-20T14:38:49.585580600Z . *CHANGE THE OUTCOME BELOW TO LAST IF BRINGING IN MORE COLS
-2021-07-20T14:38:49.585583900Z .                 if "`modeltype'"=="fulladj" local endwith "_n"
-2021-07-20T14:38:49.585587000Z  12. 
-2021-07-20T14:38:49.585589500Z .                 ***********************
-2021-07-20T14:38:49.585592000Z .                 *1) GET THE RIGHT ESTIMATES INTO MEMORY
-2021-07-20T14:38:49.585595000Z . 
-2021-07-20T14:38:49.585597800Z .                 if "`modeltype'"=="fulladj" {
-2021-07-20T14:38:49.585600800Z  13.                                 cap estimates use ./output/an_interaction_
-2021-07-20T14:38:49.585603500Z > cox_models_`outcome'_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_n
-2021-07-20T14:38:49.585606200Z > oeth_ageband_`x'`dataset'
-2021-07-20T14:38:49.585666500Z  14.                                 if _rc!=0 local noestimatesflag 1
-2021-07-20T14:38:49.585675300Z  15.                                 }
-2021-07-20T14:38:49.585679300Z  16.                 ***********************
-2021-07-20T14:38:49.585682400Z .                 *2) WRITE THE HRs TO THE OUTPUT FILE
-2021-07-20T14:38:49.585685100Z . 
-2021-07-20T14:38:49.585687800Z .                 if `noestimatesflag'==0{
-2021-07-20T14:38:49.585690700Z  17. 
-2021-07-20T14:38:49.585693400Z .                         if `int_level'==1 {
-2021-07-20T14:38:49.585696300Z  18.                         cap lincom `i'.`variable'+ 1.`int_type'#`i'.`varia
-2021-07-20T14:38:49.585700200Z > ble', eform
-2021-07-20T14:38:49.585703200Z  19.                         if _rc==0 file write tablecontents_int %4.2f (r(es
-2021-07-20T14:38:49.585706300Z > timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
-2021-07-20T14:38:49.585746200Z  20.                                 else file write tablecontents_int %4.2f ("
-2021-07-20T14:38:49.585753100Z > ERR IN MODEL") `endwith'
-2021-07-20T14:38:49.585756200Z  21.                                 }
-2021-07-20T14:38:49.585758800Z  22. 
-2021-07-20T14:38:49.585761400Z .                                                                              
-2021-07-20T14:38:49.585769700Z >    if `int_level'==2 {
-2021-07-20T14:38:49.585772500Z  23.                         cap lincom `i'.`variable'+ 2.`int_type'#`i'.`varia
-2021-07-20T14:38:49.585775300Z > ble', eform
-2021-07-20T14:38:49.585777700Z  24.                         if _rc==0 file write tablecontents_int %4.2f (r(es
-2021-07-20T14:38:49.585780300Z > timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
-2021-07-20T14:38:49.585782700Z  25.                                 else file write tablecontents_int %4.2f ("
-2021-07-20T14:38:49.585785100Z > ERR IN MODEL") `endwith'
-2021-07-20T14:38:49.585787600Z  26.                                 }
-2021-07-20T14:38:49.585789900Z  27.                         
-2021-07-20T14:38:49.585792500Z .                                                 if `int_level'==3 {
-2021-07-20T14:38:49.585903700Z  28.                         cap lincom `i'.`variable'+ 3.`int_type'#`i'.`varia
-2021-07-20T14:38:49.585912200Z > ble', eform
-2021-07-20T14:38:49.585915700Z  29.                         if _rc==0 file write tablecontents_int %4.2f (r(es
-2021-07-20T14:38:49.585918400Z > timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
-2021-07-20T14:38:49.585921400Z  30.                                 else file write tablecontents_int %4.2f ("
-2021-07-20T14:38:49.585924000Z > ERR IN MODEL") `endwith'
-2021-07-20T14:38:49.585926700Z  31.                                 }
-2021-07-20T14:38:49.586099100Z  32.                         
-2021-07-20T14:38:49.586119300Z .                                                                         if `i
-2021-07-20T14:38:49.586144100Z > nt_level'==4 {
-2021-07-20T14:38:49.586151600Z  33.                         cap lincom `i'.`variable'+ 4.`int_type'#`i'.`varia
-2021-07-20T14:38:49.586155900Z > ble', eform
-2021-07-20T14:38:49.586203900Z  34.                         if _rc==0 file write tablecontents_int %4.2f (r(es
-2021-07-20T14:38:49.586214000Z > timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
-2021-07-20T14:38:49.586218000Z  35.                                 else file write tablecontents_int %4.2f ("
-2021-07-20T14:38:49.586221300Z > ERR IN MODEL") `endwith'
-2021-07-20T14:38:49.586642100Z  36.                                 }
-2021-07-20T14:38:49.586654300Z  37.                                                                         if
-2021-07-20T14:38:49.586658700Z >  `int_level'==5 {
-2021-07-20T14:38:49.586744700Z  38.                         cap lincom `i'.`variable'+ 5.`int_type'#`i'.`varia
-2021-07-20T14:38:49.586756100Z > ble', eform
-2021-07-20T14:38:49.586760800Z  39.                         if _rc==0 file write tablecontents_int %4.2f (r(es
-2021-07-20T14:38:49.586764800Z > timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
-2021-07-20T14:38:49.586768400Z  40.                                 else file write tablecontents_int %4.2f ("
-2021-07-20T14:38:49.586778200Z > ERR IN MODEL") `endwith'
-2021-07-20T14:38:49.586781700Z  41.                                 }
-2021-07-20T14:38:49.586887800Z  42.                         
-2021-07-20T14:38:49.587152700Z . 
-2021-07-20T14:38:49.587161500Z .                 *3) Save the estimates for plotting
-2021-07-20T14:38:49.587293400Z .                 if `noestimatesflag'==0{
-2021-07-20T14:38:49.587302900Z  43.                         if "`modeltype'"=="fulladj" {
-2021-07-20T14:38:49.587307400Z  44.                                 local hr = r(estimate)
-2021-07-20T14:38:49.587310900Z  45.                                 local lb = r(lb)
-2021-07-20T14:38:49.587314100Z  46.                                 local ub = r(ub)
-2021-07-20T14:38:49.587527600Z  47.                                 cap gen `variable'=.
-2021-07-20T14:38:49.587536700Z  48.                                 test `int_level'.`int_type'#2.`variable' `
-2021-07-20T14:38:49.587540200Z > int_level'.`int_type'#1.`variable'
-2021-07-20T14:38:49.587543300Z  49.                                 local pval=r(p)
-2021-07-20T14:38:49.587546200Z  50.                                 post HRestimates_int ("`x'") ("`outcome'")
-2021-07-20T14:38:49.587549100Z >  ("`variable'") ("`int_type'") (`i') (`int_level') (`hr') (`lb') (`ub') (`pva
-2021-07-20T14:38:49.587568000Z > l')
-2021-07-20T14:38:49.587574600Z  51.                                 drop `variable'
-2021-07-20T14:38:49.587578400Z  52.                                 }
-2021-07-20T14:38:49.587580600Z  53.                 }
-2021-07-20T14:38:49.587582200Z  54.                 }
-2021-07-20T14:38:49.587583700Z  55.                 } /*int_level*/
-2021-07-20T14:38:49.587585200Z  56.                 } /*full adj*/
-2021-07-20T14:38:49.587587000Z  57. } /*variable levels*/
-2021-07-20T14:38:49.587589400Z  58. }
-2021-07-20T14:38:49.587591900Z  59. }
-2021-07-20T14:38:49.587594400Z  60. end
-2021-07-20T14:38:49.587596700Z 
-2021-07-20T14:38:49.587598900Z . *****************************************************************************
-2021-07-20T14:38:49.587601400Z > ******************************************
-2021-07-20T14:38:49.587603900Z . 
-2021-07-20T14:38:49.587606100Z . *MAIN CODE TO PRODUCE TABLE CONTENTS
-2021-07-20T14:38:49.587608500Z . cap file close tablecontents_int
-2021-07-20T14:38:49.587611000Z 
-2021-07-20T14:38:49.587613400Z . file open tablecontents_int using ./output/11_an_int_tab_contents_HRtable_`ou
-2021-07-20T14:38:49.587616000Z > tcome'_ethnicity`dataset'.txt, t w replace
-2021-07-20T14:38:49.587692100Z (note: file ./output/11_an_int_tab_contents_HRtable_covidadmission_ethnicityW2.
-2021-07-20T14:38:49.587708000Z > txt not found)
-2021-07-20T14:38:49.587710900Z 
-2021-07-20T14:38:49.587713400Z . 
-2021-07-20T14:38:49.587715700Z . tempfile HRestimates_int
-2021-07-20T14:38:49.587718300Z 
-2021-07-20T14:38:49.587721400Z . cap postutil clear
-2021-07-20T14:38:49.587723400Z 
-2021-07-20T14:38:49.587725000Z . postfile HRestimates_int str10 x str10 outcome str27 variable str27 int_type 
-2021-07-20T14:38:49.587726800Z > level int_level hr lci uci pval using `HRestimates_int'
-2021-07-20T14:38:49.587975600Z 
-2021-07-20T14:38:49.587985000Z . 
-2021-07-20T14:38:49.587988100Z . *Primary exposure
-2021-07-20T14:38:49.587990500Z . outputHRsforvar, variable("kids_cat4") min(1) max(3) outcome(`outcome')
-2021-07-20T14:38:49.602183700Z 
-2021-07-20T14:38:49.602203600Z . file write tablecontents_int _n
-2021-07-20T14:38:49.602207000Z 
-2021-07-20T14:38:49.602209800Z . 
-2021-07-20T14:38:49.602212300Z . file close tablecontents_int
-2021-07-20T14:38:49.602214900Z 
-2021-07-20T14:38:49.602217600Z . 
-2021-07-20T14:38:49.602222200Z . postclose HRestimates_int
-2021-07-20T14:38:49.602225100Z 
-2021-07-20T14:38:49.602227700Z . 
-2021-07-20T14:38:49.602230100Z . log close
-2021-07-20T14:38:49.602232600Z       name:  <unnamed>
-2021-07-20T14:38:49.602235800Z        log:  /workspace/11_an_interaction_HR_tables_forest_covidadmission_ethni
-2021-07-20T14:38:49.602239000Z > cityW2.log
-2021-07-20T14:38:49.602241700Z   log type:  text
-2021-07-20T14:38:49.602244500Z  closed on:  20 Jul 2021, 14:38:49
-2021-07-20T14:38:49.602247400Z -------------------------------------------------------------------------------
-2021-07-20T14:38:49.602250600Z 
-2021-07-20T14:38:49.602253300Z . 
-2021-07-20T14:38:49.602255800Z end of do-file
-2021-07-20T14:38:49.602258400Z 
-2021-07-20T14:38:49.602260900Z . . file open output using "/tmp/tmp.eE36JLGyuV", write text replace
-2021-07-20T14:38:49.602328800Z 
-2021-07-20T14:38:49.602339500Z . . file write output "success" 
-2021-07-20T14:38:49.602343400Z 
-2021-07-20T14:38:49.602345900Z . . file close output
-2021-07-20T14:38:49.602348700Z 
-2021-07-20T14:38:49.602351000Z . 
-2021-07-20T14:38:49.602353600Z end of do-file
-2021-07-20T14:38:49.602356200Z 
-2021-07-20T14:38:49.602358800Z 
-2021-07-20T14:38:49.619237100Z . 
+2021-07-22T14:00:36.831070800Z 
+2021-07-22T14:00:36.831111500Z   ___  ____  ____  ____  ____ (R)
+2021-07-22T14:00:36.831118200Z  /__    /   ____/   /   ____/
+2021-07-22T14:00:36.831121600Z ___/   /   /___/   /   /___/   16.1   Copyright 1985-2019 StataCorp LLC
+2021-07-22T14:00:36.831124800Z   Statistics/Data Analysis            StataCorp
+2021-07-22T14:00:36.831127900Z                                       4905 Lakeway Drive
+2021-07-22T14:00:36.831131000Z                                       College Station, Texas 77845 USA
+2021-07-22T14:00:36.831133000Z                                       800-STATA-PC        http://www.stata.com
+2021-07-22T14:00:36.831135000Z                                       979-696-4600        stata@stata.com
+2021-07-22T14:00:36.831137500Z                                       979-696-4601 (fax)
+2021-07-22T14:00:36.831140500Z 
+2021-07-22T14:00:36.831143200Z 3-user Stata network license expires 11 May 2022:
+2021-07-22T14:00:36.831146200Z        Serial number:  501709312237
+2021-07-22T14:00:36.831148900Z          Licensed to:  The Bennett Institute
+2021-07-22T14:00:36.831151600Z                        Oxford University
+2021-07-22T14:00:36.831740200Z 
+2021-07-22T14:00:36.831752400Z Notes:
+2021-07-22T14:00:36.831756200Z       1.  Unicode is supported; see help unicode_advice.
+2021-07-22T14:00:36.831759200Z 
+2021-07-22T14:00:36.831761700Z . do "analysis/11a_an_interaction_HR_tables_forest_eth_strat.wrapper.do" covida
+2021-07-22T14:00:36.831764800Z > dmission 
+2021-07-22T14:00:36.831768000Z 
+2021-07-22T14:00:36.831770800Z . . do "analysis/11a_an_interaction_HR_tables_forest_eth_strat.do" covidadmissi
+2021-07-22T14:00:36.831773900Z > on
+2021-07-22T14:00:36.831776900Z 
+2021-07-22T14:00:36.831779900Z . *************************************************************************
+2021-07-22T14:00:36.831783200Z . *Purpose: Create content that is ready to paste into a pre-formatted Word
+2021-07-22T14:00:36.831786300Z . * shell table containing HRs for interaction analyses.  Also output forest
+2021-07-22T14:00:36.831789400Z . *plot of results as SVG file.
+2021-07-22T14:00:36.831792600Z . *
+2021-07-22T14:00:36.831795500Z . *Requires: final analysis dataset (analysis_dataset.dta)
+2021-07-22T14:00:36.831798500Z . *
+2021-07-22T14:00:36.831801200Z . *Coding: HFORBES, based on file from Krishnan Bhaskaran
+2021-07-22T14:00:36.831804000Z . *
+2021-07-22T14:00:36.831806400Z . *Date drafted: 30th June 2020
+2021-07-22T14:00:36.831808800Z . *************************************************************************
+2021-07-22T14:00:36.831816700Z . global outdir     "output"
+2021-07-22T14:00:36.831820300Z 
+2021-07-22T14:00:36.831823100Z . global logdir     "log"
+2021-07-22T14:00:36.831834000Z 
+2021-07-22T14:00:36.831837500Z . global tempdir    "tempdata"
+2021-07-22T14:00:36.831840300Z 
+2021-07-22T14:00:36.831842800Z . 
+2021-07-22T14:00:36.831845200Z . local outcome `1' 
+2021-07-22T14:00:36.831847500Z 
+2021-07-22T14:00:36.831849600Z . 
+2021-07-22T14:00:36.831852000Z . 
+2021-07-22T14:00:36.831854600Z . 
+2021-07-22T14:00:36.831857100Z . * Open a log file
+2021-07-22T14:00:36.831859800Z . capture log close
+2021-07-22T14:00:36.831866200Z 
+2021-07-22T14:00:36.831870000Z . log using "$logdir/11_an_interaction_HR_tables_forest_`outcome'_ethnicityW2",
+2021-07-22T14:00:36.831873400Z >  text replace
+2021-07-22T14:00:36.832007400Z (note: file /workspace/log/11_an_interaction_HR_tables_forest_covidadmission_et
+2021-07-22T14:00:36.832034600Z > hnicityW2.log not found)
+2021-07-22T14:00:36.832038600Z -------------------------------------------------------------------------------
+2021-07-22T14:00:36.832041700Z       name:  <unnamed>
+2021-07-22T14:00:36.832045000Z        log:  /workspace/log/11_an_interaction_HR_tables_forest_covidadmission_e
+2021-07-22T14:00:36.832048300Z > thnicityW2.log
+2021-07-22T14:00:36.832051300Z   log type:  text
+2021-07-22T14:00:36.832054300Z  opened on:  22 Jul 2021, 14:00:36
+2021-07-22T14:00:36.832057500Z 
+2021-07-22T14:00:36.832060400Z . 
+2021-07-22T14:00:36.832063300Z . *****************************************************************************
+2021-07-22T14:00:36.832094400Z > ******************************************
+2021-07-22T14:00:36.832127200Z . *Generic code to ouput the HRs across outcomes for all levels of a particular
+2021-07-22T14:00:36.832131100Z >  variables, in the right shape for table
+2021-07-22T14:00:36.832134000Z . cap prog drop outputHRsforvar
+2021-07-22T14:00:36.832136900Z 
+2021-07-22T14:00:36.832139600Z . prog define outputHRsforvar
+2021-07-22T14:00:36.832216200Z   1. syntax, variable(string) min(real) max(real) outcome(string)
+2021-07-22T14:00:36.832225100Z   2. file write tablecontents_int ("age") _tab ("exposure") _tab ("exposure lev
+2021-07-22T14:00:36.832229500Z > el") ///
+2021-07-22T14:00:36.832233000Z > _tab ("outcome") _tab ("int_type") _tab ("int_level") ///
+2021-07-22T14:00:36.832236800Z > _tab ("HR")  _tab ("lci")  _tab ("uci") _tab ("pval") _n
+2021-07-22T14:00:36.832240300Z   3. forvalues x=0/1 {
+2021-07-22T14:00:36.832243500Z   4. forvalues i=`min'/`max'{
+2021-07-22T14:00:36.832246700Z   5. foreach int_type in ethnicity {
+2021-07-22T14:00:36.832281100Z   6. 
+2021-07-22T14:00:36.832295000Z . foreach int_level in 1 2 3 4 5 {
+2021-07-22T14:00:36.832299200Z   7. 
+2021-07-22T14:00:36.832302400Z . local endwith "_tab"
+2021-07-22T14:00:36.832305700Z   8. 
+2021-07-22T14:00:36.832308600Z .         *put the varname and condition to left so that alignment can be check
+2021-07-22T14:00:36.832311500Z > ed vs shell
+2021-07-22T14:00:36.832314700Z .         file write tablecontents_int ("`x'") _tab ("`variable'") _tab ("`i'")
+2021-07-22T14:00:36.832318000Z >  _tab ("`outcome'") _tab ("`int_type'") _tab ("`int_level'") _tab
+2021-07-22T14:00:36.832321700Z   9. 
+2021-07-22T14:00:36.832324900Z .         foreach modeltype of any fulladj {
+2021-07-22T14:00:36.832327900Z  10. 
+2021-07-22T14:00:36.832330800Z .                 local noestimatesflag 0 /*reset*/
+2021-07-22T14:00:36.832337000Z  11. 
+2021-07-22T14:00:36.832340500Z . *CHANGE THE OUTCOME BELOW TO LAST IF BRINGING IN MORE COLS
+2021-07-22T14:00:36.832344000Z .                 if "`modeltype'"=="fulladj" local endwith "_n"
+2021-07-22T14:00:36.832347400Z  12. 
+2021-07-22T14:00:36.832350000Z .                 ***********************
+2021-07-22T14:00:36.832352800Z .                 *1) GET THE RIGHT ESTIMATES INTO MEMORY
+2021-07-22T14:00:36.832355500Z . 
+2021-07-22T14:00:36.832358000Z .                 if "`modeltype'"=="fulladj" {
+2021-07-22T14:00:36.832366800Z  13.                                 estimates use ./output/an_interaction_cox_
+2021-07-22T14:00:36.832375600Z > models_`outcome'_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth
+2021-07-22T14:00:36.832379600Z > _ageband_`x'W2
+2021-07-22T14:00:36.832382900Z  14.                                 if _rc!=0 local noestimatesflag 1
+2021-07-22T14:00:36.832385900Z  15.                                 }
+2021-07-22T14:00:36.832389000Z  16.                 ***********************
+2021-07-22T14:00:36.832391900Z .                 *2) WRITE THE HRs TO THE OUTPUT FILE
+2021-07-22T14:00:36.832394800Z . 
+2021-07-22T14:00:36.832397700Z .                 if `noestimatesflag'==0{
+2021-07-22T14:00:36.832400600Z  17. 
+2021-07-22T14:00:36.832403400Z .                         if `int_level'==1 {
+2021-07-22T14:00:36.832406200Z  18.                         cap lincom `i'.`variable'+ 1.`int_type'#`i'.`varia
+2021-07-22T14:00:36.832409200Z > ble', eform
+2021-07-22T14:00:36.832412100Z  19.                         if _rc==0 file write tablecontents_int %4.2f (r(es
+2021-07-22T14:00:36.832415100Z > timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
+2021-07-22T14:00:36.832423500Z  20.                                 else file write tablecontents_int %4.2f ("
+2021-07-22T14:00:36.832427600Z > ERR IN MODEL") `endwith'
+2021-07-22T14:00:36.832437200Z  21.                                 }
+2021-07-22T14:00:36.832440900Z  22. 
+2021-07-22T14:00:36.832444200Z .                                                                              
+2021-07-22T14:00:36.832447600Z >    if `int_level'==2 {
+2021-07-22T14:00:36.832450400Z  23.                         cap lincom `i'.`variable'+ 2.`int_type'#`i'.`varia
+2021-07-22T14:00:36.832453300Z > ble', eform
+2021-07-22T14:00:36.832456000Z  24.                         if _rc==0 file write tablecontents_int %4.2f (r(es
+2021-07-22T14:00:36.832458800Z > timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
+2021-07-22T14:00:36.832508000Z  25.                                 else file write tablecontents_int %4.2f ("
+2021-07-22T14:00:36.832520600Z > ERR IN MODEL") `endwith'
+2021-07-22T14:00:36.832526800Z  26.                                 }
+2021-07-22T14:00:36.832531700Z  27.                         
+2021-07-22T14:00:36.832536900Z .                                                 if `int_level'==3 {
+2021-07-22T14:00:36.832542700Z  28.                         cap lincom `i'.`variable'+ 3.`int_type'#`i'.`varia
+2021-07-22T14:00:36.832589600Z > ble', eform
+2021-07-22T14:00:36.832602100Z  29.                         if _rc==0 file write tablecontents_int %4.2f (r(es
+2021-07-22T14:00:36.832608300Z > timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
+2021-07-22T14:00:36.832615100Z  30.                                 else file write tablecontents_int %4.2f ("
+2021-07-22T14:00:36.832620600Z > ERR IN MODEL") `endwith'
+2021-07-22T14:00:36.832626900Z  31.                                 }
+2021-07-22T14:00:36.832636700Z  32.                         
+2021-07-22T14:00:36.832639600Z .                                                                         if `i
+2021-07-22T14:00:36.832642400Z > nt_level'==4 {
+2021-07-22T14:00:36.832645200Z  33.                         cap lincom `i'.`variable'+ 4.`int_type'#`i'.`varia
+2021-07-22T14:00:36.832648100Z > ble', eform
+2021-07-22T14:00:36.832728000Z  34.                         if _rc==0 file write tablecontents_int %4.2f (r(es
+2021-07-22T14:00:36.832735700Z > timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
+2021-07-22T14:00:36.832739200Z  35.                                 else file write tablecontents_int %4.2f ("
+2021-07-22T14:00:36.832742000Z > ERR IN MODEL") `endwith'
+2021-07-22T14:00:36.832744800Z  36.                                 }
+2021-07-22T14:00:36.832747700Z  37.                                                                         if
+2021-07-22T14:00:36.832750700Z >  `int_level'==5 {
+2021-07-22T14:00:36.832753700Z  38.                         cap lincom `i'.`variable'+ 5.`int_type'#`i'.`varia
+2021-07-22T14:00:36.832777500Z > ble', eform
+2021-07-22T14:00:36.832789700Z  39.                         if _rc==0 file write tablecontents_int %4.2f (r(es
+2021-07-22T14:00:36.832793500Z > timate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
+2021-07-22T14:00:36.832796900Z  40.                                 else file write tablecontents_int %4.2f ("
+2021-07-22T14:00:36.832800400Z > ERR IN MODEL") `endwith'
+2021-07-22T14:00:36.832803400Z  41.                                 }
+2021-07-22T14:00:36.832806400Z  42.                         
+2021-07-22T14:00:36.832809500Z . 
+2021-07-22T14:00:36.832823400Z .                 *3) Save the estimates for plotting
+2021-07-22T14:00:36.832828500Z .                 if _rc==0{
+2021-07-22T14:00:36.832833000Z  43.                         if "`modeltype'"=="fulladj" {
+2021-07-22T14:00:36.832836500Z  44.                                 local hr = r(estimate)
+2021-07-22T14:00:36.832839400Z  45.                                 local lb = r(lb)
+2021-07-22T14:00:36.832842200Z  46.                                 local ub = r(ub)
+2021-07-22T14:00:36.832844900Z  47.                                 cap gen `variable'=.
+2021-07-22T14:00:36.832847800Z  48.                                 test `int_level'.`int_type'#2.`variable' `
+2021-07-22T14:00:36.832850900Z > int_level'.`int_type'#1.`variable'
+2021-07-22T14:00:36.832854400Z  49.                                 local pval=r(p)
+2021-07-22T14:00:36.832857600Z  50.                                 post HRestimates_int ("`x'") ("`outcome'")
+2021-07-22T14:00:36.832860900Z >  ("`variable'") ("`int_type'") (`i') (`int_level') (`hr') (`lb') (`ub') (`pva
+2021-07-22T14:00:36.832864100Z > l')
+2021-07-22T14:00:36.832866800Z  51.                                 drop `variable'
+2021-07-22T14:00:36.832869700Z  52.                                 }
+2021-07-22T14:00:36.832872400Z  53.                 }
+2021-07-22T14:00:36.832875400Z  54.                 }
+2021-07-22T14:00:36.832920700Z  55.                 } /*int_level*/
+2021-07-22T14:00:36.832928600Z  56.                 } /*full adj*/
+2021-07-22T14:00:36.832932200Z  57. } /*variable levels*/
+2021-07-22T14:00:36.832935200Z  58. }
+2021-07-22T14:00:36.832938000Z  59. }
+2021-07-22T14:00:36.832940700Z  60. end
+2021-07-22T14:00:36.833014300Z 
+2021-07-22T14:00:36.833021900Z . *****************************************************************************
+2021-07-22T14:00:36.833025300Z > ******************************************
+2021-07-22T14:00:36.833028300Z . 
+2021-07-22T14:00:36.833031000Z . *MAIN CODE TO PRODUCE TABLE CONTENTS
+2021-07-22T14:00:36.833033900Z . cap file close tablecontents_int
+2021-07-22T14:00:36.833036700Z 
+2021-07-22T14:00:36.833039600Z . file open tablecontents_int using ./output/11_an_int_tab_contents_HRtable_`ou
+2021-07-22T14:00:36.833047800Z > tcome'_ethnicityW2.txt, t w replace
+2021-07-22T14:00:36.833124700Z (note: file ./output/11_an_int_tab_contents_HRtable_covidadmission_ethnicityW2.
+2021-07-22T14:00:36.833134300Z > txt not found)
+2021-07-22T14:00:36.833137000Z 
+2021-07-22T14:00:36.833138900Z . 
+2021-07-22T14:00:36.833140600Z . tempfile HRestimates_int
+2021-07-22T14:00:36.833142600Z 
+2021-07-22T14:00:36.833144200Z . cap postutil clear
+2021-07-22T14:00:36.833145900Z 
+2021-07-22T14:00:36.833147600Z . postfile HRestimates_int str10 x str10 outcome str27 variable str27 int_type 
+2021-07-22T14:00:36.833149500Z > level int_level hr lci uci pval using `HRestimates_int'
+2021-07-22T14:00:36.833364100Z 
+2021-07-22T14:00:36.833371500Z . 
+2021-07-22T14:00:36.833374300Z . *Primary exposure
+2021-07-22T14:00:36.833376900Z . outputHRsforvar, variable("kids_cat4") min(1) max(3) outcome(`outcome')
+2021-07-22T14:00:36.968318300Z 
+2021-07-22T14:00:36.968336000Z  ( 1)  2o.kids_cat4#1b.ethnicity = 0
+2021-07-22T14:00:36.968340100Z  ( 2)  1o.kids_cat4#1b.ethnicity = 0
+2021-07-22T14:00:36.968343700Z        Constraint 1 dropped
+2021-07-22T14:00:36.968346600Z        Constraint 2 dropped
+2021-07-22T14:00:36.968349700Z 
+2021-07-22T14:00:36.968352800Z            chi2(  0) =       .
+2021-07-22T14:00:36.968356000Z          Prob > chi2 =         .
+2021-07-22T14:00:36.984304900Z 
+2021-07-22T14:00:36.984322500Z  ( 1)  2.kids_cat4#3.ethnicity = 0
+2021-07-22T14:00:36.984326700Z  ( 2)  1.kids_cat4#3.ethnicity = 0
+2021-07-22T14:00:36.984330000Z 
+2021-07-22T14:00:36.984333000Z            chi2(  2) =    1.62
+2021-07-22T14:00:36.984336400Z          Prob > chi2 =    0.4457
+2021-07-22T14:00:36.999229700Z 
+2021-07-22T14:00:36.999243500Z  ( 1)  2.kids_cat4#5.ethnicity = 0
+2021-07-22T14:00:36.999246000Z  ( 2)  1.kids_cat4#5.ethnicity = 0
+2021-07-22T14:00:36.999248000Z 
+2021-07-22T14:00:36.999249900Z            chi2(  2) =    1.10
+2021-07-22T14:00:36.999252200Z          Prob > chi2 =    0.5776
+2021-07-22T14:00:37.009660700Z 
+2021-07-22T14:00:37.009676100Z  ( 1)  2o.kids_cat4#1b.ethnicity = 0
+2021-07-22T14:00:37.009678900Z  ( 2)  1o.kids_cat4#1b.ethnicity = 0
+2021-07-22T14:00:37.009680900Z        Constraint 1 dropped
+2021-07-22T14:00:37.009682700Z        Constraint 2 dropped
+2021-07-22T14:00:37.009684700Z 
+2021-07-22T14:00:37.009686500Z            chi2(  0) =       .
+2021-07-22T14:00:37.009688400Z          Prob > chi2 =         .
+2021-07-22T14:00:37.023422700Z 
+2021-07-22T14:00:37.023437600Z  ( 1)  2.kids_cat4#3.ethnicity = 0
+2021-07-22T14:00:37.023440500Z  ( 2)  1.kids_cat4#3.ethnicity = 0
+2021-07-22T14:00:37.023442700Z 
+2021-07-22T14:00:37.023444500Z            chi2(  2) =    1.62
+2021-07-22T14:00:37.023446400Z          Prob > chi2 =    0.4457
+2021-07-22T14:00:37.036964500Z 
+2021-07-22T14:00:37.036984000Z  ( 1)  2.kids_cat4#5.ethnicity = 0
+2021-07-22T14:00:37.036986800Z  ( 2)  1.kids_cat4#5.ethnicity = 0
+2021-07-22T14:00:37.036988800Z 
+2021-07-22T14:00:37.036990600Z            chi2(  2) =    1.10
+2021-07-22T14:00:37.036992500Z          Prob > chi2 =    0.5776
+2021-07-22T14:00:37.047137500Z 
+2021-07-22T14:00:37.047157000Z  ( 1)  2o.kids_cat4#1b.ethnicity = 0
+2021-07-22T14:00:37.047161500Z  ( 2)  1o.kids_cat4#1b.ethnicity = 0
+2021-07-22T14:00:37.047165000Z        Constraint 1 dropped
+2021-07-22T14:00:37.047168100Z        Constraint 2 dropped
+2021-07-22T14:00:37.047170900Z 
+2021-07-22T14:00:37.047174100Z            chi2(  0) =       .
+2021-07-22T14:00:37.047177200Z          Prob > chi2 =         .
+2021-07-22T14:00:37.061372900Z 
+2021-07-22T14:00:37.061397400Z  ( 1)  2.kids_cat4#3.ethnicity = 0
+2021-07-22T14:00:37.061400300Z  ( 2)  1.kids_cat4#3.ethnicity = 0
+2021-07-22T14:00:37.061402300Z 
+2021-07-22T14:00:37.061404200Z            chi2(  2) =    1.62
+2021-07-22T14:00:37.061406100Z          Prob > chi2 =    0.4457
+2021-07-22T14:00:37.076336000Z 
+2021-07-22T14:00:37.076355300Z  ( 1)  2.kids_cat4#5.ethnicity = 0
+2021-07-22T14:00:37.076358300Z  ( 2)  1.kids_cat4#5.ethnicity = 0
+2021-07-22T14:00:37.076360200Z 
+2021-07-22T14:00:37.076362100Z            chi2(  2) =    1.10
+2021-07-22T14:00:37.076364500Z          Prob > chi2 =    0.5776
+2021-07-22T14:00:37.086704300Z 
+2021-07-22T14:00:37.086719600Z  ( 1)  2o.kids_cat4#1b.ethnicity = 0
+2021-07-22T14:00:37.086722300Z  ( 2)  1o.kids_cat4#1b.ethnicity = 0
+2021-07-22T14:00:37.086724300Z        Constraint 1 dropped
+2021-07-22T14:00:37.086726200Z        Constraint 2 dropped
+2021-07-22T14:00:37.086728100Z 
+2021-07-22T14:00:37.086730000Z            chi2(  0) =       .
+2021-07-22T14:00:37.086732000Z          Prob > chi2 =         .
+2021-07-22T14:00:37.101164300Z 
+2021-07-22T14:00:37.101188100Z  ( 1)  2.kids_cat4#3.ethnicity = 0
+2021-07-22T14:00:37.101192500Z  ( 2)  1.kids_cat4#3.ethnicity = 0
+2021-07-22T14:00:37.101196300Z 
+2021-07-22T14:00:37.101212000Z            chi2(  2) =    0.25
+2021-07-22T14:00:37.101214800Z          Prob > chi2 =    0.8829
+2021-07-22T14:00:37.119975100Z 
+2021-07-22T14:00:37.119989300Z  ( 1)  2.kids_cat4#5.ethnicity = 0
+2021-07-22T14:00:37.119992000Z  ( 2)  1.kids_cat4#5.ethnicity = 0
+2021-07-22T14:00:37.119994200Z 
+2021-07-22T14:00:37.119996100Z            chi2(  2) =    0.17
+2021-07-22T14:00:37.119998000Z          Prob > chi2 =    0.9170
+2021-07-22T14:00:37.132085900Z 
+2021-07-22T14:00:37.132099900Z  ( 1)  2o.kids_cat4#1b.ethnicity = 0
+2021-07-22T14:00:37.132102600Z  ( 2)  1o.kids_cat4#1b.ethnicity = 0
+2021-07-22T14:00:37.132104700Z        Constraint 1 dropped
+2021-07-22T14:00:37.132106700Z        Constraint 2 dropped
+2021-07-22T14:00:37.132108600Z 
+2021-07-22T14:00:37.132110600Z            chi2(  0) =       .
+2021-07-22T14:00:37.132112600Z          Prob > chi2 =         .
+2021-07-22T14:00:37.147435400Z 
+2021-07-22T14:00:37.147454700Z  ( 1)  2.kids_cat4#3.ethnicity = 0
+2021-07-22T14:00:37.147459400Z  ( 2)  1.kids_cat4#3.ethnicity = 0
+2021-07-22T14:00:37.147461500Z 
+2021-07-22T14:00:37.147463400Z            chi2(  2) =    0.25
+2021-07-22T14:00:37.147465300Z          Prob > chi2 =    0.8829
+2021-07-22T14:00:37.162761900Z 
+2021-07-22T14:00:37.162777800Z  ( 1)  2.kids_cat4#5.ethnicity = 0
+2021-07-22T14:00:37.162780700Z  ( 2)  1.kids_cat4#5.ethnicity = 0
+2021-07-22T14:00:37.162782700Z 
+2021-07-22T14:00:37.162784700Z            chi2(  2) =    0.17
+2021-07-22T14:00:37.162786800Z          Prob > chi2 =    0.9170
+2021-07-22T14:00:37.173448000Z 
+2021-07-22T14:00:37.173461400Z  ( 1)  2o.kids_cat4#1b.ethnicity = 0
+2021-07-22T14:00:37.173464100Z  ( 2)  1o.kids_cat4#1b.ethnicity = 0
+2021-07-22T14:00:37.173466300Z        Constraint 1 dropped
+2021-07-22T14:00:37.173468200Z        Constraint 2 dropped
+2021-07-22T14:00:37.173470200Z 
+2021-07-22T14:00:37.173472100Z            chi2(  0) =       .
+2021-07-22T14:00:37.173474100Z          Prob > chi2 =         .
+2021-07-22T14:00:37.187528000Z 
+2021-07-22T14:00:37.187543200Z  ( 1)  2.kids_cat4#3.ethnicity = 0
+2021-07-22T14:00:37.187546100Z  ( 2)  1.kids_cat4#3.ethnicity = 0
+2021-07-22T14:00:37.187549100Z 
+2021-07-22T14:00:37.187551100Z            chi2(  2) =    0.25
+2021-07-22T14:00:37.187553400Z          Prob > chi2 =    0.8829
+2021-07-22T14:00:37.201097100Z 
+2021-07-22T14:00:37.201141400Z  ( 1)  2.kids_cat4#5.ethnicity = 0
+2021-07-22T14:00:37.201145100Z  ( 2)  1.kids_cat4#5.ethnicity = 0
+2021-07-22T14:00:37.201160800Z 
+2021-07-22T14:00:37.201164000Z            chi2(  2) =    0.17
+2021-07-22T14:00:37.201167200Z          Prob > chi2 =    0.9170
+2021-07-22T14:00:37.201170500Z 
+2021-07-22T14:00:37.201190500Z . file write tablecontents_int _n
+2021-07-22T14:00:37.201195900Z 
+2021-07-22T14:00:37.201198800Z . 
+2021-07-22T14:00:37.201201800Z . file close tablecontents_int
+2021-07-22T14:00:37.201205700Z 
+2021-07-22T14:00:37.201208500Z . 
+2021-07-22T14:00:37.201211500Z . postclose HRestimates_int
+2021-07-22T14:00:37.201214800Z 
+2021-07-22T14:00:37.201217700Z . 
+2021-07-22T14:00:37.201220500Z . log close
+2021-07-22T14:00:37.201318200Z       name:  <unnamed>
+2021-07-22T14:00:37.201327700Z        log:  /workspace/log/11_an_interaction_HR_tables_forest_covidadmission_e
+2021-07-22T14:00:37.201331700Z > thnicityW2.log
+2021-07-22T14:00:37.201334900Z   log type:  text
+2021-07-22T14:00:37.201338100Z  closed on:  22 Jul 2021, 14:00:37
+2021-07-22T14:00:37.201341100Z -------------------------------------------------------------------------------
+2021-07-22T14:00:37.201349700Z 
+2021-07-22T14:00:37.201654700Z . 
+2021-07-22T14:00:37.201664400Z end of do-file
+2021-07-22T14:00:37.201668500Z 
+2021-07-22T14:00:37.201671800Z . . file open output using "/tmp/tmp.kPoYFDz7ki", write text replace
+2021-07-22T14:00:37.201675200Z 
+2021-07-22T14:00:37.201678600Z . . file write output "success" 
+2021-07-22T14:00:37.201705400Z 
+2021-07-22T14:00:37.201710600Z . . file close output
+2021-07-22T14:00:37.201714200Z 
+2021-07-22T14:00:37.201717400Z . 
+2021-07-22T14:00:37.201720500Z end of do-file
+2021-07-22T14:00:37.201723400Z 
+2021-07-22T14:00:37.201726400Z 
+2021-07-22T14:00:37.221761400Z . 
 
 state: succeeded
 commit: none
@@ -236,12 +360,12 @@ docker_image_id: sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265
 exit_code: 0
 job_id: r7eltbrhw3rxotju
 run_by_user: qc18278
-created_at: 2021-07-20T14:24:16Z
-started_at: 2021-07-20T14:38:49Z
-completed_at: 2021-07-20T14:39:52Z
+created_at: 2021-07-22T13:59:57Z
+started_at: 2021-07-22T14:00:36Z
+completed_at: 2021-07-22T14:01:04Z
 
 Completed successfully
 
 outputs:
-  11_an_interaction_HR_tables_forest_covidadmission_ethnicityW2.log     - moderately_sensitive
-  output/11_an_int_tab_contents_HRtable_covidadmission_ethnicityW2.txt  - moderately_sensitive
+  log/11_an_interaction_HR_tables_forest_covidadmission_ethnicityW2.log  - moderately_sensitive
+  output/11_an_int_tab_contents_HRtable_covidadmission_ethnicityW2.txt   - moderately_sensitive

@@ -18,7 +18,7 @@ local outcome `1'
 
 * Open a log file
 capture log close
-log using " $logdir/11_an_interaction_HR_tables_forest_`outcome'.log", text replace
+log using "$logdir/11_an_interaction_HR_tables_forest_`outcome'.log", text replace
 
 ***********************************************************************************************************************
 *Generic code to ouput the HRs across outcomes for all levels of a particular variables, in the right shape for table

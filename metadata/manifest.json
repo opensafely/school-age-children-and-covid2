@@ -1,49 +1,5 @@
 {
   "files": {
-    "11_an_interaction_HR_tables_forest_covid_death.log": {
-      "created_by_action": "11_an_interaction_HR_tables_forest_covid_death",
-      "privacy_level": "moderately_sensitive"
-    },
-    "11_an_interaction_HR_tables_forest_covid_death_ethnicityW2.log": {
-      "created_by_action": "11_an_interaction_HR_tables_forest_covid_death_ethnicity",
-      "privacy_level": "moderately_sensitive"
-    },
-    "11_an_interaction_HR_tables_forest_covid_icu.log": {
-      "created_by_action": "11_an_interaction_HR_tables_forest_covid_icu",
-      "privacy_level": "moderately_sensitive"
-    },
-    "11_an_interaction_HR_tables_forest_covid_icu_ethnicityW2.log": {
-      "created_by_action": "11_an_interaction_HR_tables_forest_covid_icu_ethnicity",
-      "privacy_level": "moderately_sensitive"
-    },
-    "11_an_interaction_HR_tables_forest_covid_tpp_prob.log": {
-      "created_by_action": "11_an_interaction_HR_tables_forest_covid_tpp_prob",
-      "privacy_level": "moderately_sensitive"
-    },
-    "11_an_interaction_HR_tables_forest_covidadmission.log": {
-      "created_by_action": "11_an_interaction_HR_tables_forest_covidadmission",
-      "privacy_level": "moderately_sensitive"
-    },
-    "11_an_interaction_HR_tables_forest_covidadmission_ethnicityW2.log": {
-      "created_by_action": "11_an_interaction_HR_tables_forest_covidadmission_ethnicity",
-      "privacy_level": "moderately_sensitive"
-    },
-    "12_an_tablecontent_HRtable_SENSE_covid_death.log": {
-      "created_by_action": "12_an_tablecontent_HRtable_SENSE_covid_death",
-      "privacy_level": "moderately_sensitive"
-    },
-    "12_an_tablecontent_HRtable_SENSE_covid_icu.log": {
-      "created_by_action": "12_an_tablecontent_HRtable_SENSE_covid_icu",
-      "privacy_level": "moderately_sensitive"
-    },
-    "12_an_tablecontent_HRtable_SENSE_covid_tpp_prob.log": {
-      "created_by_action": "12_an_tablecontent_HRtable_SENSE_covid_tpp_prob",
-      "privacy_level": "moderately_sensitive"
-    },
-    "12_an_tablecontent_HRtable_SENSE_covidadmission.log": {
-      "created_by_action": "12_an_tablecontent_HRtable_SENSE_covidadmission",
-      "privacy_level": "moderately_sensitive"
-    },
     "log/01_cr_analysis_dataset.log": {
       "created_by_action": "01_cr_analysis_dataset",
       "privacy_level": "moderately_sensitive"
@@ -376,8 +332,52 @@
       "created_by_action": "10_an_interaction_cox_models_shield_covidadmission_W2",
       "privacy_level": "moderately_sensitive"
     },
+    "log/11_an_interaction_HR_tables_forest_covid_death.log": {
+      "created_by_action": "11_an_interaction_HR_tables_forest_covid_death",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/11_an_interaction_HR_tables_forest_covid_death_ethnicityW2.log": {
+      "created_by_action": "11_an_interaction_HR_tables_forest_covid_death_ethnicity",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/11_an_interaction_HR_tables_forest_covid_icu.log": {
+      "created_by_action": "11_an_interaction_HR_tables_forest_covid_icu",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/11_an_interaction_HR_tables_forest_covid_icu_ethnicityW2.log": {
+      "created_by_action": "11_an_interaction_HR_tables_forest_covid_icu_ethnicity",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/11_an_interaction_HR_tables_forest_covid_tpp_prob.log": {
+      "created_by_action": "11_an_interaction_HR_tables_forest_covid_tpp_prob",
+      "privacy_level": "moderately_sensitive"
+    },
     "log/11_an_interaction_HR_tables_forest_covid_tpp_prob_ethnicityW2.log": {
       "created_by_action": "11_an_interaction_HR_tables_forest_covid_tpp_prob_ethnicity",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/11_an_interaction_HR_tables_forest_covidadmission.log": {
+      "created_by_action": "11_an_interaction_HR_tables_forest_covidadmission",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/11_an_interaction_HR_tables_forest_covidadmission_ethnicityW2.log": {
+      "created_by_action": "11_an_interaction_HR_tables_forest_covidadmission_ethnicity",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/12_an_tablecontent_HRtable_SENSE_covid_death.log": {
+      "created_by_action": "12_an_tablecontent_HRtable_SENSE_covid_death",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/12_an_tablecontent_HRtable_SENSE_covid_icu.log": {
+      "created_by_action": "12_an_tablecontent_HRtable_SENSE_covid_icu",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/12_an_tablecontent_HRtable_SENSE_covid_tpp_prob.log": {
+      "created_by_action": "12_an_tablecontent_HRtable_SENSE_covid_tpp_prob",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/12_an_tablecontent_HRtable_SENSE_covidadmission.log": {
+      "created_by_action": "12_an_tablecontent_HRtable_SENSE_covidadmission",
       "privacy_level": "moderately_sensitive"
     },
     "log/13_multiple_imputation_dataset_covid_deathMAIN.log": {
@@ -1982,78 +1982,6 @@
     }
   },
   "actions": {
-    "11_an_interaction_HR_tables_forest_covidadmission_ethnicity": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
-      "job_id": "r7eltbrhw3rxotju",
-      "run_by_user": "qc18278",
-      "created_at": "2021-07-20T14:24:16Z",
-      "completed_at": "2021-07-20T14:39:52Z"
-    },
-    "11_an_interaction_HR_tables_forest_covid_icu_ethnicity": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
-      "job_id": "kasoupissfo5qfcq",
-      "run_by_user": "qc18278",
-      "created_at": "2021-07-20T14:24:16Z",
-      "completed_at": "2021-07-20T14:39:55Z"
-    },
-    "11_an_interaction_HR_tables_forest_covid_death_ethnicity": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
-      "job_id": "dzjwrjfwew2gtn6s",
-      "run_by_user": "qc18278",
-      "created_at": "2021-07-20T14:24:16Z",
-      "completed_at": "2021-07-20T14:39:58Z"
-    },
-    "12_an_tablecontent_HRtable_SENSE_covid_tpp_prob": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
-      "job_id": "u4je42gaflbkw2l3",
-      "run_by_user": "qc18278",
-      "created_at": "2021-07-20T14:24:16Z",
-      "completed_at": "2021-07-20T14:40:00Z"
-    },
-    "12_an_tablecontent_HRtable_SENSE_covid_death": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
-      "job_id": "jqjhofh7okggi3j3",
-      "run_by_user": "qc18278",
-      "created_at": "2021-07-20T14:24:16Z",
-      "completed_at": "2021-07-20T14:40:04Z"
-    },
-    "12_an_tablecontent_HRtable_SENSE_covid_icu": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
-      "job_id": "r6rugu7jrlhlowtj",
-      "run_by_user": "qc18278",
-      "created_at": "2021-07-20T14:24:16Z",
-      "completed_at": "2021-07-20T14:40:07Z"
-    },
-    "12_an_tablecontent_HRtable_SENSE_covidadmission": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
-      "job_id": "5v7v523xarh3xal6",
-      "run_by_user": "qc18278",
-      "created_at": "2021-07-20T14:24:16Z",
-      "completed_at": "2021-07-20T14:40:28Z"
-    },
-    "generate_cohort": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:8caac49a0487df7aee7b6df29ebf7f5c8c8981f360f4f21b07662f95ef1b747e",
-      "job_id": "nl453jfd7zafx5o2",
-      "run_by_user": "qc18278",
-      "created_at": "2021-07-20T15:38:48Z",
-      "completed_at": "2021-07-20T15:39:16Z"
-    },
     "W2_generate_cohort": {
       "state": "succeeded",
       "commit": "none",
@@ -3035,42 +2963,6 @@
       "created_at": "2021-07-20T15:38:48Z",
       "completed_at": "2021-07-20T16:16:26Z"
     },
-    "11_an_interaction_HR_tables_forest_covid_tpp_prob": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
-      "job_id": "nkf6k7c3bao7xf7q",
-      "run_by_user": "qc18278",
-      "created_at": "2021-07-20T15:38:48Z",
-      "completed_at": "2021-07-20T16:16:31Z"
-    },
-    "11_an_interaction_HR_tables_forest_covid_death": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
-      "job_id": "qnvs3pdpxjfzekvj",
-      "run_by_user": "qc18278",
-      "created_at": "2021-07-20T15:38:48Z",
-      "completed_at": "2021-07-20T16:16:35Z"
-    },
-    "11_an_interaction_HR_tables_forest_covid_icu": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
-      "job_id": "lt6d4evyme5sw4gl",
-      "run_by_user": "qc18278",
-      "created_at": "2021-07-20T15:38:48Z",
-      "completed_at": "2021-07-20T16:16:38Z"
-    },
-    "11_an_interaction_HR_tables_forest_covidadmission": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
-      "job_id": "fhr2sfc4yhmlvgzn",
-      "run_by_user": "qc18278",
-      "created_at": "2021-07-20T15:38:48Z",
-      "completed_at": "2021-07-20T16:18:00Z"
-    },
     "11_an_interaction_HR_tables_forest_covid_tpp_prob_ethnicity": {
       "state": "succeeded",
       "commit": "none",
@@ -3079,6 +2971,114 @@
       "run_by_user": "qc18278",
       "created_at": "2021-07-20T16:35:24Z",
       "completed_at": "2021-07-20T16:35:40Z"
+    },
+    "generate_cohort": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:8caac49a0487df7aee7b6df29ebf7f5c8c8981f360f4f21b07662f95ef1b747e",
+      "job_id": "nl453jfd7zafx5o2",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-22T10:54:07Z",
+      "completed_at": "2021-07-22T10:54:25Z"
+    },
+    "11_an_interaction_HR_tables_forest_covid_tpp_prob": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "nkf6k7c3bao7xf7q",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-22T13:59:57Z",
+      "completed_at": "2021-07-22T14:00:53Z"
+    },
+    "11_an_interaction_HR_tables_forest_covid_death": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "qnvs3pdpxjfzekvj",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-22T13:59:57Z",
+      "completed_at": "2021-07-22T14:00:55Z"
+    },
+    "11_an_interaction_HR_tables_forest_covid_icu": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "lt6d4evyme5sw4gl",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-22T13:59:57Z",
+      "completed_at": "2021-07-22T14:00:58Z"
+    },
+    "11_an_interaction_HR_tables_forest_covidadmission": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "fhr2sfc4yhmlvgzn",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-22T13:59:57Z",
+      "completed_at": "2021-07-22T14:01:01Z"
+    },
+    "11_an_interaction_HR_tables_forest_covidadmission_ethnicity": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "r7eltbrhw3rxotju",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-22T13:59:57Z",
+      "completed_at": "2021-07-22T14:01:04Z"
+    },
+    "11_an_interaction_HR_tables_forest_covid_icu_ethnicity": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "kasoupissfo5qfcq",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-22T13:59:57Z",
+      "completed_at": "2021-07-22T14:01:07Z"
+    },
+    "11_an_interaction_HR_tables_forest_covid_death_ethnicity": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "dzjwrjfwew2gtn6s",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-22T13:59:57Z",
+      "completed_at": "2021-07-22T14:01:10Z"
+    },
+    "12_an_tablecontent_HRtable_SENSE_covid_tpp_prob": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "u4je42gaflbkw2l3",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-22T14:04:29Z",
+      "completed_at": "2021-07-22T14:05:23Z"
+    },
+    "12_an_tablecontent_HRtable_SENSE_covid_death": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "jqjhofh7okggi3j3",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-22T14:04:29Z",
+      "completed_at": "2021-07-22T14:05:26Z"
+    },
+    "12_an_tablecontent_HRtable_SENSE_covid_icu": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "r6rugu7jrlhlowtj",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-22T14:04:29Z",
+      "completed_at": "2021-07-22T14:05:30Z"
+    },
+    "12_an_tablecontent_HRtable_SENSE_covidadmission": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "5v7v523xarh3xal6",
+      "run_by_user": "qc18278",
+      "created_at": "2021-07-22T14:04:29Z",
+      "completed_at": "2021-07-22T14:05:34Z"
     }
   },
   "workspace": "sch-children-covid2",

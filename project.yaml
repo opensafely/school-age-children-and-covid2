@@ -1060,7 +1060,7 @@ actions:
     run: stata-mp:latest analysis/12_an_tablecontent_HRtable_SENSE.do covid_tpp_prob
     outputs:
       moderately_sensitive:
-        log:  log/12_an_tablecontent_HRtable_SENSE_covid_tpp_prob.log
+        log: log/12_an_tablecontent_HRtable_SENSE_covid_tpp_prob.log
         data: "output/12_an_sense_HRtable_covid_tpp_prob_SENSE_ANALYSES.txt"
         figure: "output/12_an_HRforest_SENSE_covid_tpp_prob_ageband_*.svg"
 
@@ -1077,7 +1077,7 @@ actions:
     run: stata-mp:latest analysis/12_an_tablecontent_HRtable_SENSE.do covid_death
     outputs:
       moderately_sensitive:
-        log:  log/12_an_tablecontent_HRtable_SENSE_covid_death.log
+        log: log/12_an_tablecontent_HRtable_SENSE_covid_death.log
         data: "output/12_an_sense_HRtable_covid_death_SENSE_ANALYSES.txt"
         figure: "output/12_an_HRforest_SENSE_covid_death_ageband_*.svg"
 
@@ -1093,7 +1093,7 @@ actions:
     run: stata-mp:latest analysis/12_an_tablecontent_HRtable_SENSE.do covid_icu
     outputs:
       moderately_sensitive:
-        log:  log/12_an_tablecontent_HRtable_SENSE_covid_icu.log
+        log: log/12_an_tablecontent_HRtable_SENSE_covid_icu.log
         data: "output/12_an_sense_HRtable_covid_icu_SENSE_ANALYSES.txt"
         figure: "output/12_an_HRforest_SENSE_covid_icu_ageband_*.svg"
 

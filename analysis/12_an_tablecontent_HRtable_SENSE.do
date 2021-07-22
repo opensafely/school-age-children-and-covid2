@@ -16,7 +16,7 @@ global tempdir    "tempdata"
 local outcome `1'
 * Open a log file
 capture log close
-log using " $logdir/12_an_tablecontent_HRtable_SENSE_`outcome'.log", text replace
+log using "$logdir/12_an_tablecontent_HRtable_SENSE_`outcome'.log", text replace
 
 *set trace on
 ***********************************************************************************************************************
