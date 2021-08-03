@@ -108,3 +108,8 @@
     * [output/redacted_01_18/15_an_HRforest_all_outcomes_ageband_0.svg](output/redacted_01_18/15_an_HRforest_all_outcomes_ageband_0.svg)
     * [output/redacted_01_18/15_an_HRforest_all_outcomes_ageband_1.svg](output/redacted_01_18/15_an_HRforest_all_outcomes_ageband_1.svg)
     * [output/redacted_01_18/15_an_tablecontents_HRtable_all_outcomes_ANALYSES.txt](output/redacted_01_18/15_an_tablecontents_HRtable_all_outcomes_ANALYSES.txt)
+* release
+  * [release/11_an_int_tab_contents_HRtable_covid_death_ethnicityW2.txt](release/11_an_int_tab_contents_HRtable_covid_death_ethnicityW2.txt)
+  * [release/11_an_int_tab_contents_HRtable_covid_icu_ethnicityW2.txt](release/11_an_int_tab_contents_HRtable_covid_icu_ethnicityW2.txt)
+  * [release/11_an_int_tab_contents_HRtable_covid_tpp_prob_ethnicityW2.txt](release/11_an_int_tab_contents_HRtable_covid_tpp_prob_ethnicityW2.txt)
+  * [release/11_an_int_tab_contents_HRtable_covidadmission_ethnicityW2.txt](release/11_an_int_tab_contents_HRtable_covidadmission_ethnicityW2.txt)
