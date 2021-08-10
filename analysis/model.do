@@ -238,12 +238,17 @@ foreach outcome of any  covid_tpp_prob covidadmission covid_icu covid_death   {
 }
 */
 
-***SENSE ANALYSIS
+***ETH MODELS
 foreach outcome of any covid_tpp_prob covidadmission covid_icu covid_death    {
-	do "10_an_interaction_cox_models_ethnicity_strat.do" `outcome'  W2
+	do "10_an_interaction_cox_models_ethnicity_strat.do" `outcome'  W2 
 	}
 	
 foreach outcome of any covid_tpp_prob covidadmission covid_icu covid_death    {
-	do "11a_an_interaction_HR_tables_forest_eth_strat.do" `outcome'
-	}	
+	do "10_an_interaction_cox_models_ethnicity_strat.do" `outcome'  MAIN 
+	}
 	
+*ETH output	
+foreach outcome of any covid_tpp_prob covidadmission covid_icu covid_death    {
+	do "11a_an_interaction_HR_tables_forest_eth_strat.do" `outcome' 
+	}	
+
