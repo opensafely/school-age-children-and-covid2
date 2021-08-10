@@ -1,0 +1,32 @@
+age	exposure	exposure level	outcome	int_type	int_level	HR	lci	uci	pval
+0	kids_cat4	1	covid_death	ethnicity	1	0.43	0.25	0.76	
+0	kids_cat4	1	covid_death	ethnicity	2	0.00	0.00	0.00	
+0	kids_cat4	1	covid_death	ethnicity	3	0.71	0.39	1.31	
+0	kids_cat4	1	covid_death	ethnicity	4	0.47	0.06	3.59	
+0	kids_cat4	1	covid_death	ethnicity	5	0.00	0.00	0.00	
+0	kids_cat4	2	covid_death	ethnicity	1	0.85	0.57	1.26	
+0	kids_cat4	2	covid_death	ethnicity	2	2.41	0.25	23.23	
+0	kids_cat4	2	covid_death	ethnicity	3	1.16	0.65	2.05	
+0	kids_cat4	2	covid_death	ethnicity	4	0.94	0.21	4.19	
+0	kids_cat4	2	covid_death	ethnicity	5	1.52	0.17	13.66	
+0	kids_cat4	3	covid_death	ethnicity	1	0.62	0.32	1.22	
+0	kids_cat4	3	covid_death	ethnicity	2	6.03	1.01	36.06	
+0	kids_cat4	3	covid_death	ethnicity	3	0.93	0.47	1.85	
+0	kids_cat4	3	covid_death	ethnicity	4	1.18	0.26	5.30	
+0	kids_cat4	3	covid_death	ethnicity	5	0.00	0.00	0.00	
+1	kids_cat4	1	covid_death	ethnicity	1	0.70	0.45	1.11	
+1	kids_cat4	1	covid_death	ethnicity	2	0.00	0.00	0.00	
+1	kids_cat4	1	covid_death	ethnicity	3	1.48	1.08	2.04	
+1	kids_cat4	1	covid_death	ethnicity	4	1.80	0.56	5.83	
+1	kids_cat4	1	covid_death	ethnicity	5	0.00	0.00	0.00	
+1	kids_cat4	2	covid_death	ethnicity	1	0.99	0.66	1.49	
+1	kids_cat4	2	covid_death	ethnicity	2	1.84	0.25	13.51	
+1	kids_cat4	2	covid_death	ethnicity	3	1.26	0.84	1.90	
+1	kids_cat4	2	covid_death	ethnicity	4	2.32	0.72	7.48	
+1	kids_cat4	2	covid_death	ethnicity	5	1.09	0.15	7.99	
+1	kids_cat4	3	covid_death	ethnicity	1	1.19	0.64	2.23	
+1	kids_cat4	3	covid_death	ethnicity	2	0.00	0.00	0.00	
+1	kids_cat4	3	covid_death	ethnicity	3	1.69	1.16	2.46	
+1	kids_cat4	3	covid_death	ethnicity	4	1.38	0.19	9.99	
+1	kids_cat4	3	covid_death	ethnicity	5	1.72	0.23	12.97	
+

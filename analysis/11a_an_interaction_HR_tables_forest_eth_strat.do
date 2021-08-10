@@ -61,31 +61,31 @@ local endwith "_tab"
 
 			if `int_level'==1 {
 			cap lincom `i'.`variable'+ 1.`int_type'#`i'.`variable', eform
-			if _rc==0 file write tablecontents_int %4.2f (r(estimate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
-				else file write tablecontents_int %4.2f ("ERR IN MODEL") `endwith'
+			if _rc==0 file write tablecontents_int %4.3e (r(estimate)) _tab %4.3e (r(lb)) _tab %4.3e (r(ub)) _tab  `endwith'
+				else file write tablecontents_int %4.3e ("ERR IN MODEL") `endwith'
 				}
 
 										if `int_level'==2 {
 			cap lincom `i'.`variable'+ 2.`int_type'#`i'.`variable', eform
-			if _rc==0 file write tablecontents_int %4.2f (r(estimate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
-				else file write tablecontents_int %4.2f ("ERR IN MODEL") `endwith'
+			if _rc==0 file write tablecontents_int %4.3e (r(estimate)) _tab %4.3e (r(lb)) _tab %4.3e (r(ub)) _tab  `endwith'
+				else file write tablecontents_int %4.3e ("ERR IN MODEL") `endwith'
 				}
 			
 						if `int_level'==3 {
 			cap lincom `i'.`variable'+ 3.`int_type'#`i'.`variable', eform
-			if _rc==0 file write tablecontents_int %4.2f (r(estimate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
-				else file write tablecontents_int %4.2f ("ERR IN MODEL") `endwith'
+			if _rc==0 file write tablecontents_int %4.3e (r(estimate)) _tab %4.3e (r(lb)) _tab %4.3e (r(ub)) _tab  `endwith'
+				else file write tablecontents_int %4.3e ("ERR IN MODEL") `endwith'
 				}
 			
 									if `int_level'==4 {
 			cap lincom `i'.`variable'+ 4.`int_type'#`i'.`variable', eform
-			if _rc==0 file write tablecontents_int %4.2f (r(estimate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
-				else file write tablecontents_int %4.2f ("ERR IN MODEL") `endwith'
+			if _rc==0 file write tablecontents_int %4.3e (r(estimate)) _tab %4.3e (r(lb)) _tab %4.3e (r(ub)) _tab  `endwith'
+				else file write tablecontents_int %4.3e ("ERR IN MODEL") `endwith'
 				}
 									if `int_level'==5 {
 			cap lincom `i'.`variable'+ 5.`int_type'#`i'.`variable', eform
-			if _rc==0 file write tablecontents_int %4.2f (r(estimate)) _tab %4.2f (r(lb)) _tab %4.2f (r(ub)) _tab  `endwith'
-				else file write tablecontents_int %4.2f ("ERR IN MODEL") `endwith'
+			if _rc==0 file write tablecontents_int %4.3e (r(estimate)) _tab %4.3e (r(lb)) _tab %4.3e (r(ub)) _tab  `endwith'
+				else file write tablecontents_int %4.3e ("ERR IN MODEL") `endwith'
 				}
 			
 
