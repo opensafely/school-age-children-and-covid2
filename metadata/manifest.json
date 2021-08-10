@@ -252,16 +252,32 @@
       "created_by_action": "08_an_tablecontent_HRtable_non_covid_death",
       "privacy_level": "moderately_sensitive"
     },
+    "log/10_an_interaction_cox_models_ethcat_covid_deathMAIN.log": {
+      "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_death_MAIN",
+      "privacy_level": "moderately_sensitive"
+    },
     "log/10_an_interaction_cox_models_ethcat_covid_deathW2.log": {
       "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_death_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/10_an_interaction_cox_models_ethcat_covid_icuMAIN.log": {
+      "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_icu_MAIN",
       "privacy_level": "moderately_sensitive"
     },
     "log/10_an_interaction_cox_models_ethcat_covid_icuW2.log": {
       "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_icu_W2",
       "privacy_level": "moderately_sensitive"
     },
+    "log/10_an_interaction_cox_models_ethcat_covid_tpp_probMAIN.log": {
+      "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_tpp_prob_MAIN",
+      "privacy_level": "moderately_sensitive"
+    },
     "log/10_an_interaction_cox_models_ethcat_covid_tpp_probW2.log": {
       "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_tpp_prob_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "log/10_an_interaction_cox_models_ethcat_covidadmissionMAIN.log": {
+      "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covidadmission_MAIN",
       "privacy_level": "moderately_sensitive"
     },
     "log/10_an_interaction_cox_models_ethcat_covidadmissionW2.log": {
@@ -668,8 +684,16 @@
       "created_by_action": "15_anHRfigure_all_outcomes_nursery_cat",
       "privacy_level": "moderately_sensitive"
     },
+    "output/an_interaction_cox_models_covid_death_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_0MAIN.ster": {
+      "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_death_MAIN",
+      "privacy_level": "moderately_sensitive"
+    },
     "output/an_interaction_cox_models_covid_death_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_0W2.ster": {
       "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_death_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_interaction_cox_models_covid_death_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_1MAIN.ster": {
+      "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_death_MAIN",
       "privacy_level": "moderately_sensitive"
     },
     "output/an_interaction_cox_models_covid_death_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_1W2.ster": {
@@ -708,8 +732,16 @@
       "created_by_action": "10_an_interaction_cox_models_shield_covid_death_W2",
       "privacy_level": "moderately_sensitive"
     },
+    "output/an_interaction_cox_models_covid_icu_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_0MAIN.ster": {
+      "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_icu_MAIN",
+      "privacy_level": "moderately_sensitive"
+    },
     "output/an_interaction_cox_models_covid_icu_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_0W2.ster": {
       "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_icu_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_interaction_cox_models_covid_icu_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_1MAIN.ster": {
+      "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_icu_MAIN",
       "privacy_level": "moderately_sensitive"
     },
     "output/an_interaction_cox_models_covid_icu_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_1W2.ster": {
@@ -748,8 +780,16 @@
       "created_by_action": "10_an_interaction_cox_models_shield_covid_icu_W2",
       "privacy_level": "moderately_sensitive"
     },
+    "output/an_interaction_cox_models_covid_tpp_prob_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_0MAIN.ster": {
+      "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_tpp_prob_MAIN",
+      "privacy_level": "moderately_sensitive"
+    },
     "output/an_interaction_cox_models_covid_tpp_prob_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_0W2.ster": {
       "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_tpp_prob_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_interaction_cox_models_covid_tpp_prob_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_1MAIN.ster": {
+      "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covid_tpp_prob_MAIN",
       "privacy_level": "moderately_sensitive"
     },
     "output/an_interaction_cox_models_covid_tpp_prob_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_1W2.ster": {
@@ -788,8 +828,16 @@
       "created_by_action": "10_an_interaction_cox_models_shield_covid_tpp_prob_W2",
       "privacy_level": "moderately_sensitive"
     },
+    "output/an_interaction_cox_models_covidadmission_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_0MAIN.ster": {
+      "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covidadmission_MAIN",
+      "privacy_level": "moderately_sensitive"
+    },
     "output/an_interaction_cox_models_covidadmission_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_0W2.ster": {
       "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covidadmission_W2",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/an_interaction_cox_models_covidadmission_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_1MAIN.ster": {
+      "created_by_action": "10_an_interaction_cox_models_ethnicity_strat_covidadmission_MAIN",
       "privacy_level": "moderately_sensitive"
     },
     "output/an_interaction_cox_models_covidadmission_kids_cat4_ethnicity_MAINFULLYADJMODEL_agespline_bmicat_noeth_ageband_1W2.ster": {
@@ -3079,6 +3127,42 @@
       "run_by_user": "qc18278",
       "created_at": "2021-07-22T14:04:29Z",
       "completed_at": "2021-07-22T14:05:34Z"
+    },
+    "10_an_interaction_cox_models_ethnicity_strat_covid_tpp_prob_MAIN": {
+      "state": "succeeded",
+      "commit": null,
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "qpay3hin3gu5dxs5",
+      "run_by_user": "qc18278",
+      "created_at": "2021-08-10T12:29:15Z",
+      "completed_at": "2021-08-10T12:30:46Z"
+    },
+    "10_an_interaction_cox_models_ethnicity_strat_covidadmission_MAIN": {
+      "state": "succeeded",
+      "commit": null,
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "af5h6ddpbwz64xyv",
+      "run_by_user": "qc18278",
+      "created_at": "2021-08-10T12:29:15Z",
+      "completed_at": "2021-08-10T12:30:49Z"
+    },
+    "10_an_interaction_cox_models_ethnicity_strat_covid_icu_MAIN": {
+      "state": "succeeded",
+      "commit": null,
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "o5kkg3uhm6ppfgg4",
+      "run_by_user": "qc18278",
+      "created_at": "2021-08-10T12:29:15Z",
+      "completed_at": "2021-08-10T12:30:52Z"
+    },
+    "10_an_interaction_cox_models_ethnicity_strat_covid_death_MAIN": {
+      "state": "succeeded",
+      "commit": null,
+      "docker_image_id": "sha256:11980aa720220a1b39bf523f5a8a33270214c13876c30ee364e16265766f7f60",
+      "job_id": "6kih4e75j26dqk24",
+      "run_by_user": "qc18278",
+      "created_at": "2021-08-10T12:29:15Z",
+      "completed_at": "2021-08-10T12:31:00Z"
     }
   },
   "workspace": "sch-children-covid2",
