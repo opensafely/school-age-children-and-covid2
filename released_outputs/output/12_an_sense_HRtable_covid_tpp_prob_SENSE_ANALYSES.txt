@@ -1,0 +1,104 @@
+datasetage0
+
+sense=AAmain
+kids_cat4	1	0.98	0.96	1.01	9334392
+kids_cat4	2	1.05	1.01	1.08	9334392
+kids_cat4	3	1.01	0.97	1.05	9334392
+
+sense=CCeth_bmi_smok
+kids_cat4	1	0.96	0.93	0.99	7665303
+kids_cat4	2	1.06	1.02	1.09	7665303
+kids_cat4	3	1.02	0.98	1.06	7665303
+
+sense=plus_eth_12mo
+kids_cat4	1	1.01	0.99	1.04	8585489
+kids_cat4	2	1.07	1.03	1.11	8585489
+kids_cat4	3	1.04	1.00	1.08	8585489
+
+sense=age_underlying_timescale
+kids_cat4	1	0.99	0.97	1.02	9334392
+kids_cat4	2	1.08	1.04	1.11	9334392
+kids_cat4	3	1.06	1.02	1.10	9334392
+
+sense=time_int
+
+sense=SUS_censor
+datasetage1
+
+sense=AAmain
+kids_cat4	1	1.04	0.93	1.16	2684524
+kids_cat4	2	0.92	0.80	1.06	2684524
+kids_cat4	3	1.17	1.00	1.37	2684524
+
+sense=CCeth_bmi_smok
+kids_cat4	1	1.06	0.95	1.19	2531893
+kids_cat4	2	0.92	0.80	1.06	2531893
+kids_cat4	3	1.21	1.03	1.42	2531893
+
+sense=plus_eth_12mo
+kids_cat4	1	1.07	0.95	1.20	2611987
+kids_cat4	2	0.93	0.81	1.07	2611987
+kids_cat4	3	1.19	1.01	1.40	2611987
+
+sense=age_underlying_timescale
+kids_cat4	1	1.03	0.92	1.15	2684524
+kids_cat4	2	0.92	0.80	1.05	2684524
+kids_cat4	3	1.17	1.00	1.37	2684524
+
+sense=time_int
+
+sense=SUS_censor
+datasetage0
+
+sense=AAmain
+kids_cat4	1	1.06	1.05	1.08	9266919
+kids_cat4	2	1.22	1.20	1.24	9266919
+kids_cat4	3	1.25	1.23	1.27	9266919
+
+sense=CCeth_bmi_smok
+kids_cat4	1	1.06	1.05	1.07	7493197
+kids_cat4	2	1.24	1.21	1.26	7493197
+kids_cat4	3	1.28	1.26	1.30	7493197
+
+sense=plus_eth_12mo
+kids_cat4	1	1.08	1.06	1.09	8733513
+kids_cat4	2	1.23	1.21	1.25	8733513
+kids_cat4	3	1.26	1.24	1.29	8733513
+
+sense=age_underlying_timescale
+kids_cat4	1	1.06	1.05	1.08	9266919
+kids_cat4	2	1.22	1.21	1.24	9266919
+kids_cat4	3	1.25	1.23	1.27	9266919
+
+sense=time_int
+kids_cat4	1	1.06	1.05	1.08	9266919
+kids_cat4	2	1.22	1.20	1.24	9266919
+kids_cat4	3	1.25	1.23	1.27	9266919
+
+sense=SUS_censor
+datasetage1
+
+sense=AAmain
+kids_cat4	1	1.15	1.06	1.24	2706505
+kids_cat4	2	1.16	1.06	1.27	2706505
+kids_cat4	3	1.27	1.14	1.42	2706505
+
+sense=CCeth_bmi_smok
+kids_cat4	1	1.17	1.08	1.26	2539976
+kids_cat4	2	1.16	1.05	1.27	2539976
+kids_cat4	3	1.30	1.17	1.46	2539976
+
+sense=plus_eth_12mo
+kids_cat4	1	1.15	1.07	1.25	2651492
+kids_cat4	2	1.16	1.05	1.27	2651492
+kids_cat4	3	1.27	1.14	1.43	2651492
+
+sense=age_underlying_timescale
+kids_cat4	1	1.14	1.06	1.23	2706505
+kids_cat4	2	1.16	1.06	1.28	2706505
+kids_cat4	3	1.27	1.14	1.42	2706505
+
+sense=time_int
+
+sense=SUS_censor
+

@@ -1,0 +1,16 @@
+
+
+state: succeeded
+commit: 90c70a4ca9cd37d27825fda192d83a80ac947b0b
+docker_image_id: sha256:e4a676ff497b1550742032051cce1ba5502f65b172e86e4d82aadbaa1e056935
+job_id: wxscuu2bup3ivqiy
+run_by_user: hjforbes
+created_at: 2021-02-01T14:40:18Z
+started_at: 2021-02-01T14:51:50Z
+completed_at: 2021-02-01T22:28:58Z
+
+Completed successfully
+
+outputs:
+  log/07d_an_multivariable_cox_models_covid_tpp_prob_Sense5_time_intsMAIN.log  - moderately_sensitive
+  output/an_sense_covid_tpp_prob_time_int_ageband_0MAIN.ster                   - moderately_sensitive

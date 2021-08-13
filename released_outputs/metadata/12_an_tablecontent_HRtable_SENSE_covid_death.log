@@ -1,0 +1,20 @@
+
+
+state: succeeded
+commit: 90c70a4ca9cd37d27825fda192d83a80ac947b0b
+docker_image_id: sha256:e4a676ff497b1550742032051cce1ba5502f65b172e86e4d82aadbaa1e056935
+job_id: 43hvidanlzg4hduu
+run_by_user: hjforbes
+created_at: 2021-02-02T09:09:55Z
+started_at: 2021-02-02T09:10:54Z
+completed_at: 2021-02-02T09:12:06Z
+
+Completed successfully
+
+outputs:
+  12_an_tablecontent_HRtable_SENSE_covid_death.log            - moderately_sensitive
+  output/12_an_HRforest_SENSE_covid_death_ageband_0_MAIN.svg  - moderately_sensitive
+  output/12_an_HRforest_SENSE_covid_death_ageband_0_W2.svg    - moderately_sensitive
+  output/12_an_HRforest_SENSE_covid_death_ageband_1_MAIN.svg  - moderately_sensitive
+  output/12_an_HRforest_SENSE_covid_death_ageband_1_W2.svg    - moderately_sensitive
+  output/12_an_sense_HRtable_covid_death_SENSE_ANALYSES.txt   - moderately_sensitive

@@ -1,0 +1,74 @@
+dataset	age	exposure	exposure level	outcome	int_type	int_level	HR	lci	uci	pval
+MAIN	0	kids_cat4	1	covid_tpp_prob	male	0	0.92	0.90	0.95	0.00
+MAIN	0	kids_cat4	1	covid_tpp_prob	male	1	1.08	1.04	1.12	
+MAIN	0	kids_cat4	1	covid_tpp_prob	cat_time	0	DID NOT FIT
+MAIN	0	kids_cat4	1	covid_tpp_prob	cat_time	1	DID NOT FIT
+MAIN	0	kids_cat4	1	covid_tpp_prob	shield	0	0.99	0.96	1.02	0.05
+MAIN	0	kids_cat4	1	covid_tpp_prob	shield	1	0.94	0.90	0.99	
+MAIN	0	kids_cat4	2	covid_tpp_prob	male	0	1.02	0.98	1.06	0.02
+MAIN	0	kids_cat4	2	covid_tpp_prob	male	1	1.09	1.04	1.15	
+MAIN	0	kids_cat4	2	covid_tpp_prob	cat_time	0	DID NOT FIT
+MAIN	0	kids_cat4	2	covid_tpp_prob	cat_time	1	DID NOT FIT
+MAIN	0	kids_cat4	2	covid_tpp_prob	shield	0	1.05	1.01	1.09	0.72
+MAIN	0	kids_cat4	2	covid_tpp_prob	shield	1	1.04	0.98	1.10	
+MAIN	0	kids_cat4	3	covid_tpp_prob	male	0	0.97	0.93	1.01	0.00
+MAIN	0	kids_cat4	3	covid_tpp_prob	male	1	1.07	1.01	1.13	
+MAIN	0	kids_cat4	3	covid_tpp_prob	cat_time	0	DID NOT FIT
+MAIN	0	kids_cat4	3	covid_tpp_prob	cat_time	1	DID NOT FIT
+MAIN	0	kids_cat4	3	covid_tpp_prob	shield	0	1.02	0.98	1.06	0.44
+MAIN	0	kids_cat4	3	covid_tpp_prob	shield	1	0.99	0.92	1.06	
+MAIN	1	kids_cat4	1	covid_tpp_prob	male	0	1.03	0.88	1.20	0.76
+MAIN	1	kids_cat4	1	covid_tpp_prob	male	1	1.06	0.92	1.21	
+MAIN	1	kids_cat4	1	covid_tpp_prob	cat_time	0	DID NOT FIT
+MAIN	1	kids_cat4	1	covid_tpp_prob	cat_time	1	DID NOT FIT
+MAIN	1	kids_cat4	1	covid_tpp_prob	shield	0	1.07	0.93	1.23	0.53
+MAIN	1	kids_cat4	1	covid_tpp_prob	shield	1	1.01	0.86	1.18	
+MAIN	1	kids_cat4	2	covid_tpp_prob	male	0	0.97	0.81	1.17	0.43
+MAIN	1	kids_cat4	2	covid_tpp_prob	male	1	0.88	0.73	1.06	
+MAIN	1	kids_cat4	2	covid_tpp_prob	cat_time	0	DID NOT FIT
+MAIN	1	kids_cat4	2	covid_tpp_prob	cat_time	1	DID NOT FIT
+MAIN	1	kids_cat4	2	covid_tpp_prob	shield	0	0.90	0.75	1.08	0.71
+MAIN	1	kids_cat4	2	covid_tpp_prob	shield	1	0.95	0.78	1.15	
+MAIN	1	kids_cat4	3	covid_tpp_prob	male	0	1.48	1.22	1.79	0.00
+MAIN	1	kids_cat4	3	covid_tpp_prob	male	1	0.88	0.69	1.12	
+MAIN	1	kids_cat4	3	covid_tpp_prob	cat_time	0	DID NOT FIT
+MAIN	1	kids_cat4	3	covid_tpp_prob	cat_time	1	DID NOT FIT
+MAIN	1	kids_cat4	3	covid_tpp_prob	shield	0	1.14	0.92	1.42	0.69
+MAIN	1	kids_cat4	3	covid_tpp_prob	shield	1	1.21	0.97	1.52	
+W2	0	kids_cat4	1	covid_tpp_prob	male	0	1.02	1.01	1.04	0.00
+W2	0	kids_cat4	1	covid_tpp_prob	male	1	1.12	1.10	1.14	
+W2	0	kids_cat4	1	covid_tpp_prob	cat_time	0	DID NOT FIT
+W2	0	kids_cat4	1	covid_tpp_prob	cat_time	1	DID NOT FIT
+W2	0	kids_cat4	1	covid_tpp_prob	shield	0	1.06	1.05	1.08	0.83
+W2	0	kids_cat4	1	covid_tpp_prob	shield	1	1.06	1.04	1.09	
+W2	0	kids_cat4	2	covid_tpp_prob	male	0	1.23	1.21	1.25	0.21
+W2	0	kids_cat4	2	covid_tpp_prob	male	1	1.21	1.18	1.23	
+W2	0	kids_cat4	2	covid_tpp_prob	cat_time	0	DID NOT FIT
+W2	0	kids_cat4	2	covid_tpp_prob	cat_time	1	DID NOT FIT
+W2	0	kids_cat4	2	covid_tpp_prob	shield	0	1.22	1.20	1.24	0.39
+W2	0	kids_cat4	2	covid_tpp_prob	shield	1	1.21	1.17	1.24	
+W2	0	kids_cat4	3	covid_tpp_prob	male	0	1.26	1.24	1.28	0.15
+W2	0	kids_cat4	3	covid_tpp_prob	male	1	1.24	1.21	1.27	
+W2	0	kids_cat4	3	covid_tpp_prob	cat_time	0	DID NOT FIT
+W2	0	kids_cat4	3	covid_tpp_prob	cat_time	1	DID NOT FIT
+W2	0	kids_cat4	3	covid_tpp_prob	shield	0	1.24	1.22	1.27	0.16
+W2	0	kids_cat4	3	covid_tpp_prob	shield	1	1.28	1.24	1.32	
+W2	1	kids_cat4	1	covid_tpp_prob	male	0	1.15	1.04	1.27	0.98
+W2	1	kids_cat4	1	covid_tpp_prob	male	1	1.15	1.04	1.27	
+W2	1	kids_cat4	1	covid_tpp_prob	cat_time	0	DID NOT FIT
+W2	1	kids_cat4	1	covid_tpp_prob	cat_time	1	DID NOT FIT
+W2	1	kids_cat4	1	covid_tpp_prob	shield	0	1.14	1.04	1.25	0.79
+W2	1	kids_cat4	1	covid_tpp_prob	shield	1	1.16	1.03	1.30	
+W2	1	kids_cat4	2	covid_tpp_prob	male	0	1.10	0.97	1.24	0.16
+W2	1	kids_cat4	2	covid_tpp_prob	male	1	1.22	1.09	1.38	
+W2	1	kids_cat4	2	covid_tpp_prob	cat_time	0	DID NOT FIT
+W2	1	kids_cat4	2	covid_tpp_prob	cat_time	1	DID NOT FIT
+W2	1	kids_cat4	2	covid_tpp_prob	shield	0	1.18	1.06	1.33	0.53
+W2	1	kids_cat4	2	covid_tpp_prob	shield	1	1.12	0.98	1.29	
+W2	1	kids_cat4	3	covid_tpp_prob	male	0	1.38	1.21	1.57	0.05
+W2	1	kids_cat4	3	covid_tpp_prob	male	1	1.14	0.98	1.34	
+W2	1	kids_cat4	3	covid_tpp_prob	cat_time	0	DID NOT FIT
+W2	1	kids_cat4	3	covid_tpp_prob	cat_time	1	DID NOT FIT
+W2	1	kids_cat4	3	covid_tpp_prob	shield	0	1.22	1.06	1.40	0.29
+W2	1	kids_cat4	3	covid_tpp_prob	shield	1	1.36	1.15	1.60	
+

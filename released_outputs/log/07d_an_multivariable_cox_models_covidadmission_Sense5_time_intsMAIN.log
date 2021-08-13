@@ -1,0 +1,801 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /workspace/log/07d_an_multivariable_cox_models_covidadmission_Sens
+> e5_time_intsMAIN.log
+  log type:  text
+ opened on:  29 Jan 2021, 21:36:25
+. 
+. foreach x in 0 1 {
+  2. ******************************
+. *  Multivariable Cox models  *
+. ******************************
+. use "$tempdir/cr_create_analysis_dataset_STSET_covidadmission_ageband_`x'`dat
+> aset'.dta", clear
+  3. stsplit timeperiod, at(60 90)
+  4. 
+. *make vars binary
+. gen anyreduced_kidney_function = reduced_kidney_function_cat>=2
+  5. gen anyobesity = obese4cat>=2
+  6. gen highimd = imd>=3
+  7. gen anydiab= diabcat>=2
+  8. gen any_nonwhite=ethnicity>=2
+  9. 
+. *Fully adjusted
+. stcox   i.kids_cat4      ///
+>                         age1 age2 age3          ///
+>                         i.male                                               
+>    ///
+>                         i.tot_adults_hh ///
+>                         i.obese4cat                                     ///
+>                         i.smoke_nomiss                                  ///
+>                         i.imd                                           ///
+>                         i.ethnicity ///
+>                         `comordidadjlist'       ///     
+>                         60.timeperiod#1.male                                 
+>                    ///
+>                         90.timeperiod#1.male                                 
+>            ///
+>                         60.timeperiod#1.any_nonwhite                         
+>                            ///
+>                         90.timeperiod#1.any_nonwhite                         
+>                    ///
+>                         60.timeperiod#1.highimd                              
+>                            ///
+>                         90.timeperiod#1.highimd                              
+>                    ///
+>                         60.timeperiod#1.chronic_liver_disease                
+>                    ///
+>                         90.timeperiod#1.chronic_liver_disease                
+>                    ///             
+>                         , strata(stp) vce(cluster household_id)
+ 10. estimates
+ 11. estimates save "./output/an_sense_covidadmission_time_int_ageband_`x'`data
+> set'", replace
+ 12. }
+(18,552,545 observations (episodes) created)
+
+         failure _d:  covidadmission
+   analysis time _t:  (stime_covidadmission-origin)
+             origin:  time enter_date
+  enter on or after:  time enter_date
+                 id:  patient_id
+
+Iteration 0:   log pseudolikelihood = -82248.847
+Iteration 1:   log pseudolikelihood = -81166.514
+Iteration 2:   log pseudolikelihood = -78121.563
+Iteration 3:   log pseudolikelihood = -77810.043
+Iteration 4:   log pseudolikelihood = -77766.436
+Iteration 5:   log pseudolikelihood = -77763.645
+Iteration 6:   log pseudolikelihood = -77763.626
+Iteration 7:   log pseudolikelihood = -77763.626
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -77763.626
+
+Stratified Cox regr. -- Breslow method for ties
+
+No. of subjects      =    9,334,392             Number of obs    =  27,886,937
+No. of failures      =        6,374
+Time at risk         =   1963027620
+                                                Wald chi2(55)    =    13180.63
+Log pseudolikelihood =   -77763.626             Prob > chi2      =      0.0000
+
+                   (Std. Err. adjusted for 5,833,113 clusters in household_id)
+------------------------------------------------------------------------------
+             |               Robust
+          _t | Haz. Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   kids_cat4 |
+only <12 ..  |   .9203317   .0377691    -2.02   0.043     .8492045    .9974164
+ only 12-18  |    1.06232   .0466208     1.38   0.168     .9747646     1.15774
+      mixed  |   1.114563   .0561034     2.15   0.031     1.009853    1.230131
+             |
+        age1 |   1.079215   .0085263     9.65   0.000     1.062633    1.096057
+        age2 |   .9637827   .0192903    -1.84   0.065     .9267064    1.002342
+        age3 |   1.012183    .053397     0.23   0.818     .9127559    1.122442
+      1.male |   1.825757   .0907678    12.11   0.000     1.656248    2.012615
+             |
+tot_adults~h |
+          2  |   .9233629   .0320413    -2.30   0.022      .862651    .9883477
+          3  |   1.084902   .0373555     2.37   0.018     1.014102    1.160644
+             |
+   obese4cat |
+Obese I ..)  |   1.580002   .0522057    13.84   0.000     1.480923    1.685709
+Obese II..)  |   2.099045   .0875993    17.77   0.000     1.934188    2.277954
+Obese II..)  |   2.811448   .1368246    21.24   0.000     2.555669    3.092825
+             |
+smoke_nomiss |
+     Former  |   .9522876   .0269876    -1.73   0.085     .9008351    1.006679
+    Current  |   .3943288   .0181856   -20.18   0.000      .360249    .4316326
+             |
+         imd |
+          2  |   1.059487   .0502179     1.22   0.223     .9654954    1.162629
+          3  |   .8854759   .0587626    -1.83   0.067      .777479    1.008474
+          4  |   1.023014    .065901     0.35   0.724     .9016718    1.160686
+5 most de..  |   1.159087   .0758635     2.26   0.024      1.01954    1.317735
+             |
+   ethnicity |
+      Mixed  |   1.988243   .1936125     7.06   0.000     1.642784    2.406347
+Asian or ..  |   2.155359   .1358071    12.19   0.000     1.904961     2.43867
+      Black  |   2.199805   .1618967    10.71   0.000     1.904317    2.541144
+      Other  |   2.098901    .172506     9.02   0.000     1.786622    2.465761
+             |
+1.htdiag_o~p |   1.284316   .0385233     8.34   0.000     1.210988    1.362084
+1.~y_disease |   2.671903   .1275908    20.58   0.000     2.433176    2.934053
+    1.asthma |   1.368543   .0425983    10.08   0.000     1.287548    1.454633
+1.~c_disease |   1.479358   .0652282     8.88   0.000     1.356882     1.61289
+             |
+     diabcat |
+T1DM, con..  |   1.688632   .3692199     2.40   0.017     1.100068    2.592092
+T1DM, unc..  |   2.473948   .2898465     7.73   0.000     1.966366    3.112555
+T2DM, con..  |   1.553288    .072023     9.50   0.000      1.41835    1.701064
+T2DM, unc..  |   2.209358   .1000216    17.51   0.000     2.021765    2.414357
+Diabetes,..  |   1.893051   .5732562     2.11   0.035     1.045684     3.42708
+             |
+cancer_exh~t |
+  Last year  |   2.330206   .3130793     6.30   0.000     1.790727    3.032209
+2-5 years..  |   1.466767    .145064     3.87   0.000     1.208306    1.780514
+   5+ years  |   1.196587   .1042793     2.06   0.039     1.008705    1.419463
+             |
+cancer_hae~t |
+  Last year  |   3.380617   1.033897     3.98   0.000     1.856403    6.156297
+2-5 years..  |   4.759424   .7251593    10.24   0.000     3.530717    6.415727
+   5+ years  |   1.810757   .2929243     3.67   0.000     1.318749    2.486327
+             |
+1.~r_disease |   1.486541   .2708773     2.18   0.030      1.04009    2.124627
+1.stroke_d~a |   1.553518   .1111289     6.16   0.000     1.350289    1.787335
+1.other_ne~o |   2.532111   .2080687    11.31   0.000     2.155449    2.974594
+             |
+reduced_ki~t |
+Stage 3a/..  |   1.556649   .0999394     6.89   0.000     1.372594    1.765384
+Stage 4/5..  |   2.469621   .3218089     6.94   0.000      1.91299    3.188217
+             |
+      1.esrd |   3.584136   .4468862    10.24   0.000     2.807067    4.576317
+1.other_tr~t |   .8773002   .2760919    -0.42   0.677     .4734452    1.625649
+  1.asplenia |   1.643302   .3575738     2.28   0.022     1.072755    2.517297
+1.ra_sle_p~s |   1.243474   .0617084     4.39   0.000     1.128224    1.370497
+1.other_im~o |   1.053209   .1571955     0.35   0.728     .7860848    1.411106
+             |
+  timeperiod#|
+        male |
+       60 1  |   .7679066   .0465507    -4.36   0.000     .6818806    .8647857
+       90 1  |   .5987724   .0431274    -7.12   0.000     .5199395    .6895579
+             |
+  timeperiod#|
+any_nonwhite |
+       60 1  |   1.254577   .0925457     3.07   0.002     1.085694    1.449731
+       90 1  |   1.217219   .1058764     2.26   0.024      1.02643    1.443472
+             |
+  timeperiod#|
+     highimd |
+       60 1  |   1.264835   .0855153     3.47   0.001     1.107858    1.444054
+       90 1  |   1.636527   .1376078     5.86   0.000     1.387872     1.92973
+             |
+  timeperiod#|
+chronic_l~se |
+       60 1  |   1.337735   .2882871     1.35   0.177     .8768649    2.040832
+       90 1  |   1.955898   .4553761     2.88   0.004     1.239275    3.086915
+------------------------------------------------------------------------------
+                                                             Stratified by stp
+
+-------------------------------------------------------------------------------
+active results
+-------------------------------------------------------------------------------
+
+Stratified Cox regr. -- Breslow method for ties
+
+No. of subjects      =    9,334,392             Number of obs    =  27,886,937
+No. of failures      =        6,374
+Time at risk         =   1963027620
+                                                Wald chi2(55)    =    13180.63
+Log pseudolikelihood =   -77763.626             Prob > chi2      =      0.0000
+
+                   (Std. Err. adjusted for 5,833,113 clusters in household_id)
+------------------------------------------------------------------------------
+             |               Robust
+          _t | Haz. Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   kids_cat4 |
+only <12 ..  |   .9203317   .0377691    -2.02   0.043     .8492045    .9974164
+ only 12-18  |    1.06232   .0466208     1.38   0.168     .9747646     1.15774
+      mixed  |   1.114563   .0561034     2.15   0.031     1.009853    1.230131
+             |
+        age1 |   1.079215   .0085263     9.65   0.000     1.062633    1.096057
+        age2 |   .9637827   .0192903    -1.84   0.065     .9267064    1.002342
+        age3 |   1.012183    .053397     0.23   0.818     .9127559    1.122442
+      1.male |   1.825757   .0907678    12.11   0.000     1.656248    2.012615
+             |
+tot_adults~h |
+          2  |   .9233629   .0320413    -2.30   0.022      .862651    .9883477
+          3  |   1.084902   .0373555     2.37   0.018     1.014102    1.160644
+             |
+   obese4cat |
+Obese I ..)  |   1.580002   .0522057    13.84   0.000     1.480923    1.685709
+Obese II..)  |   2.099045   .0875993    17.77   0.000     1.934188    2.277954
+Obese II..)  |   2.811448   .1368246    21.24   0.000     2.555669    3.092825
+             |
+smoke_nomiss |
+     Former  |   .9522876   .0269876    -1.73   0.085     .9008351    1.006679
+    Current  |   .3943288   .0181856   -20.18   0.000      .360249    .4316326
+             |
+         imd |
+          2  |   1.059487   .0502179     1.22   0.223     .9654954    1.162629
+          3  |   .8854759   .0587626    -1.83   0.067      .777479    1.008474
+          4  |   1.023014    .065901     0.35   0.724     .9016718    1.160686
+5 most de..  |   1.159087   .0758635     2.26   0.024      1.01954    1.317735
+             |
+   ethnicity |
+      Mixed  |   1.988243   .1936125     7.06   0.000     1.642784    2.406347
+Asian or ..  |   2.155359   .1358071    12.19   0.000     1.904961     2.43867
+      Black  |   2.199805   .1618967    10.71   0.000     1.904317    2.541144
+      Other  |   2.098901    .172506     9.02   0.000     1.786622    2.465761
+             |
+1.htdiag_o~p |   1.284316   .0385233     8.34   0.000     1.210988    1.362084
+1.~y_disease |   2.671903   .1275908    20.58   0.000     2.433176    2.934053
+    1.asthma |   1.368543   .0425983    10.08   0.000     1.287548    1.454633
+1.~c_disease |   1.479358   .0652282     8.88   0.000     1.356882     1.61289
+             |
+     diabcat |
+T1DM, con..  |   1.688632   .3692199     2.40   0.017     1.100068    2.592092
+T1DM, unc..  |   2.473948   .2898465     7.73   0.000     1.966366    3.112555
+T2DM, con..  |   1.553288    .072023     9.50   0.000      1.41835    1.701064
+T2DM, unc..  |   2.209358   .1000216    17.51   0.000     2.021765    2.414357
+Diabetes,..  |   1.893051   .5732562     2.11   0.035     1.045684     3.42708
+             |
+cancer_exh~t |
+  Last year  |   2.330206   .3130793     6.30   0.000     1.790727    3.032209
+2-5 years..  |   1.466767    .145064     3.87   0.000     1.208306    1.780514
+   5+ years  |   1.196587   .1042793     2.06   0.039     1.008705    1.419463
+             |
+cancer_hae~t |
+  Last year  |   3.380617   1.033897     3.98   0.000     1.856403    6.156297
+2-5 years..  |   4.759424   .7251593    10.24   0.000     3.530717    6.415727
+   5+ years  |   1.810757   .2929243     3.67   0.000     1.318749    2.486327
+             |
+1.~r_disease |   1.486541   .2708773     2.18   0.030      1.04009    2.124627
+1.stroke_d~a |   1.553518   .1111289     6.16   0.000     1.350289    1.787335
+1.other_ne~o |   2.532111   .2080687    11.31   0.000     2.155449    2.974594
+             |
+reduced_ki~t |
+Stage 3a/..  |   1.556649   .0999394     6.89   0.000     1.372594    1.765384
+Stage 4/5..  |   2.469621   .3218089     6.94   0.000      1.91299    3.188217
+             |
+      1.esrd |   3.584136   .4468862    10.24   0.000     2.807067    4.576317
+1.other_tr~t |   .8773002   .2760919    -0.42   0.677     .4734452    1.625649
+  1.asplenia |   1.643302   .3575738     2.28   0.022     1.072755    2.517297
+1.ra_sle_p~s |   1.243474   .0617084     4.39   0.000     1.128224    1.370497
+1.other_im~o |   1.053209   .1571955     0.35   0.728     .7860848    1.411106
+             |
+  timeperiod#|
+        male |
+       60 1  |   .7679066   .0465507    -4.36   0.000     .6818806    .8647857
+       90 1  |   .5987724   .0431274    -7.12   0.000     .5199395    .6895579
+             |
+  timeperiod#|
+any_nonwhite |
+       60 1  |   1.254577   .0925457     3.07   0.002     1.085694    1.449731
+       90 1  |   1.217219   .1058764     2.26   0.024      1.02643    1.443472
+             |
+  timeperiod#|
+     highimd |
+       60 1  |   1.264835   .0855153     3.47   0.001     1.107858    1.444054
+       90 1  |   1.636527   .1376078     5.86   0.000     1.387872     1.92973
+             |
+  timeperiod#|
+chronic_l~se |
+       60 1  |   1.337735   .2882871     1.35   0.177     .8768649    2.040832
+       90 1  |   1.955898   .4553761     2.88   0.004     1.239275    3.086915
+------------------------------------------------------------------------------
+                                                             Stratified by stp
+(note: file ./output/an_sense_covidadmission_time_int_ageband_0MAIN.ster not fo
+> und)
+file ./output/an_sense_covidadmission_time_int_ageband_0MAIN.ster saved
+(5,312,190 observations (episodes) created)
+
+         failure _d:  covidadmission
+   analysis time _t:  (stime_covidadmission-origin)
+             origin:  time enter_date
+  enter on or after:  time enter_date
+                 id:  patient_id
+
+Iteration 0:   log pseudolikelihood = -99210.206
+Iteration 1:   log pseudolikelihood = -95808.952
+Iteration 2:   log pseudolikelihood =  -95016.43
+Iteration 3:   log pseudolikelihood = -94980.073
+Iteration 4:   log pseudolikelihood = -94978.452
+Iteration 5:   log pseudolikelihood = -94978.446
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -94978.446
+
+Stratified Cox regr. -- Breslow method for ties
+
+No. of subjects      =    2,684,524             Number of obs    =   7,996,714
+No. of failures      =        8,560
+Time at risk         =    561156909
+                                                Wald chi2(55)    =    12238.10
+Log pseudolikelihood =   -94978.446             Prob > chi2      =      0.0000
+
+                   (Std. Err. adjusted for 2,091,789 clusters in household_id)
+------------------------------------------------------------------------------
+             |               Robust
+          _t | Haz. Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   kids_cat4 |
+only <12 ..  |   1.060848   .0845232     0.74   0.458     .9074724    1.240146
+ only 12-18  |     1.0323   .0986089     0.33   0.739     .8560441    1.244846
+      mixed  |   1.154894   .1334009     1.25   0.212     .9209169    1.448317
+             |
+        age1 |   1.006155   .0130122     0.47   0.635     .9809718    1.031984
+        age2 |   1.304312   .0807921     4.29   0.000     1.155197    1.472674
+        age3 |   .5865848   .0751127    -4.17   0.000     .4563875    .7539245
+      1.male |    1.78176    .072834    14.13   0.000     1.644577    1.930387
+             |
+tot_adults~h |
+          2  |   .7942463   .0203367    -9.00   0.000     .7553707    .8351227
+          3  |    .939121   .0339742    -1.74   0.083     .8748386    1.008127
+             |
+   obese4cat |
+Obese I ..)  |   1.163837   .0329259     5.36   0.000      1.10106    1.230193
+Obese II..)  |    1.48529     .06128     9.59   0.000     1.369911    1.610386
+Obese II..)  |   1.730041   .1045174     9.07   0.000     1.536854    1.947513
+             |
+smoke_nomiss |
+     Former  |   1.231153   .0313889     8.16   0.000     1.171143    1.294237
+    Current  |   .8457643   .0423679    -3.34   0.001     .7666709    .9330172
+             |
+         imd |
+          2  |   1.132225   .0425225     3.31   0.001     1.051876    1.218712
+          3  |   .9912742   .0514897    -0.17   0.866     .8953234    1.097508
+          4  |   1.133178   .0583634     2.43   0.015     1.024372    1.253541
+5 most de..  |   1.241067   .0656108     4.09   0.000      1.11891     1.37656
+             |
+   ethnicity |
+      Mixed  |   1.164326   .1798753     0.98   0.325     .8601489    1.576071
+Asian or ..  |    1.47754   .1042378     5.53   0.000     1.286733    1.696641
+      Black  |   1.414154   .1263554     3.88   0.000     1.186975    1.684815
+      Other  |   1.213626   .1426134     1.65   0.099      .963962    1.527952
+             |
+1.htdiag_o~p |   .9715689   .0265745    -1.05   0.292     .9208553    1.025075
+1.~y_disease |   1.963623   .0511186    25.92   0.000     1.865946    2.066414
+    1.asthma |   1.098219    .032532     3.16   0.002     1.036273    1.163868
+1.~c_disease |   1.377404    .033015    13.36   0.000     1.314192    1.443656
+             |
+     diabcat |
+T1DM, con..  |   1.872352   .3733257     3.15   0.002     1.266682    2.767626
+T1DM, unc..  |   2.104859   .2895305     5.41   0.000      1.60745    2.756187
+T2DM, con..  |   1.369216   .0390777    11.01   0.000     1.294728     1.44799
+T2DM, unc..  |   1.927207   .0662669    19.08   0.000     1.801606    2.061564
+Diabetes,..  |   2.608021   .5903337     4.23   0.000     1.673551    4.064276
+             |
+cancer_exh~t |
+  Last year  |    1.91992   .1379712     9.08   0.000     1.667682     2.21031
+2-5 years..  |    1.19044   .0628996     3.30   0.001     1.073328    1.320331
+   5+ years  |   1.134415   .0384187     3.72   0.000      1.06156    1.212269
+             |
+cancer_hae~t |
+  Last year  |   2.620146   .4445699     5.68   0.000      1.87888    3.653861
+2-5 years..  |   2.505043   .2477289     9.29   0.000      2.06366    3.040831
+   5+ years  |     1.4879   .1309319     4.52   0.000     1.252189    1.767981
+             |
+1.~r_disease |   1.611328   .2289358     3.36   0.001      1.21968    2.128736
+1.stroke_d~a |   1.612294   .0477621    16.12   0.000     1.521348    1.708677
+1.other_ne~o |   2.084854   .1061851    14.43   0.000     1.886786    2.303715
+             |
+reduced_ki~t |
+Stage 3a/..  |   1.261115   .0327883     8.92   0.000     1.198461    1.327045
+Stage 4/5..  |   2.067272   .1010688    14.85   0.000     1.878376    2.275165
+             |
+      1.esrd |   3.277006   .2752781    14.13   0.000     2.779546    3.863498
+1.other_tr~t |      1.136   .4076101     0.36   0.722     .5622864    2.295089
+  1.asplenia |   1.372618   .2376749     1.83   0.067      .977598    1.927254
+1.ra_sle_p~s |   1.241664   .0448824     5.99   0.000      1.15674    1.332823
+1.other_im~o |   1.486741    .260334     2.26   0.024      1.05484    2.095482
+             |
+  timeperiod#|
+        male |
+       60 1  |    .840436   .0427056    -3.42   0.001     .7607675    .9284474
+       90 1  |   .8020904    .048683    -3.63   0.000     .7121305    .9034146
+             |
+  timeperiod#|
+any_nonwhite |
+       60 1  |   .9903544   .0832143    -0.12   0.908     .8399794     1.16765
+       90 1  |   1.246889   .1255913     2.19   0.028     1.023509    1.519021
+             |
+  timeperiod#|
+     highimd |
+       60 1  |   1.413952   .0778307     6.29   0.000     1.269347     1.57503
+       90 1  |   1.388952   .0926247     4.93   0.000     1.218775    1.582892
+             |
+  timeperiod#|
+chronic_l~se |
+       60 1  |   1.008762   .1825078     0.05   0.962     .7075987    1.438104
+       90 1  |   1.209562   .2545719     0.90   0.366     .8007174    1.827163
+------------------------------------------------------------------------------
+                                                             Stratified by stp
+
+-------------------------------------------------------------------------------
+active results
+-------------------------------------------------------------------------------
+
+Stratified Cox regr. -- Breslow method for ties
+
+No. of subjects      =    2,684,524             Number of obs    =   7,996,714
+No. of failures      =        8,560
+Time at risk         =    561156909
+                                                Wald chi2(55)    =    12238.10
+Log pseudolikelihood =   -94978.446             Prob > chi2      =      0.0000
+
+                   (Std. Err. adjusted for 2,091,789 clusters in household_id)
+------------------------------------------------------------------------------
+             |               Robust
+          _t | Haz. Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   kids_cat4 |
+only <12 ..  |   1.060848   .0845232     0.74   0.458     .9074724    1.240146
+ only 12-18  |     1.0323   .0986089     0.33   0.739     .8560441    1.244846
+      mixed  |   1.154894   .1334009     1.25   0.212     .9209169    1.448317
+             |
+        age1 |   1.006155   .0130122     0.47   0.635     .9809718    1.031984
+        age2 |   1.304312   .0807921     4.29   0.000     1.155197    1.472674
+        age3 |   .5865848   .0751127    -4.17   0.000     .4563875    .7539245
+      1.male |    1.78176    .072834    14.13   0.000     1.644577    1.930387
+             |
+tot_adults~h |
+          2  |   .7942463   .0203367    -9.00   0.000     .7553707    .8351227
+          3  |    .939121   .0339742    -1.74   0.083     .8748386    1.008127
+             |
+   obese4cat |
+Obese I ..)  |   1.163837   .0329259     5.36   0.000      1.10106    1.230193
+Obese II..)  |    1.48529     .06128     9.59   0.000     1.369911    1.610386
+Obese II..)  |   1.730041   .1045174     9.07   0.000     1.536854    1.947513
+             |
+smoke_nomiss |
+     Former  |   1.231153   .0313889     8.16   0.000     1.171143    1.294237
+    Current  |   .8457643   .0423679    -3.34   0.001     .7666709    .9330172
+             |
+         imd |
+          2  |   1.132225   .0425225     3.31   0.001     1.051876    1.218712
+          3  |   .9912742   .0514897    -0.17   0.866     .8953234    1.097508
+          4  |   1.133178   .0583634     2.43   0.015     1.024372    1.253541
+5 most de..  |   1.241067   .0656108     4.09   0.000      1.11891     1.37656
+             |
+   ethnicity |
+      Mixed  |   1.164326   .1798753     0.98   0.325     .8601489    1.576071
+Asian or ..  |    1.47754   .1042378     5.53   0.000     1.286733    1.696641
+      Black  |   1.414154   .1263554     3.88   0.000     1.186975    1.684815
+      Other  |   1.213626   .1426134     1.65   0.099      .963962    1.527952
+             |
+1.htdiag_o~p |   .9715689   .0265745    -1.05   0.292     .9208553    1.025075
+1.~y_disease |   1.963623   .0511186    25.92   0.000     1.865946    2.066414
+    1.asthma |   1.098219    .032532     3.16   0.002     1.036273    1.163868
+1.~c_disease |   1.377404    .033015    13.36   0.000     1.314192    1.443656
+             |
+     diabcat |
+T1DM, con..  |   1.872352   .3733257     3.15   0.002     1.266682    2.767626
+T1DM, unc..  |   2.104859   .2895305     5.41   0.000      1.60745    2.756187
+T2DM, con..  |   1.369216   .0390777    11.01   0.000     1.294728     1.44799
+T2DM, unc..  |   1.927207   .0662669    19.08   0.000     1.801606    2.061564
+Diabetes,..  |   2.608021   .5903337     4.23   0.000     1.673551    4.064276
+             |
+cancer_exh~t |
+  Last year  |    1.91992   .1379712     9.08   0.000     1.667682     2.21031
+2-5 years..  |    1.19044   .0628996     3.30   0.001     1.073328    1.320331
+   5+ years  |   1.134415   .0384187     3.72   0.000      1.06156    1.212269
+             |
+cancer_hae~t |
+  Last year  |   2.620146   .4445699     5.68   0.000      1.87888    3.653861
+2-5 years..  |   2.505043   .2477289     9.29   0.000      2.06366    3.040831
+   5+ years  |     1.4879   .1309319     4.52   0.000     1.252189    1.767981
+             |
+1.~r_disease |   1.611328   .2289358     3.36   0.001      1.21968    2.128736
+1.stroke_d~a |   1.612294   .0477621    16.12   0.000     1.521348    1.708677
+1.other_ne~o |   2.084854   .1061851    14.43   0.000     1.886786    2.303715
+             |
+reduced_ki~t |
+Stage 3a/..  |   1.261115   .0327883     8.92   0.000     1.198461    1.327045
+Stage 4/5..  |   2.067272   .1010688    14.85   0.000     1.878376    2.275165
+             |
+      1.esrd |   3.277006   .2752781    14.13   0.000     2.779546    3.863498
+1.other_tr~t |      1.136   .4076101     0.36   0.722     .5622864    2.295089
+  1.asplenia |   1.372618   .2376749     1.83   0.067      .977598    1.927254
+1.ra_sle_p~s |   1.241664   .0448824     5.99   0.000      1.15674    1.332823
+1.other_im~o |   1.486741    .260334     2.26   0.024      1.05484    2.095482
+             |
+  timeperiod#|
+        male |
+       60 1  |    .840436   .0427056    -3.42   0.001     .7607675    .9284474
+       90 1  |   .8020904    .048683    -3.63   0.000     .7121305    .9034146
+             |
+  timeperiod#|
+any_nonwhite |
+       60 1  |   .9903544   .0832143    -0.12   0.908     .8399794     1.16765
+       90 1  |   1.246889   .1255913     2.19   0.028     1.023509    1.519021
+             |
+  timeperiod#|
+     highimd |
+       60 1  |   1.413952   .0778307     6.29   0.000     1.269347     1.57503
+       90 1  |   1.388952   .0926247     4.93   0.000     1.218775    1.582892
+             |
+  timeperiod#|
+chronic_l~se |
+       60 1  |   1.008762   .1825078     0.05   0.962     .7075987    1.438104
+       90 1  |   1.209562   .2545719     0.90   0.366     .8007174    1.827163
+------------------------------------------------------------------------------
+                                                             Stratified by stp
+(note: file ./output/an_sense_covidadmission_time_int_ageband_1MAIN.ster not fo
+> und)
+file ./output/an_sense_covidadmission_time_int_ageband_1MAIN.ster saved
+. }
+
+. 
+. if "`outcome'"=="covidadmission"  & "`dataset'"=="W2" {
+. * Open a log file
+. capture log close
+. log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense5_time_ints
+> `dataset'", text replace
+. 
+. foreach x in 0 1 {
+  2. ******************************
+. *  Multivariable Cox models  *
+. ******************************
+. use "$tempdir/cr_create_analysis_dataset_STSET_covidadmission_ageband_`x'`dat
+> aset'.dta", clear
+  3. stsplit timeperiod, at(60 90)
+  4. 
+. *make vars binary
+. gen anyreduced_kidney_function = reduced_kidney_function_cat>=2
+  5. gen anyobesity = obese4cat>=2
+  6. gen highimd = imd>=3
+  7. gen anydiab= diabcat>=2
+  8. gen any_nonwhite=ethnicity>=2
+  9. 
+. *Fully adjusted
+. stcox   i.kids_cat4      ///
+>                         age1 age2 age3          ///
+>                         i.male                                               
+>    ///
+>                         i.tot_adults_hh ///
+>                         i.obese4cat                                     ///
+>                         i.smoke_nomiss                                  ///
+>                         i.imd                                           ///
+>                         i.ethnicity ///
+>                         `comordidadjlist'       ///     
+>                         60.timeperiod#1.any_nonwhite                         
+>                            ///
+>                         90.timeperiod#1.any_nonwhite                         
+>                    ///
+>                         60.timeperiod#1.cancer_haem_cat                      
+>                    ///
+>                         90.timeperiod#1.cancer_haem_cat                      
+>            ///
+>                         , strata(stp) vce(cluster household_id)
+ 10. estimates
+ 11. estimates save "./output/an_sense_covidadmission_time_int_ageband_`x'`data
+> set'", replace
+ 12. }
+. }
+
+. 
+. 
+. if "`outcome'"=="covid_icu" & "`dataset'"=="MAIN" {
+. * Open a log file
+. capture log close
+. log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense5_time_ints
+> `dataset'", text replace
+. 
+. foreach x in 0 1 {
+  2. ******************************
+. *  Multivariable Cox models  *
+. ******************************
+. use "$tempdir/cr_create_analysis_dataset_STSET_covid_icu_ageband_`x'`dataset'
+> .dta", clear
+  3. stsplit timeperiod, at(60 90)
+  4. 
+. *make vars binary
+. gen anyreduced_kidney_function = reduced_kidney_function_cat>=2
+  5. gen anyobesity = obese4cat>=2
+  6. gen highimd = imd>=3
+  7. gen anydiab= diabcat>=2
+  8. gen any_nonwhite=ethnicity>=2
+  9. *Fully adjusted
+. stcox   i.kids_cat4      ///
+>                         age1 age2 age3          ///
+>                         i.male                                               
+>    ///
+>                         i.obese4cat                                     ///
+>                         i.tot_adults_hh ///
+>                         i.smoke_nomiss                                  ///
+>                         i.imd                                           ///
+>                         i.ethnicity ///
+>                         `comordidadjlist'       ///     
+>                         60.timeperiod#1.male                                 
+>                    ///
+>                         90.timeperiod#1.male                                 
+>            ///
+>                         60.timeperiod#1.tot_adults_hh                        
+>                            ///
+>                         90.timeperiod#1.tot_adults_hh                        
+>                    ///
+>                         60.timeperiod#1.anyobesity                           
+>                            ///
+>                         90.timeperiod#1.anyobesity                           
+>                    ///
+>                         60.timeperiod#1.any_nonwhite                         
+>                            ///
+>                         90.timeperiod#1.any_nonwhite                         
+>                    ///
+>                         60.timeperiod#3.smoke_nomiss                         
+>                    ///
+>                         90.timeperiod#3.smoke_nomiss                         
+>            ///
+>                         60.timeperiod#1.highimd                              
+>                            ///
+>                         90.timeperiod#1.highimd                              
+>                    ///
+>                         60.timeperiod#1.htdiag_or_highbp                     
+>                            ///
+>                         90.timeperiod#1.htdiag_or_highbp                     
+>                    ///
+>                         60.timeperiod#1.anydiab                              
+>    ///
+>                         90.timeperiod#1.anydiab                              
+>    ///     
+>                         60.timeperiod#1.chronic_cardiac_disease              
+>                    ///
+>                         90.timeperiod#1.chronic_cardiac_disease              
+>            ///
+>                         60.timeperiod#1.chronic_liver_disease                
+>                    ///
+>                         90.timeperiod#1.chronic_liver_disease                
+>                    ///             
+>                         60.timeperiod#1.esrd                                 
+>            ///
+>                         90.timeperiod#1.esrd                                 
+>    ///
+>                         60.timeperiod#1.other_immuno                         
+>                    ///
+>                         90.timeperiod#1.other_immuno                         
+>            ///
+>                         60.timeperiod#1.reduced_kidney_function_cat          
+>                                    ///
+>                         90.timeperiod#1.reduced_kidney_function_cat          
+>                            ///             
+>                         60.timeperiod#1.other_transplant                     
+>                            ///
+>                         90.timeperiod#1.other_transplant                     
+>                    ///
+>                         , strata(stp) vce(cluster household_id)
+ 10. estimates
+ 11. estimates save "./output/an_sense_covid_icu_time_int_ageband_`x'`dataset'"
+> , replace
+ 12. }
+. }
+
+. 
+. 
+. if "`outcome'"=="covid_death" & "`dataset'"=="MAIN" {
+. * Open a log file
+. capture log close
+. log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense5_time_ints
+> `dataset'", text replace
+. 
+. foreach x in 0 1 {
+  2. ******************************
+. *  Multivariable Cox models  *
+. ******************************
+. use "$tempdir/cr_create_analysis_dataset_STSET_covid_death_ageband_`x'`datase
+> t'.dta", clear
+  3. stsplit timeperiod, at(60 90)
+  4. 
+. *make vars binary
+. gen anyreduced_kidney_function = reduced_kidney_function_cat>=2
+  5. gen anyobesity = obese4cat>=2
+  6. gen highimd = imd>=3
+  7. gen anydiab= diabcat>=2
+  8. gen any_nonwhite=ethnicity>=2
+  9. 
+. *Fully adjusted
+. stcox   i.kids_cat4      ///
+>                         age1 age2 age3          ///
+>                         i.tot_adults_hh ///
+>                         i.male                                               
+>    ///
+>                         i.obese4cat                                     ///
+>                         i.smoke_nomiss                                  ///
+>                         i.imd                                           ///
+>                         i.ethnicity ///
+>                         `comordidadjlist'       ///     
+>                         60.timeperiod#1.anyobesity                           
+>                            ///
+>                         90.timeperiod#1.anyobesity                           
+>                    ///
+>                         60.timeperiod#3.smoke_nomiss                         
+>                    ///
+>                         90.timeperiod#3.smoke_nomiss                         
+>            ///
+>                         60.timeperiod#1.highimd                              
+>                            ///
+>                         90.timeperiod#1.highimd ///
+>                         60.timeperiod#1.anydiab                              
+>    ///
+>                         90.timeperiod#1.anydiab                              
+>    ///     
+>                         60.timeperiod#1.cancer_exhaem_cat                    
+>                    ///
+>                         90.timeperiod#1.cancer_exhaem_cat                    
+>            ///
+>                         60.timeperiod#1.chronic_liver_disease                
+>                            ///
+>                         90.timeperiod#1.chronic_liver_disease                
+>                    ///
+>                         , strata(stp) vce(cluster household_id)
+ 10. estimates
+ 11. estimates save "./output/an_sense_covid_death_time_int_ageband_`x'`dataset
+> '", replace
+ 12. }
+. }
+
+. 
+. if "`outcome'"=="covid_death" & "`dataset'"=="W2" {
+. * Open a log file
+. capture log close
+. log using "$logdir/07d_an_multivariable_cox_models_`outcome'_Sense5_time_ints
+> `dataset'", text replace
+. 
+. foreach x in 0 1 {
+  2. ******************************
+. *  Multivariable Cox models  *
+. ******************************
+. use "$tempdir/cr_create_analysis_dataset_STSET_covid_death_ageband_`x'`datase
+> t'.dta", clear
+  3. stsplit timeperiod, at(60 90)
+  4. 
+. *make vars binary
+. gen anyreduced_kidney_function = reduced_kidney_function_cat>=2
+  5. gen anyobesity = obese4cat>=2
+  6. gen highimd = imd>=3
+  7. gen anydiab= diabcat>=2
+  8. gen any_nonwhite=ethnicity>=2
+  9. 
+. *Fully adjusted
+. stcox   i.kids_cat4      ///
+>                         age1 age2 age3          ///
+>                         i.tot_adults_hh ///
+>                         i.male                                               
+>    ///
+>                         i.obese4cat                                     ///
+>                         i.smoke_nomiss                                  ///
+>                         i.imd                                           ///
+>                         i.ethnicity ///
+>                         `comordidadjlist'       ///     
+>                         60.timeperiod#1.anyobesity                           
+>                            ///
+>                         90.timeperiod#1.anyobesity                           
+>                    ///
+>                         60.timeperiod#1.cancer_haem_cat                      
+>                    ///
+>                         90.timeperiod#1.cancer_haem_cat                      
+>            ///
+>                         60.timeperiod#1.esrd                                 
+>            ///
+>                         90.timeperiod#1.esrd                                 
+>    ///
+>                         60.timeperiod#1.other_immuno                         
+>                    ///
+>                         90.timeperiod#1.other_immuno                         
+>            ///
+>                         60.timeperiod#1.reduced_kidney_function_cat          
+>                                    ///
+>                         90.timeperiod#1.reduced_kidney_function_cat          
+>                            ///             
+>                         60.timeperiod#1.other_immuno                         
+>                    ///
+>                         90.timeperiod#1.other_immuno                         
+>            ///
+>                         , strata(stp) vce(cluster household_id)
+ 10. estimates
+ 11. estimates save "./output/an_sense_covid_death_time_int_ageband_`x'`dataset
+> '", replace
+ 12. }
+. }
+
+. cap log close
