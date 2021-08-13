@@ -55,6 +55,7 @@
   * [output/11_an_int_tab_contents_HRtable_covid_tpp_prob.txt](output/11_an_int_tab_contents_HRtable_covid_tpp_prob.txt)
   * [output/11_an_int_tab_contents_HRtable_covid_tpp_prob_ethnicity.txt](output/11_an_int_tab_contents_HRtable_covid_tpp_prob_ethnicity.txt)
   * [output/11_an_int_tab_contents_HRtable_covidadmission.txt](output/11_an_int_tab_contents_HRtable_covidadmission.txt)
+  * [output/11_an_int_tab_contents_HRtable_covidadmission_ethnicity.txt](output/11_an_int_tab_contents_HRtable_covidadmission_ethnicity.txt)
   * [output/12_an_HRforest_SENSE_covid_death_ageband_0_MAIN.svg](output/12_an_HRforest_SENSE_covid_death_ageband_0_MAIN.svg)
   * [output/12_an_HRforest_SENSE_covid_death_ageband_0_W2.svg](output/12_an_HRforest_SENSE_covid_death_ageband_0_W2.svg)
   * [output/12_an_HRforest_SENSE_covid_death_ageband_1_MAIN.svg](output/12_an_HRforest_SENSE_covid_death_ageband_1_MAIN.svg)
