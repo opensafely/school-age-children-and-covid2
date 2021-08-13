@@ -51,6 +51,7 @@
   * [output/04b_an_descriptive_table_2_W2_ageband0.txt](output/04b_an_descriptive_table_2_W2_ageband0.txt)
   * [output/04b_an_descriptive_table_2_W2_ageband1.txt](output/04b_an_descriptive_table_2_W2_ageband1.txt)
   * [output/11_an_int_tab_contents_HRtable_covid_death.txt](output/11_an_int_tab_contents_HRtable_covid_death.txt)
+  * [output/11_an_int_tab_contents_HRtable_covid_death_ethnicity.txt](output/11_an_int_tab_contents_HRtable_covid_death_ethnicity.txt)
   * [output/11_an_int_tab_contents_HRtable_covid_icu.txt](output/11_an_int_tab_contents_HRtable_covid_icu.txt)
   * [output/11_an_int_tab_contents_HRtable_covid_tpp_prob.txt](output/11_an_int_tab_contents_HRtable_covid_tpp_prob.txt)
   * [output/11_an_int_tab_contents_HRtable_covid_tpp_prob_ethnicity.txt](output/11_an_int_tab_contents_HRtable_covid_tpp_prob_ethnicity.txt)
